@@ -164,7 +164,8 @@ var RadioView = TextView.extend({
 		var selected = this.$el.find(":checked");
 		if (selected.length > 0) {
 			val = selected.val();
-			ci = this.model.toJSON().conceptId;
+			ci = this.model.get('conceptId');
+			
 			switch(ci){
 			case "vaccinat":
 				if (val == 1){
@@ -291,6 +292,8 @@ var SubmitPageView = FormItemView.extend({
 	}
 });
 
+/* This object sets what view types correspond with what view templates.
+ *  A new view template needs to be added here to be used. */
 
 window.formItemViewCodes = {text : TextView,
 		number : NumberView,

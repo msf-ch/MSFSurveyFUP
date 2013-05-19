@@ -30,7 +30,7 @@ childPage1Views = [
    	{viewType : "text", conceptId : "merpren", label : "Pr\xE9nom de la m\xE8re"}, 
    	{viewType : "text", conceptId : "pernom", label : "Nom de famille du p\xE8re"}, 
    	{viewType : "text", conceptId : "perpren", label : "Pr\xE9nom du p\xE8re"}, 
-   	{viewType : "text", conceptId : "tel", label : "Num\xE9ro de t\xE9l\xE9phone"}, 
+   	{viewType : "number", conceptId : "tel", label : "Num\xE9ro de t\xE9l\xE9phone"}, 
    	{viewType : "radio", conceptId : "accomp", label : "Accompagnant de l'enfant",
    		options : [{label : "m\xE8re", value : "1"},
    		           {label : "p\xE8re", value : "2"},

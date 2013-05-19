@@ -7,6 +7,7 @@ import org.apache.cordova.api.CallbackContext;
 import org.apache.cordova.api.CordovaPlugin;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * @author Nicholas Wilkie
@@ -15,7 +16,7 @@ import org.json.JSONException;
 public class MSFPlugin extends CordovaPlugin {
 	public static final String SUBMIT_ACTION = "submit";
 	public static final String PAGE_FORWARD_ACTION = "forward";
-	public static final String PAGE_BACKWARD_ACTION = "forward";
+	public static final String PAGE_BACKWARD_ACTION = "backward";
 	
 	/* (non-Javadoc)
 	 * @see org.apache.cordova.api.CordovaPlugin#execute(java.lang.String, org.json.JSONArray, org.apache.cordova.api.CallbackContext)
@@ -30,8 +31,17 @@ public class MSFPlugin extends CordovaPlugin {
 		} else if (action.equalsIgnoreCase(PAGE_BACKWARD_ACTION)) {
 			
 		} else {
+			
 		}
 		
 		return super.execute(action, args, callbackContext);
+	}
+	
+	/*
+	 * cordova.exec(callback(success){}, callback(fail){}, "MSF", "submit", [_obs])
+	 * 
+	 * 
+	 */
+	public void submit(JSONArray args, CallbackContext callbackContext) throws JSONException {
 	}
 }
