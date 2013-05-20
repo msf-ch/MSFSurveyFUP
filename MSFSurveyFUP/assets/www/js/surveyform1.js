@@ -6,7 +6,7 @@
 
 childPage1Views = [
 	{viewType : "date", conceptId : "datenq", label : "Date du suivi"}, 
-	{viewType : "text", conceptId : "nomenq", label : "Num\xE9ro de l'enqu\xEAteur"}, 
+	{viewType : "number", conceptId : "nomenq", label : "Num\xE9ro de l'enqu\xEAteur"}, 
 	{viewType : "text", conceptId : "zonenom", label : "Nom de la zone"}, 
 	{viewType : "number", conceptId : "zonenum", label : "Num\xE9ro de la zone"}, 
 	{viewType : "number", conceptId : "nummen", label : "Num\xE9ro du m\xE9nage"}, 
@@ -283,7 +283,13 @@ SubmitPage = {
 			theme : "b"
 		},
 		footer : {
-			theme : "c"
+			theme : "c",
+
+			footerButton3Text : "Submit",
+			footerButton3Theme : "e",
+			footerButton3Icon : "plus",
+			footerButton3Action : "submit",
+			footerButton3Disabled : false
 		},
 		content : {
 			theme : "c",
@@ -302,9 +308,9 @@ formData = {
 	},
 	
 	pages : [childPage1,
-	         childPage2,
-	         childPage3,
-	         childPage4,
+//	         childPage2,
+//	         childPage3,
+//	         childPage4,
 	         SubmitPage]
 };
 

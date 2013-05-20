@@ -229,6 +229,7 @@ Footer = Backbone.View.extend({
 	submit : function(e) {
 		console.log('submit button pressed');
 		if(this.isEnabled()) {
+			FormService.submit();
 		}
 	}
 });

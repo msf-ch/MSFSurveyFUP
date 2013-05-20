@@ -23,7 +23,19 @@ FormService = {
 	unregisterView : function(view) {
 		var index = this.views.indexOf(view);
 		this.views.splice(index, 1);
-	}
+	},
+	
+	submit : function() {
+		var obs = obsList.toJSON();
+		
+		cordova.exec(this.submitSuccessCallback, this.submitFailCallback, "MSF", "submit", [obs]);
+	},
+	
+	submitSuccessCallback : function(args) {
+	},
+	
+	submitFailCallback : function(args) {
+	},
 };
 
 ObsService = {
@@ -54,10 +66,12 @@ RadioGroupService = {
 	// Generic method for showing/hidding an item by given the name and showFlag
 	showItem : function(name, showFlag) {
 		item = ViewIdService.getViewId(name);
-		if (showFlag)
-			item.show();
-		else
-			item.hide();
+		if (item != undefined) {
+			if (showFlag)
+				item.show();
+			else
+				item.hide();
+		}
 	},
 		
 	/*This is for page 2: show/hide the checkbox group depending the value of the Vaccination radio selected */
