@@ -308,9 +308,9 @@ formData = {
 	},
 	
 	pages : [childPage1,
-//	         childPage2,
-//	         childPage3,
-//	         childPage4,
+	         childPage2,
+	         childPage3,
+	         childPage4,
 	         SubmitPage]
 };
 
