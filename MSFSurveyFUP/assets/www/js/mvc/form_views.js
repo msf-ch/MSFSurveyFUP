@@ -27,9 +27,14 @@ var FormItemViewModel = Backbone.Model.extend({
 		}
 	},
 	
-	generateView : function(element, viewType) {
+	generateView : function(element, params) {
 		if(this.view) {
 			this.destroyView();
+		}
+		
+		if (params) {
+			this.page = params.page;
+			var viewType = params.viewType;
 		}
 		
 		if(!viewType) {
@@ -39,6 +44,7 @@ var FormItemViewModel = Backbone.Model.extend({
 		this.view = new formItemViewCodes[viewType]({model : this,
 			el : element});
 		this.view.render();
+		
 		FormService.registerView(this.view);
 	},
 	
@@ -75,6 +81,10 @@ var FormItemView = Backbone.View.extend({
 			}
 		}
 		this.id = id;
+		
+		if(this.initialize2) {
+			this.initialize2.apply(this, arguments);
+		}
 	},
 	
 	renderDefault : function(templateId, processBeforeCreateFunction) {
@@ -126,7 +136,7 @@ var TextView = FormItemView.extend({
 	
 	setValue : function(value) {
 		this.$el.find("input").val(value);
-		console.log("VVvalue'" + value + "TEST" + "'");
+		console.log("Value'" + value + "TEST" + "'");
 		this.model.defaultValue = value
 	}
 });
@@ -236,7 +246,7 @@ var CheckGroupView = FormItemView.extend({
 			//generate checkboxes before creating
 			this.model.childrenModels.each(function(childModel, index, list) {
 				var newElement = $("<div></div>").appendTo(this.$el.find('fieldset'));
-				childModel.generateView(newElement, 'checkbox');
+				childModel.generateView(newElement, {viewType: 'checkbox'});
 			}, this);
 		});
 	}
@@ -286,9 +296,20 @@ var DateView = TextView.extend({
 });
 
 var SubmitPageView = FormItemView.extend({
+	initialize2 : function() {
+		if(this.model.page) {
+			this.listenTo(this.model.page, 'pagebeforeshow', this.renderBeforeShow);
+		}
+	},
+	
 	render : function() {
+	},
+	
+	renderBeforeShow : function() {
 		this.$el.attr('id', this.id).attr('formview', this.model.get('viewType'));
 		this.$el.html(_.template($("#tmpl-submitpage").html(), {model : this.model, view : this}, {variable : "data"}));
+		
+		this.$el.trigger('create');
 	}
 });
 

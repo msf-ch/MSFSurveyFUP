@@ -265,7 +265,7 @@ childPage3 = {
 
 childPage4 = {
 		header : {
-			title : "Page 4 Survey",
+			title : "Page 4: Survey",
 			theme : "b"
 		},
 		footer : {

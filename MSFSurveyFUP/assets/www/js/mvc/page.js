@@ -108,13 +108,13 @@ PageView = Backbone.View.extend({
 		this.duyhide.hide();
 		
 		this.$el.page();
-		
-		
 	},
 	
 	beforeShow : function() {
 		this.footer.render();
 		this.footer.$el.trigger('create');
+		
+		this.trigger('pagebeforeshow');
 	}
 });
 
@@ -134,6 +134,7 @@ Content = Backbone.View.extend({
 	initialize : function() {
 		console.log("Content initializing");
 		this.model = this.options.model;
+		this.page = this.options.page;
 		this.viewModels = new FormItemViewModelList([this.model.get('views')]);
 	},
 	
@@ -146,11 +147,10 @@ Content = Backbone.View.extend({
 		
 		a = modelList;
 		modelList.each(function(model) {
-			model.generateView($("<div></div>").appendTo(parentElement));
-		});
+			model.generateView($("<div></div>").appendTo(parentElement), {page : this.page});
+		}, this);
 		dd = $(this.el).find("AFTER SHOW");
 		dd.hide();
-		var i = 1;
 	}
 });
 
