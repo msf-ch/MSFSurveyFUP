@@ -5,7 +5,7 @@
 */
 
 childPage1Views = [
-	{viewType : "date", conceptId : "datenq", label : "Date du suivi"}, 
+	{viewType : "date", conceptId : "datenq", label : "Date du suivi", hideIf : ['nomenq', ["3"]]}, 
 	{viewType : "number", conceptId : "nomenq", label : "Num\xE9ro de l'enqu\xEAteur"}, 
 	{viewType : "text", conceptId : "zonenom", label : "Nom de la zone"}, 
 	{viewType : "number", conceptId : "zonenum", label : "Num\xE9ro de la zone"}, 

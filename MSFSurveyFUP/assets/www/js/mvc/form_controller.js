@@ -14,15 +14,39 @@ FormService = {
 		console.log('register view ' + view.id);
 		
 		this.views.push(view);
-		view.on('viewValueChange', FormService.viewValueChange);
-		var conceptId = view.model.get('conceptId');
+		this.addListeners(view);
 		
+		var conceptId = view.model.get('conceptId');
 		ViewIdService.setViewId(conceptId, view.$el);
 	},
 	
 	unregisterView : function(view) {
+		view.off('viewValueChange');
+		
 		var index = this.views.indexOf(view);
 		this.views.splice(index, 1);
+	},
+	
+	addListeners : function(view) {
+		view.on('viewValueChange', FormService.viewValueChange);
+		
+		var hideIf = view.model.get('hideIf');
+		view.listenTo(obsList, "changeObsValue:" + hideIf[0], function(model, value, options) {
+			if(hideIf[1].indexOf(value) >= 0) {
+				view.hide();
+			} else {
+				view.show();
+			}
+		});
+		
+		var showIf = view.model.get('showIf');
+		view.listenTo(obsList, "changeObsValue:" + showIf[0], function(model, value, options) {
+			if(showIf[1].indexOf(value) >= 0) {
+				view.show();
+			} else {
+				view.hide();
+			}
+		});
 	},
 	
 	submit : function() {
@@ -172,7 +196,6 @@ RadioGroupService = {
 var PageService = {
 	pageModels : undefined,
 	activeIndex : -1,
-	oList : undefined,
 	
 	setPageModels : function(pages) {
 		if (!this.pageModels) {
@@ -181,9 +204,6 @@ var PageService = {
 			});
 		} else {
 			this.pageModels.reset(pages);
-		}
-		if (!this.oList){
-			this.oList = obsList;
 		}
 	},
 	
@@ -200,7 +220,6 @@ var PageService = {
 	},
 	
 	setActivePageIndex : function(pageIndex) {
-		this.oList = obsList;
 		if (pageIndex + 1 > this.pageModels.length) {
 			alert('PageIndex exceeds number of pages!');
 			return;
@@ -227,7 +246,6 @@ var PageService = {
 	},
 	
 	nextPage : function(force) {
-		this.oList = obsList;
 		if (!force) {
 			//check that all requirements are met
 		}

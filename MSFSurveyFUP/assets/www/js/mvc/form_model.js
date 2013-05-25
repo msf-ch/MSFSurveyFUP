@@ -26,6 +26,19 @@ var Obs = Backbone.Model.extend({
 
 var ObsList = Backbone.Collection.extend({
 	model : Obs,
+	
+	initialize : function() {
+		//trigger event specific to the conceptId. (model, value, options)
+		this.on("change:value",
+				function(model, value, options) {console.log("change:value triggered for " + model.get('conceptId')); this.trigger('changeObsValue:' + model.get('conceptId'), model, value, options)},
+				this);
+		this.on("add",
+				function(model, options) {this.trigger('changeObsValue:' + model.get('conceptId'), model, model.get('value'), options)},
+				this);
+		this.on("remove",
+				function(model, options) {this.trigger('changeObsValue:' + model.get('conceptId'), model, undefined, options)},
+				this);
+	},
     
 	findObsFromConceptId : function(conceptIdToFind) {
 		var results = this.where({conceptId : conceptIdToFind});
