@@ -33,21 +33,21 @@ FooterModel = Backbone.Model.extend({
 		
 		footerIconPosition : "top",
 		
-		footerButton1Text : "Previous",
+		footerButton1Text : "Précédent",
 		footerButton1Theme : "a",
 		footerButton1Icon : "arrow-l",
 		footerButton1Action : "prev",
 		footerButton1Disabled : false,
 		
 
-		footerButton2Text : "Help",
+		footerButton2Text : "Aide",
 		footerButton2Theme : "a",
 		footerButton2Icon : "info",
 		footerButton2Action : "help",
 		footerButton2Disabled : false,
 		
 
-		footerButton3Text : "Next",
+		footerButton3Text : "Suivant",
 		footerButton3Theme : "a",
 		footerButton3Icon : "arrow-r",
 		footerButton3Action : "next",

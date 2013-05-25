@@ -305,7 +305,7 @@ var CheckView = FormItemView.extend({
 var DateView = TextView.extend({
 	render : function() {
 		this.renderDefault("tmpl-dateview");
-		this.$el.find('input').mobiscroll().date();
+		this.$el.find('input').mobiscroll().date({lang: 'fr', display: 'bubble'});
 	}
 });
 
