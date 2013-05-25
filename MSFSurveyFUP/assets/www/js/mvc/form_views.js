@@ -124,6 +124,7 @@ var FormItemView = Backbone.View.extend({
 	},
 	
 	hide : function() {
+		this.setValue(undefined);
 		this.$el.hide();
 	}
 });

@@ -29,24 +29,28 @@ FormService = {
 	
 	addListeners : function(view) {
 		view.on('viewValueChange', FormService.viewValueChange);
-		
+
 		var hideIf = view.model.get('hideIf');
-		view.listenTo(obsList, "changeObsValue:" + hideIf[0], function(model, value, options) {
-			if(hideIf[1].indexOf(value) >= 0) {
-				view.hide();
-			} else {
-				view.show();
-			}
-		});
+		if (hideIf.condition) {
+			view.listenTo(obsList, "changeObsValue:" + hideIf.conceptIds.join(" changeObsValue:"), function(model, value, options) {
+				if(ObsService.evaluateConditionSting(hideIf.conceptIds, hideIf.condition)) {
+					view.hide();
+				} else {
+					view.show();
+				}
+			});
+		}
 		
 		var showIf = view.model.get('showIf');
-		view.listenTo(obsList, "changeObsValue:" + showIf[0], function(model, value, options) {
-			if(showIf[1].indexOf(value) >= 0) {
-				view.show();
-			} else {
-				view.hide();
-			}
-		});
+		if (showIf.condition) {
+			view.listenTo(obsList, "changeObsValue:" + showIf.conceptIds.join(" changeObsValue:"), function(model, value, options) {
+				if(ObsService.evaluateConditionSting(showIf.conceptIds, showIf.condition)) {
+					view.show();
+				} else {
+					view.hide();
+				}
+			});
+		}
 	},
 	
 	submit : function() {
@@ -59,7 +63,7 @@ FormService = {
 	},
 	
 	submitFailCallback : function(args) {
-	},
+	}
 };
 
 ObsService = {
@@ -72,6 +76,16 @@ ObsService = {
 	getObs : function(conceptId) {
 		console.log('get obs ' + conceptId);
 		return obsList.getValue(conceptId);
+	},
+	
+	evaluateConditionSting : function(conceptIds, string) {
+		var script = "";
+		for (var i = 0; i < conceptIds.length; i++) {
+			script += "var " + conceptIds[i] + "=\"" + this.getObs(conceptIds[i]) + "\";";
+		}
+		script += "(" + string + ");";
+		
+		return eval(script);
 	}
 };
 

@@ -5,7 +5,8 @@
 */
 
 childPage1Views = [
-	{viewType : "date", conceptId : "datenq", label : "Date du suivi", hideIf : ['nomenq', ["3"]]}, 
+	{viewType : "date", conceptId : "datenq", label : "Date du suivi",
+		hideIf : {conceptIds : ["nomenq"], condition : "nomenq == '2'"}}, 
 	{viewType : "number", conceptId : "nomenq", label : "Num\xE9ro de l'enqu\xEAteur"}, 
 	{viewType : "text", conceptId : "zonenom", label : "Nom de la zone"}, 
 	{viewType : "number", conceptId : "zonenum", label : "Num\xE9ro de la zone"}, 
@@ -54,6 +55,7 @@ childPage2Views = [
     	            		viewType : "checkboxgroup",
     	            		label : "Quel vaccin a-t-il reçu?",
     	            		conceptId : "vaccinesCheckbox",
+    	            		//showIf : ["vaccinat", [1]],
     	            		children : [{label : "vaccination polio", conceptId : "vacpolio"},
     	            		           {label : "vaccination rougeole", conceptId : "vacrouge"},
     	            		           {label : "vaccination pentavalent", conceptId : "vacpenta"},
@@ -70,6 +72,7 @@ childPage2Views = [
 	            		viewType : "checkboxgroup",
 	            		label : "Quel vaccin a-t-il reçu?",
 	            		conceptId : "reactionsCheckbox",
+	            		//showIf : ["ppdreac", [1]],
 	            		children : [{label : "Diarrhée", conceptId : "ppddiarr"},
 	            		           {label : "Vomissement", conceptId : "ppdvomis"},
 	            		           {label : "Rash cutané", conceptId : "ppdrash"},
@@ -95,6 +98,7 @@ childPage3Views = [
        	            		viewType : "checkboxgroup",
        	            		label : "Symptômes",
        	            		conceptId : "symptomesCheckbox",
+       	            		//showIf : ["malad"]
        	            		children : [{label : "Fièvre", conceptId : "fievre"},
         	            		           {label : "Toux", conceptId : "toux"},
            	            		           {label : "Diarrhée", conceptId : "diarhe"},
@@ -136,6 +140,7 @@ childPage3Views = [
    	            		viewType : "checkboxgroup",
    	            		label : "Quelles sont les raisons de n'avoir rien entrepris",
    	            		conceptId : "reasonCheckbox",
+   	            		//showIf : ['epsoin', [1]],
    	            		children : [{label : "Raison financière", conceptId : "nofin"},
     	            		           {label : "Manque de transport", conceptId : "notransp"},
     	            		           {label : "Maladie trop grave", conceptId : "notgve"},
@@ -152,6 +157,7 @@ childPage3Views = [
    	            		viewType : "checkboxgroup",
    	            		label : "Si oui, qu'est-ce qui a été fait?",
    	            		conceptId : "whatdoneCheckbox",
+   	            		//showIf : ['epsoin', [2]],
    	            		children : [{label : "Consultation au CDS", conceptId : "reccds"},
     	            		           {label : "Est allé à l'hôpital", conceptId : "rechop"},
     	            		           {label : "Consulter un médecin privé", conceptId : "recmed"},
