@@ -188,58 +188,58 @@ var RadioView = TextView.extend({
 		var selected = this.$el.find(":checked");
 		if (selected.length > 0) {
 			val = selected.val();
-			ci = this.model.get('conceptId');
-			
-			switch(ci){
-			case "vaccinat":
-				if (val == 1){
-					RadioGroupService.showVaccinesCheckboxGroup(true);
-				}else{
-					RadioGroupService.showVaccinesCheckboxGroup(false);
-				}				
-			  break;
-			case "ppdreac":
-				if (val == 1){
-					RadioGroupService.showReactionsCheckboxGroup(true);
-				}else{
-					RadioGroupService.showReactionsCheckboxGroup(false);
-				}				
-			  break;
-			  
-			case "malad":
-				if (val == 1){
-					RadioGroupService.showSymptomesCheckboxGroup(true);
-					epsoin = ObsService.getObs("epsoin");
-					if (epsoin == 1){
-						RadioGroupService.showReasonCheckboxGroup(true);
-						RadioGroupService.showWhatDoneCheckboxGroup(false);
-					} else if (epsoin == 2) {
-						RadioGroupService.showReasonCheckboxGroup(false);
-						RadioGroupService.showWhatDoneCheckboxGroup(true);
-					}
-				}else{
-					RadioGroupService.showSymptomesCheckboxGroup(false);
-					RadioGroupService.showReasonCheckboxGroup(false);
-					RadioGroupService.showWhatDoneCheckboxGroup(false);
-				}				
-			  break;
-			case "epsoin":
-				malad = ObsService.getObs("malad");
-				if (malad == 1){
-					if (val == 1){
-						RadioGroupService.showReasonCheckboxGroup(true);
-						RadioGroupService.showWhatDoneCheckboxGroup(false);
-						break;
-					} else if (val == 2) {
-						RadioGroupService.showReasonCheckboxGroup(false);
-						RadioGroupService.showWhatDoneCheckboxGroup(true);
-						break;
-					}
-				}
-				RadioGroupService.showReasonCheckboxGroup(false);
-				RadioGroupService.showWhatDoneCheckboxGroup(false);
-			  break;
-			}			
+//			ci = this.model.get('conceptId');
+//			
+//			switch(ci){
+//			case "vaccinat":
+//				if (val == 1){
+//					RadioGroupService.showVaccinesCheckboxGroup(true);
+//				}else{
+//					RadioGroupService.showVaccinesCheckboxGroup(false);
+//				}				
+//			  break;
+//			case "ppdreac":
+//				if (val == 1){
+//					RadioGroupService.showReactionsCheckboxGroup(true);
+//				}else{
+//					RadioGroupService.showReactionsCheckboxGroup(false);
+//				}				
+//			  break;
+//			  
+//			case "malad":
+//				if (val == 1){
+//					RadioGroupService.showSymptomesCheckboxGroup(true);
+//					epsoin = ObsService.getObs("epsoin");
+//					if (epsoin == 1){
+//						RadioGroupService.showReasonCheckboxGroup(true);
+//						RadioGroupService.showWhatDoneCheckboxGroup(false);
+//					} else if (epsoin == 2) {
+//						RadioGroupService.showReasonCheckboxGroup(false);
+//						RadioGroupService.showWhatDoneCheckboxGroup(true);
+//					}
+//				}else{
+//					RadioGroupService.showSymptomesCheckboxGroup(false);
+//					RadioGroupService.showReasonCheckboxGroup(false);
+//					RadioGroupService.showWhatDoneCheckboxGroup(false);
+//				}				
+//			  break;
+//			case "epsoin":
+//				malad = ObsService.getObs("malad");
+//				if (malad == 1){
+//					if (val == 1){
+//						RadioGroupService.showReasonCheckboxGroup(true);
+//						RadioGroupService.showWhatDoneCheckboxGroup(false);
+//						break;
+//					} else if (val == 2) {
+//						RadioGroupService.showReasonCheckboxGroup(false);
+//						RadioGroupService.showWhatDoneCheckboxGroup(true);
+//						break;
+//					}
+//				}
+//				RadioGroupService.showReasonCheckboxGroup(false);
+//				RadioGroupService.showWhatDoneCheckboxGroup(false);
+//			  break;
+//			}			
 			return val;
 		} else {
 			return "";
@@ -281,12 +281,12 @@ var CheckView = FormItemView.extend({
 	getValue : function() {
 		var selected = this.input.is(":checked");
 		
-		ci = this.model.toJSON().conceptId;
-		if (ci == "ppdautre")
-			if (selected == true) 
-				RadioGroupService.showItem("ppdautreprecise", true);
-			else
-				RadioGroupService.showItem("ppdautreprecise", false);
+//		ci = this.model.toJSON().conceptId;
+//		if (ci == "ppdautre")
+//			if (selected == true) 
+//				RadioGroupService.showItem("ppdautreprecise", true);
+//			else
+//				RadioGroupService.showItem("ppdautreprecise", false);
 		
 		return selected;
 	},

@@ -25,6 +25,8 @@ init = function() {
 	PageService.renderPages();
 	
 	PageService.setActivePageIndex(0);
+	
+	FormService.ready();
 };
 
 initialized = false;

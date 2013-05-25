@@ -6,7 +6,7 @@
 
 childPage1Views = [
 	{viewType : "date", conceptId : "datenq", label : "Date du suivi",
-		hideIf : {conceptIds : ["nomenq"], condition : "nomenq == '2'"}}, 
+		hideIf : {conceptIds : ["nomenq"], condition : "nomenq == '4'"}}, 
 	{viewType : "number", conceptId : "nomenq", label : "Num\xE9ro de l'enqu\xEAteur"}, 
 	{viewType : "text", conceptId : "zonenom", label : "Nom de la zone"}, 
 	{viewType : "number", conceptId : "zonenum", label : "Num\xE9ro de la zone"}, 
@@ -37,7 +37,8 @@ childPage1Views = [
    		           {label : "p\xE8re", value : "2"},
    		           {label : "grand m\xE8re", value : "3"},
    		           {label : "autre", value : "4"}]},
-    {viewType : "text", conceptId : "accompprecise", label : "Pr\xE9ciser:"}
+    {viewType : "text", conceptId : "accompprecise", label : "Pr\xE9ciser:",
+	            		showIf : {conceptIds : ["accomp"], condition: "accomp == 4"}}
 ];
 
 childPage2Views = [
@@ -55,7 +56,7 @@ childPage2Views = [
     	            		viewType : "checkboxgroup",
     	            		label : "Quel vaccin a-t-il reçu?",
     	            		conceptId : "vaccinesCheckbox",
-    	            		//showIf : ["vaccinat", [1]],
+    	            		showIf : {conceptIds : ["vaccinat"], condition : "vaccinat == '1'"},
     	            		children : [{label : "vaccination polio", conceptId : "vacpolio"},
     	            		           {label : "vaccination rougeole", conceptId : "vacrouge"},
     	            		           {label : "vaccination pentavalent", conceptId : "vacpenta"},
@@ -63,7 +64,8 @@ childPage2Views = [
             	            },            	            
                	
             	{viewType : "radio", conceptId : "ppdreac", label : "Avez-vous remarqué des réactions particulières après la prise du supplément nutritionnel?",
-            	    options : [{label : "oui", value : "1"},
+            	    showIf : {conceptIds : ["vacautre"], condition : "vacautre == '4'"},
+            	      options : [{label : "oui", value : "1"},
             	            {label : "non", value : "2"},
             	            {label : "ne sait pas ou non spécifié", value : "9"}]},
                	
@@ -72,12 +74,13 @@ childPage2Views = [
 	            		viewType : "checkboxgroup",
 	            		label : "Quel vaccin a-t-il reçu?",
 	            		conceptId : "reactionsCheckbox",
-	            		//showIf : ["ppdreac", [1]],
+	            		showIf : {conceptIds : ["ppdreac"], condition : "ppdreac == 1"},
 	            		children : [{label : "Diarrhée", conceptId : "ppddiarr"},
 	            		           {label : "Vomissement", conceptId : "ppdvomis"},
 	            		           {label : "Rash cutané", conceptId : "ppdrash"},
 	            		           {label : "Autre", conceptId : "ppdautre"}]},            	            
-               	{viewType : "text", conceptId : "ppdautreprecise", label : "Préciser:"}, 
+               	{viewType : "text", conceptId : "ppdautreprecise", label : "Préciser:",
+            		showIf : {conceptIds : ["ppdreac"], condition : "ppdreac == 1"}}, 
                	{viewType : "number", conceptId : "pmmes", label : "Mesure du perimètre brachial (MUAC) (mm)"},
             	{viewType : "radio", conceptId : "oedem", label : "Oedèmes bilateraux",
             	    options : [{label : "oui", value : "1"},
@@ -98,7 +101,7 @@ childPage3Views = [
        	            		viewType : "checkboxgroup",
        	            		label : "Symptômes",
        	            		conceptId : "symptomesCheckbox",
-       	            		//showIf : ["malad"]
+       	            		showIf : {conceptIds : ["malad"], condition : "malad == '1'"},
        	            		children : [{label : "Fièvre", conceptId : "fievre"},
         	            		           {label : "Toux", conceptId : "toux"},
            	            		           {label : "Diarrhée", conceptId : "diarhe"},
@@ -119,19 +122,20 @@ childPage3Views = [
         	            		           {label : "Maux de gorge", conceptId : "gorge"},
         	            		           {label : "Non Specifié", conceptId : "nonspec"},
         	            		           {label : "Autre No1", conceptId : "autre1"},
-        	            		           {label : "Préciser:", conceptId : "autre1precise"},
         	            		           {label : "Autre No2", conceptId : "autre2"},
-           	            		           {label : "Préciser", conceptId : "autre2precise"},
-       	            		           {label : "autre vaccination", conceptId : "vacautre"}
-           	            		           ]    	            		        		   
-               	            },            	            
+           	            		    ]    	            		        		   
+               	            },            	     
+              	{viewType : "text", conceptId : "autre1precise", label : "Autre No 1 Préciser:", showIf : {conceptIds : ["autre1"], condition : "autre1 == 'true'"}},           	  
+              	{viewType : "text", conceptId : "autre2precise", label : "Autre No 2 Préciser:", showIf : {conceptIds : ["autre2"], condition : "autre2 == 'true'"}},
                	            
                	{viewType : "radio", conceptId : "eptemps", label : "Combien de temps a duré l'épisode de maladie",
+	            	showIf : {conceptIds : ["malad"], condition : "malad == '1'"},
                	    options : [{label : "1-2jrs", value : "1"},
                	            {label : "3-5jrs", value : "2"},
                	            {label : "ne sait pas ou non spécifié", value : "3"}]},
                   	
                	{viewType : "radio", conceptId : "epsoin", label : "Quelque chose a-t-il été fait à l'apparition de la maladie par vous ou qu'elqu'un de la famille?",
+           	        showIf : {conceptIds : ["malad"], condition : "malad == '1'"},
                	    options : [{label : "oui", value : "1"},
                   	            {label : "non", value : "2"},
                   	            {label : "ne sait pas ou non spécifié", value : "9"}]},
@@ -140,7 +144,7 @@ childPage3Views = [
    	            		viewType : "checkboxgroup",
    	            		label : "Quelles sont les raisons de n'avoir rien entrepris",
    	            		conceptId : "reasonCheckbox",
-   	            		//showIf : ['epsoin', [1]],
+   	            		showIf : {conceptIds : ["malad", "epsoin"], condition : "malad == '1' && epsoin == '2'"},
    	            		children : [{label : "Raison financière", conceptId : "nofin"},
     	            		           {label : "Manque de transport", conceptId : "notransp"},
     	            		           {label : "Maladie trop grave", conceptId : "notgve"},
@@ -151,13 +155,15 @@ childPage3Views = [
        	            		           {label : "Autre raison", conceptId : "noautre"}
        	            		           ]    	            		        		   
            	            },            	            
-              	{viewType : "text", conceptId : "noautreprecise", label : "Préciser"},
+              	{viewType : "text", conceptId : "noautreprecise", label : "Préciser",
+                  	            	showIf : {conceptIds : ["malad", "epsoin", "noautre"],
+                  	            				condition: "malad == '1' && epsoin == '2' && noautre == 'true'"}},
 
                 whatdoneCheckbox = {
    	            		viewType : "checkboxgroup",
    	            		label : "Si oui, qu'est-ce qui a été fait?",
    	            		conceptId : "whatdoneCheckbox",
-   	            		//showIf : ['epsoin', [2]],
+   	            		showIf : {conceptIds : ["malad", "epsoin"], condition : "malad == '1' && epsoin == '2'"},
    	            		children : [{label : "Consultation au CDS", conceptId : "reccds"},
     	            		           {label : "Est allé à l'hôpital", conceptId : "rechop"},
     	            		           {label : "Consulter un médecin privé", conceptId : "recmed"},
@@ -173,11 +179,14 @@ childPage3Views = [
        	            		           {label : "Autre", conceptId : "recautre"},
        	            		           ]    	            		        		   
            	            },            	            
-              	{viewType : "text", conceptId : "recautreprecise", label : "Préciser"},
+              	{viewType : "text", conceptId : "recautreprecise", label : "Préciser",
+          	            	showIf : {conceptIds : ["malad", "epsoin", "recautre"],
+  	            				condition: "malad == '1' && epsoin == '2' && recautre == 'true'"}},
                ];
 
 childPage4Views = [
                	{viewType : "radio", conceptId : "epevol", label : "Comment a évolué l'enfant après cette demarche?",
+	            	showIf : {conceptIds : ["malad", "epsoin"], condition : "malad == '1'"},
                		options : [{label : "il a guéri", value : "1"},
                		           {label : "traitement en cours", value : "2"},
                		           {label : "il s'est amélioré", value : "3"},
@@ -185,21 +194,25 @@ childPage4Views = [
                		           {label : "aucun changement", value : "5"}]},
 
                	{viewType : "radio", conceptId : "dmiss", label : "L'enfant a-t-il dû être admis à l'hôpital de Massakory?",
+               	    showIf : {conceptIds : ["malad"], condition : "malad == '1'"},
                	    options : [{label : "oui", value : "1"},
                	            {label : "non", value : "2"},
                	            {label : "ne sait pas ou non spécifié", value : "9"}]},
 
                	{viewType : "radio", conceptId : "eprest", label : "L'enfant est-il toujours malade aujourd'hui?",
+               	    showIf : {conceptIds : ["malad"], condition : "malad == '1'"},
                	    options : [{label : "oui", value : "1"},
                	            {label : "non", value : "2"},
                	            {label : "ne sait pas ou non spécifié", value : "9"}]},
 
                	{viewType : "radio", conceptId : "enqrefer", label : "L'enquêteur a-t-il référé l'enfant?",
+               	    showIf : {conceptIds : ["malad"], condition : "malad == '1'"},
                	    options : [{label : "oui", value : "1"},
                	            {label : "non", value : "2"},
                	            {label : "ne sait pas ou non spécifié", value : "9"}]},
 
                	{viewType : "radio", conceptId : "decision", label : "Si oui, à quel centre l'enfant a-t-il été référé?",
+                    showIf : {conceptIds : ["malad", "enqrefer"], condition : "malad == '1' && enqrefer == '1'"},
                	    options : [{label : "Centre de santé", value : "1"},
                	            {label : "Agent communautaire", value : "2"},
                	            {label : "Hôpital", value : "3"}]},
