@@ -7,8 +7,8 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
 <title>MSF Form</title>
-<link href="css/jquery.mobile-1.3.1.min.css" rel="stylesheet"
-	type="text/css" />
+<link href="css/jquery.mobile-1.3.1.min.css" rel="stylesheet" type="text/css" />
+<link href="css/msf_form.css" rel="stylesheet" type="text/css" />
 	
 <link href="css/mobiscroll.jqm.css" rel="stylesheet" type="text/css" />
 <link href="css/mobiscroll.core.css" rel="stylesheet" type="text/css" />
@@ -156,12 +156,15 @@ var inputId = data.view.id + '_input';
 							var itemLabel = viewModel.label;
 							var children = viewModel.children;
 							if (conceptId) {
-							%>
-								<li> <a href="#">
-										<p><strong><%= itemLabel %></strong></p>
-										<h2><%= ObsService.getObs(conceptId) %></h2>
-								</a> </li>
-							<% }
+								var value = ObsService.getObs(conceptId)
+								if (value) {
+								%>
+									<li> <a href="#">
+											<p><strong><%= itemLabel %></strong></p>
+											<h2><%= value %></h2>
+									</a> </li>
+								<% }
+								}
 							if (children) {
 								addFields(children);
 							} %>

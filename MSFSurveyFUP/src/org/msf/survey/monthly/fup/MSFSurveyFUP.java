@@ -30,11 +30,6 @@ public class MSFSurveyFUP extends DroidGap
     {
         super.onCreate(savedInstanceState);
         super.loadUrl("file:///android_asset/www/home.html");
-        //super.loadUrl("file:///android_asset/www/MSFSurveyMonthlyFUP.html");
-//        super.loadUrl("file:///android_asset/www/todo/todo.html");
-//        super.loadUrl("file:///android_asset/www/malnutritiontest.html");
-        //super.loadUrl("file:///android_asset/www/testmobiscroll.html");
-        //super.loadUrl("http://demo.mobiscroll.com/datetime#theme=android-ics&display=bubble&mode=mixed");
     }
 }
 

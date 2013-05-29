@@ -33,7 +33,7 @@ FooterModel = Backbone.Model.extend({
 		
 		footerIconPosition : "top",
 		
-		footerButton1Text : "PrŽcŽdent",
+		footerButton1Text : "Précédent",
 		footerButton1Theme : "a",
 		footerButton1Icon : "arrow-l",
 		footerButton1Action : "prev",

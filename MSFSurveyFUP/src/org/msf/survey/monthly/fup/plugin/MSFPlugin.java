@@ -15,10 +15,13 @@ import org.apache.cordova.api.CordovaPlugin;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.msf.survey.monthly.fup.Constants;
+import org.msf.survey.monthly.fup.FinalActivity;
+import org.msf.survey.monthly.fup.R;
 
-import android.content.Context;
+import android.content.Intent;
 import android.os.Environment;
 import android.util.Log;
+import android.widget.EditText;
 import android.widget.Toast;
 
 /**
@@ -76,7 +79,9 @@ public class MSFPlugin extends CordovaPlugin {
 		}
 		
 		callbackContext.success();
-		Toast.makeText(cordova.getActivity(), "Done!", Toast.LENGTH_LONG).show();
+	    Intent intent = new Intent(cordova.getActivity(), FinalActivity.class);
+	    intent.putExtra("ABCD", "TETA");
+	    cordova.getActivity().startActivity(intent);		
 		cordova.getActivity().finish();
 	}
 }
