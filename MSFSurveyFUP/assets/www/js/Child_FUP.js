@@ -1,6 +1,6 @@
 ﻿childPage1Views = [
 			{viewType : "date", conceptId : "datenq", label : "Date du suivi"},
-			{viewType : "text", conceptId : "nomenq", label : "Numéro de l'enquêteur"},
+			{viewType : "number", conceptId : "nomenq", label : "Numéro de l'enquêteur"},
 			{viewType : "text", conceptId : "zonenom", label : "Nom de la zone"},
 			{viewType : "number", conceptId : "zonenum", label : "Numéro de la zone"},
 			{viewType : "number", conceptId : "nummen", label : "Numéro du ménage"},
