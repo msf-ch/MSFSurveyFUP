@@ -238,12 +238,12 @@ childPage7 = {
 };
 SubmitPage = {
 		header : {
-		title : "Submit form data",
+		title : "Sauvegarder les données du formulaire",
 		theme : "b"
 	},
 	footer : {
 		theme : "c",
-		footerButton3Text : "Submit",
+		footerButton3Text : "Sauvegarder",
 		footerButton3Theme : "e",
 		footerButton3Icon : "plus",
 		footerButton3Action : "submit",
