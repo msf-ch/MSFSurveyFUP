@@ -31,7 +31,8 @@ FormService = {
 		view.on('viewValueChange', FormService.viewValueChange);
 
 		var hideIf = view.model.get('hideIf');
-		if (hideIf.condition) {
+		if (hideIf && hideIf.condition) {
+			view.hideIfFunction = 
 			view.listenTo(obsList, "initialize changeObsValue:" + hideIf.conceptIds.join(" changeObsValue:"), function(model, value, options) {
 				if(ObsService.evaluateConditionSting(hideIf.conceptIds, hideIf.condition)) {
 					view.hide();
@@ -42,7 +43,7 @@ FormService = {
 		}
 		
 		var showIf = view.model.get('showIf');
-		if (showIf.condition) {
+		if (showIf && showIf.condition) {
 			view.listenTo(obsList, "initialize changeObsValue:" + showIf.conceptIds.join(" changeObsValue:"), function(model, value, options) {
 				if(ObsService.evaluateConditionSting(showIf.conceptIds, showIf.condition)) {
 					view.show();
@@ -83,13 +84,21 @@ ObsService = {
 	},
 	
 	evaluateConditionSting : function(conceptIds, string) {
-		var script = "";
+//		var script = "";
+//		for (var i = 0; i < conceptIds.length; i++) {
+//			script += "var " + conceptIds[i] + "=\"" + this.getObs(conceptIds[i]) + "\";";
+//		}
+//		script += "(" + string + ");";
+//		
+//		return eval(script);
+
+		var args = [];
 		for (var i = 0; i < conceptIds.length; i++) {
-			script += "var " + conceptIds[i] + "=\"" + this.getObs(conceptIds[i]) + "\";";
+			args[i] = ObsService.getObs(conceptIds[i]);
 		}
-		script += "(" + string + ");";
+		var func = new Function(conceptIds, 'return ' + string + ';');
 		
-		return eval(script);
+		return func.apply(func, args);
 	}
 };
 
@@ -293,4 +302,21 @@ var PageService = {
 			}
 		}
 	}
+};
+
+EvaluationService = {
+		compileObsEvalFunction : function(obsEvalSerialized) {
+			var func = new Function(conceptIds, 'return ' + string + ';');
+			func.serialized = obsEvalSerialized;
+			
+			return func;
+		},
+		
+		executeObsEvalFunction : function(obsEvalFunction) {
+			var args = [];
+			for (var i = 0; i < conceptIds.length; i++) {
+				args[i] = ObsService.getObs(conceptIds[i]);
+			}
+			return obsEvalFunction.apply(obsEvalFunction.serialized, args);
+		}
 };

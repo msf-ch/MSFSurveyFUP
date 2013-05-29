@@ -8,10 +8,11 @@ var FormItemViewModel = Backbone.Model.extend({
 		defaultValue : "",
 		options : [],
 		children : undefined,
-		showIf : [], // [conceptId, [values]]
-		hideIf : [], // [conceptId, [values]]
-		events : [], // [eventName, action]
-		obsListeners : [] // [conceptId, eventName, action]
+		showIf : undefined, // [conceptId, [values]]
+		hideIf : undefined, // [conceptId, [values]]
+		obsListeners : undefined, // [conceptId, eventName, action]
+		
+		validate : undefined, // {condition : "", conceptIds : []}
 	},
 	
 	propertyDescriptors : {
@@ -26,8 +27,6 @@ var FormItemViewModel = Backbone.Model.extend({
 		if(children) {
 			this.childrenModels = new FormItemViewModelList;
 			this.childrenModels.add(children);
-			
-			this.listenTo(this.childrenModels, 'change', this.rebuildChildren);
 		}
 	},
 	
@@ -126,6 +125,14 @@ var FormItemView = Backbone.View.extend({
 	hide : function() {
 		this.setValue(undefined);
 		this.$el.hide();
+	},
+	
+	error : function(showError, messages) {
+		
+	},
+	
+	validate : function() {
+		
 	}
 });
 
