@@ -3,7 +3,8 @@ window.positionFooter = function(event) {
 	var content = $.mobile.activePage.children(":jqmData(role='content')");
 	content.css("min-height", "0px");
 	
-	var headerHeight = $.mobile.activePage.children(":jqmData(role='header')").outerHeight();
+//	var headerHeight = $.mobile.activePage.children(":jqmData(role='header')").outerHeight();
+	var headerHeight = $.mobile.activePage.children("[pageheader]").outerHeight();
 	var contentHeight = content.outerHeight();
 	var footerHeight = $.mobile.activePage.children(":jqmData(role='footer')").outerHeight();
 	
