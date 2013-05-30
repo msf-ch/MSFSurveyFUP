@@ -102,7 +102,8 @@ PageView = Backbone.View.extend({
 		this.$el.html(_.template(this.template, {}, {variable : "data"}));
 		this.$el.attr('data-role', 'page').attr('data-theme', this.model.get('theme'));
 		
-		this.header = new Header({el : this.$el.children(":jqmData(role='header')"), page : this, model : this.model.get('header')});
+		//this.header = new Header({el : this.$el.children(":jqmData(role='header')"), page : this, model : this.model.get('header')});
+		this.header = new Header({el : this.$el.children("[pageheader]"), page : this, model : this.model.get('header')});
 		this.content = new Content({el : this.$el.children(":jqmData(role='content')"), page : this, model : this.model.get('content')});
 		this.footer = new Footer({el : this.$el.children(":jqmData(role='footer')"), page : this, model : this.model.get('footer')});
 		
@@ -159,7 +160,8 @@ var Header = Backbone.View.extend({
 	},
 	
 	render : function() {
-		this.$el.attr('data-theme', this.model.get('theme'));
+//		this.$el.attr('data-theme', this.model.get('theme'));
+		this.$el.addClass('ui-bar ui-bar-' + this.model.get('theme'));
 		this.$el.html(_.template($("#tmpl-header").html(), this.model.toJSON(), {variable : "data"}));
 	}
 });

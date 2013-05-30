@@ -1,4 +1,18 @@
 @CHARSET "UTF-8";
+
+[pageheader] {
+	text-align: center;
+	font-size: 16px;
+	font-weight: bold;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 0.6em;
+	padding-bottom: 0.8em;
+	
+	border-left-width: 0;
+	border-right-width: 0;
+}
+
 .formview {
 	
 }
