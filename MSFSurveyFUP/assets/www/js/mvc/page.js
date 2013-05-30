@@ -1,12 +1,20 @@
 BodyView = Backbone.View.extend({
 	events : {
-		'pagebeforeshow' : 'pagebeforeshow'
+		'pagebeforeshow' : 'pagebeforeshow',
+		'pageshow' : 'pageshow'
 	},
 	
 	pagebeforeshow : function(event) {
 		var page = PageService.getPageFromElement(event.target);
 		if (page) {
 			page.beforeShow();
+		}
+	},
+	
+	pageshow : function(event) {
+		var page = PageService.getPageFromElement(event.target);
+		if (page) {
+			page.onShow();
 		}
 	}
 });
@@ -33,7 +41,7 @@ FooterModel = Backbone.Model.extend({
 		
 		footerIconPosition : "top",
 		
-		footerButton1Text : "PrŽcŽdent",
+		footerButton1Text : "Précédent",
 		footerButton1Theme : "a",
 		footerButton1Icon : "arrow-l",
 		footerButton1Action : "prev",
@@ -86,11 +94,8 @@ PageView = Backbone.View.extend({
 		this.model = this.options.model;
 		
 		this.template = $("#tmpl-page").html();
-		this.duyhide = this.$el.find("duyhide");
 
 		this.render();
-		
-		var i = 1;
 	},
 	
 	render : function() {
@@ -104,8 +109,6 @@ PageView = Backbone.View.extend({
 		this.header.render();
 		this.content.render();
 		this.footer.render();
-
-		this.duyhide.hide();
 		
 		this.$el.page();
 	},
@@ -115,6 +118,37 @@ PageView = Backbone.View.extend({
 		this.footer.$el.trigger('create');
 		
 		this.trigger('pagebeforeshow');
+	},
+	
+	onShow : function() {
+		$.mobile.silentScroll(0);
+		
+		this.trigger('pageshow');
+	},
+	
+	validate : function() {
+		var viewsWithErrors =[];
+		var formViews = this.$el.find(".formview");
+		
+		var view;
+		var viewErrors;
+		for (var i = 0; i < formViews.length; i++) {
+			view = $(formViews[i]).data('view');
+			viewErrors = view.validate();
+			if (viewErrors && viewErrors.length > 0) {
+				viewsWithErrors.push({'view' : view, errors : viewErrors});
+			}
+		}
+		
+		if (viewsWithErrors.length > 0) {
+			this.content.$el.find('.errorheader').remove();
+			this.content.$el.prepend(_.template($("#tmpl-errorheader").html(), {'errors' : viewsWithErrors}, {variable : "data"}));
+			$.mobile.silentScroll(0);
+		} else {
+			this.content.$el.find('.errorheader').remove();
+		}
+		
+		return viewsWithErrors;
 	}
 });
 

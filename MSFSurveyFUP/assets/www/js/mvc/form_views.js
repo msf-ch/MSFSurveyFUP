@@ -11,8 +11,9 @@ var FormItemViewModel = Backbone.Model.extend({
 		showIf : undefined, // [conceptId, [values]]
 		hideIf : undefined, // [conceptId, [values]]
 		obsListeners : undefined, // [conceptId, eventName, action]
-		
-		validate : undefined, // {condition : "", conceptIds : []}
+		validators : undefined, // [{conceptIds : [], condition : "", errorMessage : ""}]
+		bounds : undefined, // {minValue : 0, maxValue : 1, minLength : 0, maxLength : 1, exactLength : 1}
+		required : false,
 	},
 	
 	propertyDescriptors : {
@@ -27,6 +28,14 @@ var FormItemViewModel = Backbone.Model.extend({
 		if(children) {
 			this.childrenModels = new FormItemViewModelList;
 			this.childrenModels.add(children);
+		}
+		
+		//precompile validators
+		var validators = this.get('validators');
+		if (validators) {
+			for (var i = 0; i < validators.length; i++) {
+				validators[i].compiledFunction = EvaluationService.compileObsEvalFunction(validators[i]);
+			}
 		}
 	},
 	
@@ -59,6 +68,38 @@ var FormItemViewModel = Backbone.Model.extend({
 	
 	rebuildChildren : function() {
 		this.set('children', childrenModels.toJSON());
+	},
+	
+	getValidationErrors : function() {
+		var errors = [];
+		if (this.get('validators')) {
+			//check against validators
+		}
+		var bounds = this.get('bounds');
+		var value = this.view.getValue();
+		if (bounds && value) { //TRANSLATETHIS
+			var stringValue = value.toString();
+			 if (bounds.maxValue && value > bounds.maxValue) {
+				 errors.push("Answer VALUE must be less than or equal to " + bounds.maxValue);
+			 }
+			 if (bounds.minValue && value < bounds.minValue) {
+				 errors.push("Answer VALUE must be more than or equal to " + bounds.minValue);
+			 }
+
+			var stringValue = value.toString();
+			 if (bounds.maxLength && stringValue.length > bounds.maxLength) {
+				 errors.push("Answer LENGTH must be less than or equal to " + bounds.maxLength + " characters.");
+			 }
+			 if (bounds.minLength && stringValue.length > bounds.minLength) {
+				 errors.push("Answer LENGTH must be more than or equal to " + bounds.minLength + " characters.");
+			 }
+
+			 if (bounds.exactLength && stringValue.length > bounds.exactLength) {
+				 errors.push("Answer LENGTH must be exactly " + bounds.exactLength + " characters.");
+			 }
+		}
+		
+		return errors;
 	}
 });
 
@@ -91,8 +132,10 @@ var FormItemView = Backbone.View.extend({
 	},
 	
 	renderDefault : function(templateId, processBeforeCreateFunction) {
-		this.$el.attr('id', this.id).attr('formview', this.model.get('viewType'));
+		this.$el.attr('id', this.id).attr('formview', this.model.get('viewType')).data('view', this).addClass('formview');
+		
 		this.$el.html(_.template($("#" + templateId).html(), {model : this.model, view : this}, {variable : "data"}));
+		
 		if (processBeforeCreateFunction) {
 			processBeforeCreateFunction.apply(this, this.$el);
 		}
@@ -119,20 +162,35 @@ var FormItemView = Backbone.View.extend({
 	},
 	
 	show : function() {
-		this.$el.show();
+		this.$el.removeClass('viewhidden');
+//		this.$el.show();
 	},
 	
 	hide : function() {
 		this.setValue(undefined);
-		this.$el.hide();
+		this.$el.addClass('viewhidden');
+//		this.$el.hide();
 	},
 	
 	error : function(showError, messages) {
+		this.$el.children(".errorfield").remove();
 		
+		if (!showError) {
+			this.$el.removeClass('viewwitherror');
+		} else {
+			this.$el.addClass('viewwitherror');
+			var errorHtml = _.template($("#tmpl-errormsg").html(),
+					{model : this.model, view : this, errors : messages},
+					{variable : "data"});
+			this.$el.prepend(errorHtml);
+		}
 	},
 	
 	validate : function() {
+		var validationErrors = this.model.getValidationErrors();
+		this.error(validationErrors.length > 0, validationErrors);
 		
+		return validationErrors;
 	}
 });
 

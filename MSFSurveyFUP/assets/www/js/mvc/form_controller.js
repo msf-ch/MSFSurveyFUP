@@ -32,7 +32,6 @@ FormService = {
 
 		var hideIf = view.model.get('hideIf');
 		if (hideIf && hideIf.condition) {
-			view.hideIfFunction = 
 			view.listenTo(obsList, "initialize changeObsValue:" + hideIf.conceptIds.join(" changeObsValue:"), function(model, value, options) {
 				if(ObsService.evaluateConditionSting(hideIf.conceptIds, hideIf.condition)) {
 					view.hide();
@@ -84,14 +83,6 @@ ObsService = {
 	},
 	
 	evaluateConditionSting : function(conceptIds, string) {
-//		var script = "";
-//		for (var i = 0; i < conceptIds.length; i++) {
-//			script += "var " + conceptIds[i] + "=\"" + this.getObs(conceptIds[i]) + "\";";
-//		}
-//		script += "(" + string + ");";
-//		
-//		return eval(script);
-
 		var args = [];
 		for (var i = 0; i < conceptIds.length; i++) {
 			args[i] = ObsService.getObs(conceptIds[i]);
@@ -163,8 +154,6 @@ var PageService = {
 			//check that all requirements are met
 		}
 		var pageModel = this.pageModels.at(this.activeIndex);
-		
-		var ttt = pageModel.attributes.content.toJSON()
 				
 		if (this.activeIndex == 0) {
 			for(var i = 0; i < obsList.length; i++) {
@@ -172,7 +161,11 @@ var PageService = {
 				console.log('KEY = ' + model.conceptId + ' VALUE = ' + model.value);
 			}
 		}
-		this.setActivePageIndex(this.activeIndex + 1);
+		
+		var errors = pageModel.pageView.validate();
+		if (!errors || errors.length == 0) {
+			this.setActivePageIndex(this.activeIndex + 1);
+		}
 	},
 	
 	getActivePageIndex : function() {
