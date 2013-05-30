@@ -77,7 +77,7 @@
 <%
 var inputId = data.view.id + '_input';
 %>
-<div class="formview textview" data-role="fieldcontain">
+<div class="textview" data-role="fieldcontain">
 	<label for="<%= inputId %>"><%= data.model.get('label') %></label>
 	<input type="text" id="<%= inputId %>" value="" />
 </div>
@@ -87,7 +87,7 @@ var inputId = data.view.id + '_input';
 <%
 var inputId = data.view.id + '_input';
 %>
-<div class="formview numberview" data-role="fieldcontain">
+<div class="numberview" data-role="fieldcontain">
 	<label for="<%= inputId %>"><%= data.model.get('label') %></label>
 	<input type="number" id="<%= inputId %>" value="" />
 </div>
@@ -97,7 +97,7 @@ var inputId = data.view.id + '_input';
 <%
 var inputId = data.view.id + '-input';
 %>
-<div class="formview radioview" data-role="fieldcontain">
+<div class="radioview" data-role="fieldcontain">
 	<fieldset data-role="controlgroup">
 		<legend><%= data.model.get('label') %></legend>
 		<div>
@@ -116,7 +116,7 @@ var inputId = data.view.id + '-input';
 <%
 var inputId = data.view.id + '-input';
 %>
-<div class="formview checkgroupview" data-role="fieldcontain">
+<div class="checkgroupview" data-role="fieldcontain">
 	<fieldset data-role="controlgroup">
 		<legend><%= data.model.get('label') %></legend>
 	</fieldset>
@@ -132,7 +132,7 @@ var inputId = data.view.id + '-input';
 <%
 var inputId = data.view.id + '_input';
 %>
-<div class="formview dateview" data-role="fieldcontain">
+<div class="dateview" data-role="fieldcontain">
 	<label for="<%= inputId %>"><%= data.model.get('label') %></label>
 	<input type="text" id="<%= inputId %>" value=""/>
 </div>
@@ -140,7 +140,7 @@ var inputId = data.view.id + '_input';
 
 <script id='tmpl-submitpage' type='text/template'>
 	<div class="ui-body ui-body-e" style="text-align:center;">
-		<h2>Please review your entries</h2>
+		<h2>Veuillez vérifier votre saisie</h2>
 	</div>
 	<ul data-role="listview" data-inset="true" data-divider-theme="d">
 		<%
@@ -155,13 +155,16 @@ var inputId = data.view.id + '_input';
 							var conceptId = viewModel.conceptId;
 							var itemLabel = viewModel.label;
 							var children = viewModel.children;
-							if (conceptId) {
+							var value = ObsService.getObs(conceptId)
+							if (value) {
 							%>
 								<li> <a href="#">
 										<p><strong><%= itemLabel %></strong></p>
-										<h2><%= ObsService.getObs(conceptId) %></h2>
-								</a> </li>
+										<h2><%= value %></h2>
+									</a> </li>
 							<% }
+							}
+
 							if (children) {
 								addFields(children);
 							} %>
@@ -171,6 +174,23 @@ var inputId = data.view.id + '_input';
 			<% } %>
 
 	</ul>
+</script>
+
+<script id='tmpl-errormsg' type='text/template'>
+	<div class="errorfield ui-body ui-body-e">
+		<ul>
+			<% for (var i = 0; i < data.errors.length; i++) { %>
+				<li><%= data.errors[i] %></li>
+			<% } %>
+		</ul>
+	</div>
+</script>
+
+<script id='tmpl-errorheader' type='text/template'>
+	<div class="errorheader ui-body ui-body-e">
+		<h2>Please fix errors before continuing</h2>
+		<h3>There are <strong style="color : red"><%= data.errors.length %></strong> questions to fix.</h3>
+	</div>
 </script>
 
 <div data-role="page" data-theme="c">
