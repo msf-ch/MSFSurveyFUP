@@ -94,10 +94,10 @@ childPage3Views = [
 				{ label : "Saignement", conceptId : "sang"},
 				{ label : "Traumatisme", conceptId : "trauma"},
 				{ label : "Maux de gorge", conceptId : "gorge"},
-				{ label : "Non Specifié", conceptId : "nonspec"},
-				{ label : "Autre No1", conceptId : "autre1"},
-				{ label : "Autre No2", conceptId : "autre2"}],
+				{ label : "Non Specifié", conceptId : "nonspec"}],
 				showIf : {conceptIds : ["malad"], condition: "malad == '1'"}},
+			{ viewType : "text", conceptId : "autre1", label : "Autre symptôme 1", showIf : {conceptIds : ["malad"], condition: "malad == '1'"}},
+			{ viewType : "text", conceptId : "autre2", label : "Autre symptôme 2", showIf : {conceptIds : ["malad"], condition: "malad == '1'"}},
 			{viewType : "radio", conceptId : "eptemps", label : "Combien de temps a duré l'épisode de maladie", options : [
 				{ value : "1", label : "1-2jrs"},
 				{ value : "2", label : "3-5 jrs"},
