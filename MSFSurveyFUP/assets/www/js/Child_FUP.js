@@ -61,14 +61,18 @@ childPage2Views = [
 				{ label : "Autre", conceptId : "ppdautre"}],
 				showIf : {conceptIds : ["ppdreac"], condition: "ppdreac == '1'"}},
 			{viewType : "text", conceptId : "ppdautreprecise", label : "Préciser:",
-				showIf : {conceptIds : ["ppdautre"], condition: "ppdautre == 'true'"}},
-			{viewType : "number", conceptId : "pmmes", label : "Mesure du perimètre brachial (MUAC) (mm)"},
+				showIf : {conceptIds : ["ppdautre"], condition: "ppdautre == 'true'"},
+				bounds : {maxLength : 25}},
+			{viewType : "number", conceptId : "pmmes", label : "Mesure du perimètre brachial (MUAC) (mm)",
+					bounds : {minValue : 65, maxValue : 180}},
 			{viewType : "radio", conceptId : "oedem", label : "Oedèmes bilateraux", options : [
 				{ value : "1", label : "oui"},
 				{ value : "2", label : "non"},
 				{ value : "9", label : "ne sait pas ou non spécifié"}]},
-			{viewType : "number", conceptId : "poids", label : "Poids de l'enfant (kg)"},
-			{viewType : "number", conceptId : "taille", label : "Taille de l'enfant (cm)"},
+			{viewType : "number", conceptId : "poids", label : "Poids de l'enfant (kg)",
+				bounds : {minValue : 2.5, maxValue : 25.0}},
+			{viewType : "number", conceptId : "taille", label : "Taille de l'enfant (cm)",
+				bounds : {minValue : 60.0, maxValue : 90.0}},
 ];
 childPage3Views = [
 			{viewType : "radio", conceptId : "malad", label : "L'enfant a-t-il été malade depuis la dernière visite?", options : [
@@ -96,8 +100,8 @@ childPage3Views = [
 				{ label : "Maux de gorge", conceptId : "gorge"},
 				{ label : "Non Specifié", conceptId : "nonspec"}],
 				showIf : {conceptIds : ["malad"], condition: "malad == '1'"}},
-			{ viewType : "text", conceptId : "autre1", label : "Autre symptôme 1", showIf : {conceptIds : ["malad"], condition: "malad == '1'"}},
-			{ viewType : "text", conceptId : "autre2", label : "Autre symptôme 2", showIf : {conceptIds : ["malad"], condition: "malad == '1'"}},
+			{ viewType : "text", conceptId : "autre1precise", label : "Autre symptôme 1", showIf : {conceptIds : ["malad"], condition: "malad == '1'"}, bounds : {maxLength : 25}},
+			{ viewType : "text", conceptId : "autre2precise", label : "Autre symptôme 2", showIf : {conceptIds : ["malad"], condition: "malad == '1'"}, bounds : {maxLength : 25}},
 			{viewType : "radio", conceptId : "eptemps", label : "Combien de temps a duré l'épisode de maladie", options : [
 				{ value : "1", label : "1-2jrs"},
 				{ value : "2", label : "3-5 jrs"},
@@ -119,7 +123,8 @@ childPage3Views = [
 				{ label : "Autre raison", conceptId : "noautre"}],
 				showIf : {conceptIds : ["malad", "epsoin"], condition: "malad == '1' && epsoin == '2'"}},
 			{viewType : "text", conceptId : "noautreprecise", label : "Préciser:",
-				showIf : {conceptIds : ["noautre"], condition: "noautre == 'true'"}},
+				showIf : {conceptIds : ["noautre"], condition: "noautre == 'true'"},
+				bounds : {maxLength : 25}},
 			whatdoneCheckbox = { viewType : "checkboxgroup", label : "Si oui, qu'est-ce qui a été fait?", conceptId : "whatdoneCheckbox", children : [
 				{ label : "Consultation au CDS", conceptId : "reccds"},
 				{ label : "Est allé à l'hôpital", conceptId : "rechop"},
@@ -135,7 +140,8 @@ childPage3Views = [
 				{ label : "Autre", conceptId : "recautre"}],
 				showIf : {conceptIds : ["malad", "epsoin"], condition: "malad == '1' && epsoin == '1'"}},
 			{viewType : "text", conceptId : "recautreprecise", label : "Préciser:",
-				showIf : {conceptIds : ["recautre"], condition: "recautre == 'true'"}},
+				showIf : {conceptIds : ["recautre"], condition: "recautre == 'true'"},
+				bounds : {maxLength : 25}},
 ];
 childPage4Views = [
 			{viewType : "radio", conceptId : "epevol", label : "Comment a évolué l'enfant après cette demarche?", options : [
@@ -165,7 +171,8 @@ childPage4Views = [
 				{ value : "2", label : "Agent communautaire"},
 				{ value : "3", label : "Hôpital"}],
 				showIf : {conceptIds : ["malad", "enqrefer"], condition: "malad == '1' && enqrefer == '1'"}},
-			{viewType : "number", conceptId : "enfidrep", label : "Numero d'identification de l'enfant, répétition"},
+			{viewType : "number", conceptId : "enfidrep", label : "Numero d'identification de l'enfant, répétition",
+					bounds : {minValue : 0, maxValue : 99999}},
 ];
 introPage = {
 	header : {
