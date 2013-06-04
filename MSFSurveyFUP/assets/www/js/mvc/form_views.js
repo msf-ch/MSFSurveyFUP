@@ -109,6 +109,8 @@ var FormItemViewModelList = Backbone.Collection.extend({
 });
 
 var FormItemView = Backbone.View.extend({
+	decorated : false,
+	
 	customPropertyDescriptors : {
 	},
 	
@@ -139,7 +141,12 @@ var FormItemView = Backbone.View.extend({
 		if (processBeforeCreateFunction) {
 			processBeforeCreateFunction.apply(this, this.$el);
 		}
+		this.decorate();
+	},
+	
+	decorate : function() {
 		this.$el.trigger('create');
+		this.decorated = true;
 	},
 	
 	valueChanged : function(view) {

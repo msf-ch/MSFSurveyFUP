@@ -251,6 +251,7 @@ SubmitPage = {
 	}
 };
 formData = {
+	name : "household_fup",
 	global : {},
 	pages : [
 		childPage8,
@@ -259,3 +260,4 @@ formData = {
 		childPage11,
 		SubmitPage]
 };
+return formData;

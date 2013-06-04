@@ -3,9 +3,12 @@
  */
 package org.msf.survey.monthly.fup.plugin;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.Date;
@@ -16,13 +19,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.msf.survey.monthly.fup.Constants;
 import org.msf.survey.monthly.fup.FinalActivity;
-import org.msf.survey.monthly.fup.R;
 
 import android.content.Intent;
 import android.os.Environment;
 import android.util.Log;
-import android.widget.EditText;
-import android.widget.Toast;
 
 /**
  * @author Nicholas Wilkie
@@ -30,6 +30,7 @@ import android.widget.Toast;
  */
 public class MSFPlugin extends CordovaPlugin {
 	public static final String SUBMIT_ACTION = "submit";
+	public static final String GET_OBS_ACTION = "getobs";
 	public static final String PAGE_FORWARD_ACTION = "forward";
 	public static final String PAGE_BACKWARD_ACTION = "backward";
 	
@@ -41,6 +42,8 @@ public class MSFPlugin extends CordovaPlugin {
 			CallbackContext callbackContext) throws JSONException {
 		if (action.equalsIgnoreCase(SUBMIT_ACTION)) {
 			submit(args, callbackContext);
+		} else if (action.equalsIgnoreCase(GET_OBS_ACTION)) {
+			getObs(args, callbackContext);
 		} else if (action.equalsIgnoreCase(PAGE_FORWARD_ACTION)) {
 			
 		} else if (action.equalsIgnoreCase(PAGE_BACKWARD_ACTION)) {
@@ -59,14 +62,14 @@ public class MSFPlugin extends CordovaPlugin {
 	 */
 	public void submit(JSONArray args, CallbackContext callbackContext) throws JSONException {
 		JSONArray obs = args.getJSONArray(0);
-		for (int i = 0; i < obs.length(); i++) {
-			
-		}
+//		for (int i = 0; i < obs.length(); i++) {
+//			
+//		}
 		
 		try {
-			File outputDirectory = new File(Environment.getExternalStorageDirectory(), Constants.SAVE_DIR_NAME);
-			outputDirectory.mkdirs();
-			File outputFile = new File(outputDirectory, "file-" + new Date().getTime());
+			File saveDirectory = new File(Environment.getExternalStorageDirectory(), Constants.SAVE_DIR_NAME);
+			saveDirectory.mkdirs();
+			File outputFile = new File(saveDirectory, "file-" + new Date().getTime());
 			Log.d("MSFPlugin", outputFile.toString());
 			outputFile.createNewFile();
 			FileOutputStream os = new FileOutputStream(outputFile);
@@ -83,5 +86,40 @@ public class MSFPlugin extends CordovaPlugin {
 	    intent.putExtra("ABCD", "TETA");
 	    cordova.getActivity().startActivity(intent);		
 		cordova.getActivity().finish();
+	}
+	
+	public void getObs(JSONArray args, CallbackContext callbackContext) throws JSONException {
+		final String fileName = args.getString(0);
+		File saveDirectory = new File(Environment.getExternalStorageDirectory(), Constants.SAVE_DIR_NAME);
+		
+		File[] files = saveDirectory.listFiles(new FileFilter() {
+			@Override
+			public boolean accept(File pathname) {
+				return pathname.getName().equals(fileName);
+			}
+		});
+		
+		if (files.length == 0){
+			
+		}
+		
+	    try {
+			BufferedReader reader = new BufferedReader( new FileReader (files[0]));
+			String         line = null;
+			StringBuilder  stringBuilder = new StringBuilder();
+			String         ls = System.getProperty("line.separator");
+
+			while( ( line = reader.readLine() ) != null ) {
+			    stringBuilder.append( line );
+			    stringBuilder.append( ls );
+			}
+			reader.close();
+
+			String json = stringBuilder.toString();
+			callbackContext.success(json);
+		} catch (Exception e) {
+			e.printStackTrace();
+			callbackContext.error("Error loading file");
+		}
 	}
 }

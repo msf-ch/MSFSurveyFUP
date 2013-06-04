@@ -255,6 +255,7 @@ SubmitPage = {
 	}
 };
 formData = {
+	name : "child_inclusion",
 	global : {},
 	pages : [
 		childPage5,
@@ -262,3 +263,4 @@ formData = {
 		childPage7,
 		SubmitPage]
 };
+return formData;

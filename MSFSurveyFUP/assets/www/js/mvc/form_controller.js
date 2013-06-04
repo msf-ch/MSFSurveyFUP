@@ -17,7 +17,12 @@ FormService = {
 		this.addListeners(view);
 		
 		var conceptId = view.model.get('conceptId');
+		var value = ObsService.getObs(conceptId);
 		ViewIdService.setViewId(conceptId, view.$el);
+		
+		if (value) {
+			view.setValue(value);
+		}
 	},
 	
 	unregisterView : function(view) {
@@ -56,7 +61,7 @@ FormService = {
 	submit : function() {
 		var obs = obsList.toJSON();
 		
-		cordova.exec(this.submitSuccessCallback, this.submitFailCallback, "MSF", "submit", [obs]);
+		cordova.exec(this.submitSuccessCallback, this.submitFailCallback, "MSF", "submit", [obs, formData]);
 	},
 	
 	submitSuccessCallback : function(args) {
@@ -103,7 +108,7 @@ ViewIdService = {
 		}
 	};
 
-var PageService = {
+PageService = {
 	pageModels : undefined,
 	activeIndex : -1,
 	
