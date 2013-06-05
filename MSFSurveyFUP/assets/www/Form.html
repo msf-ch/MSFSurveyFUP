@@ -162,13 +162,12 @@ var inputId = data.view.id + '_input';
 							<% }
 							}
 
-							if (children) {
-								addFields(children);
-							} %>
-						<% } %>
-					<% } %>
-				<% addFields(pageModel.content.toJSON().views.toJSON()); %>
+					if (children) {
+						addFields(children);
+					} %>
 			<% } %>
+			<% addFields(pageModel.content.toJSON().views.toJSON()); %>
+	<% } %>
 
 	</ul>
 </script>

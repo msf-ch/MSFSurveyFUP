@@ -43,11 +43,7 @@ function getParameterByName(name) {
 			" "));
 }
 
-init = function() {
-	$(document).on('pageshow', positionFooter);
-	$(window).on('resize', positionFooter);
-
-	var formFilePath = getParameterByName('formFilePath');
+loadFromJSONForm = function(formFilePath) {
 	$.get(formFilePath, undefined, undefined, "text").
 	success(function(data, textStatus, jqXHR) {
 		var formData = new Function(data).apply(this);
@@ -63,6 +59,26 @@ init = function() {
 	}).fail(function(jqXHR, textStatus, errorThrown) {
 		console.error(textStatus + ":\n" + jqXHR.responseText)
 	});
+}
+
+init = function() {
+	$(document).on('pageshow', positionFooter);
+	$(window).on('resize', positionFooter);
+
+	var encounter = getParameterByName('encounter');
+	var formFilePath = getParameterByName('formFilePath');
+	
+	if (encounter) {
+		cordova.exec(function(data) {
+			obsList.set(data.obs);
+			loadFromJSONForm(formFilePath);
+		}, undefined, "MSF", "getEncounter", [encounter]);
+	} else {
+		loadFromJSONForm(formFilePath);
+	}
+	
+	
+
 	
 //	var savedDataFile = getParameterByName('savedDataFile');
 //	var savedObs = cordova.exec(this.submitSuccessCallback,
@@ -73,7 +89,7 @@ init = function() {
 };
 
 initialized = false;
-$(document).on('pageinit', function() {
+$(document).on('deviceready', function() {
 	if (!initialized) {
 		initialized = true;
 		init();

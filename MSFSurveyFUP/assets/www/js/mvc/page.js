@@ -1,11 +1,18 @@
 FormModel = Backbone.Model.extend({
 	defaults : {
-		name : undefined,
+		name : "",
+		nameReadable : "",
+		description : "",
+		path : "",
 		global : {},
 		pages : []
 	},
 	
 	initialize : function() {
+		if (!this.get('path')) {
+			this.set('path', getParameterByName('formFilePath'));
+		}
+		
 		PageService.setPageModels(this.get('pages'));
 	}
 });
@@ -53,7 +60,7 @@ FooterModel = Backbone.Model.extend({
 		
 		footerIconPosition : "top",
 		
-		footerButton1Text : "Précédent",
+		footerButton1Text : "Prï¿½cï¿½dent",
 		footerButton1Theme : "a",
 		footerButton1Icon : "arrow-l",
 		footerButton1Action : "prev",

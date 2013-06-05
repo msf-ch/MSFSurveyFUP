@@ -252,6 +252,8 @@ SubmitPage = {
 };
 formData = {
 	name : "household_fup",
+	nameReadable : "Household FUP",
+	description: "",
 	global : {},
 	pages : [
 		childPage8,

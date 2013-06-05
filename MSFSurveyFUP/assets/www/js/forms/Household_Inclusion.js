@@ -450,6 +450,8 @@ SubmitPage = {
 };
 formData = {
 	name : "household_inclusion",
+	nameReadable : "Household Inclusion",
+	description: "",
 	global : {},
 	pages : [
 		childPage12,

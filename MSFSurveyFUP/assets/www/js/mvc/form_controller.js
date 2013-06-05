@@ -59,9 +59,10 @@ FormService = {
 	},
 	
 	submit : function() {
-		var obs = obsList.toJSON();
+		var encounter = {obs : obsList.toJSON(), lastSaved : new Date().getTime(), formPath : Form.get('path')};
 		
-		cordova.exec(this.submitSuccessCallback, this.submitFailCallback, "MSF", "submit", [obs, formData]);
+		
+		cordova.exec(this.submitSuccessCallback, this.submitFailCallback, "MSF", "submit", [encounter, formData]);
 	},
 	
 	submitSuccessCallback : function(args) {

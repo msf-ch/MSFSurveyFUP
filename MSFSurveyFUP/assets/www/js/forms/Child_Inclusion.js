@@ -256,6 +256,8 @@ SubmitPage = {
 };
 formData = {
 	name : "child_inclusion",
+	nameReadable : "Child Inclusion",
+	description: "",
 	global : {},
 	pages : [
 		childPage5,
