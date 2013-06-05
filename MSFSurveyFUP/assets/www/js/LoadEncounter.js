@@ -31,10 +31,11 @@ EncounterList = Backbone.View.extend({
 	}
 });
 $(document).on('deviceready', function() {
-	alert('ready');
+	//alert('ready');
 	//$("#encounterList").parents(":jqmData(role='page')").on('pageshow', function() {
-		cordova.exec(function(result) {
-			encounterList = new EncounterList({el : $("#encounterList"), encounterJSON : result});
-		}, undefined, "MSF", "getEncounterFiles");
+	cordova.exec(function(result) {
+//		alert('success');
+		encounterList = new EncounterList({el : $("#encounterList"), encounterJSON : result});
+	}, function() {alert('ERROR')}, "MSF", "getEncounterFiles", []);
 	//});
 });

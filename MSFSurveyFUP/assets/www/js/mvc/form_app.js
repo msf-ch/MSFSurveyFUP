@@ -46,6 +46,13 @@ function getParameterByName(name) {
 loadFromJSONForm = function(formFilePath) {
 	$.get(formFilePath, undefined, undefined, "text").
 	success(function(data, textStatus, jqXHR) {
+		$.mobile.loading( "show", {
+			text: "Générant forme...",
+			textVisible: true,
+			theme: "b",
+			html: ""
+		});
+		
 		var formData = new Function(data).apply(this);
 		Form = new FormModel(formData);
 		Body = new BodyView({
@@ -56,6 +63,8 @@ loadFromJSONForm = function(formFilePath) {
 		PageService.setActivePageIndex(0);
 
 		FormService.ready();
+		
+		$.mobile.loading("hide");
 	}).fail(function(jqXHR, textStatus, errorThrown) {
 		console.error(textStatus + ":\n" + jqXHR.responseText)
 	});

@@ -59,7 +59,7 @@ FormService = {
 	},
 	
 	submit : function() {
-		var encounterToSave = {obs : obsList.toJSON(), lastSaved : new Date().getTime(), formPath : formFilePath};
+		var encounterToSave = {obs : obsList.toJSON(), lastSaved : new Date().getTime(), formPath : formFilePath, formNameReadable : Form.get('nameReadable')};
 		
 		cordova.exec(this.submitSuccessCallback, this.submitFailCallback, "MSF", "submit", [encounterToSave, formData]);
 	},
