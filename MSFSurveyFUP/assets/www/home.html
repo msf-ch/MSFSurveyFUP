@@ -19,20 +19,31 @@
 	<div data-role="page" id="page1">
 	    <div data-theme="a" data-role="header">
 	        <h3>
-	            MSF Malnutrition!
+	            MSF Malnutrition
 	        </h3>
 	    </div>
 	    <div data-role="content">
-	        <div style="width: 522px; height: 180px; border: 1px solid #b8b8b8; margin-left: auto; margin-right: auto;">
-	            <img src="img/msf_logo_bilingual.png" alt="image"; top: 50%; left: 50%; margin-left: -16px; margin-top: -18px">
+	        <div style="max-width: 552px; border: 1px solid #b8b8b8; margin-left: auto; margin-right: auto;">
+	            <img src="img/msf_logo_bilingual.png" alt="image" style="width: 100%;">
 	        </div>
-	        <a data-role="button" href="Form.html?formFilePath=js/forms/Child_FUP.js" data-icon="edit" data-iconpos="left" data-ajax="false">Child FUP</a>
-	        <a data-role="button" href="Form.html?formFilePath=js/forms/Household_FUP.js" data-icon="edit" data-iconpos="left" data-ajax="false">House Hold FUP </a>
-	        <a data-role="button" href="Form.html?formFilePath=js/forms/Child_Inclusion.js" data-icon="edit" data-iconpos="left" data-ajax="false">Child Inclusion</a>
-	        <a data-role="button" href="Form.html?formFilePath=js/forms/Household_Inclusion.js" data-icon="edit" data-iconpos="left" data-ajax="false">House Hold Inclusion</a>
+	        <a data-role="button" formButton href="#" formFilePath="js/forms/Child_FUP.js" data-icon="edit" data-iconpos="left" data-ajax="false">Child FUP</a>
+	        <a data-role="button" formButton href="#" formFilePath="js/forms/Household_FUP.js" data-icon="edit" data-iconpos="left" data-ajax="false">House Hold FUP </a>
+	        <a data-role="button" formButton href="#" formFilePath="js/forms/Child_Inclusion.js" data-icon="edit" data-iconpos="left" data-ajax="false">Child Inclusion</a>
+	        <a data-role="button" formButton href="#" formFilePath="js/forms/Household_Inclusion.js" data-icon="edit" data-iconpos="left" data-ajax="false">House Hold Inclusion</a>
 	        <br>
 	        <a data-role="button" href="LoadEncounter.html" data-icon="edit" data-iconpos="left" data-ajax="false">Load encounters</a>	  	        
 	    </div>
+	    
+	    <script type="text/javascript">
+	    	$(function() {
+	    		$("[formButton]:jqmData(role='button')").click(function(event) {
+	    			var formFilePath = $(this).attr('formFilePath');
+	    			sessionStorage.formFilePath = formFilePath;
+	    			
+	    			document.location.href = "Form.html";
+	    		});
+	    	});
+	    </script>
 	</div>
 </body>
 </html>

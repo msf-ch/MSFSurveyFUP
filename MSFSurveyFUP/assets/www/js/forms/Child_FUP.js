@@ -261,7 +261,6 @@ formData = {
 	name : "child_fup",
 	nameReadable : "Child FUP",
 	description: "",
-	path : "js/forms/Child_FUP.js",
 	global : {},
 	pages : [
 		childPage1,

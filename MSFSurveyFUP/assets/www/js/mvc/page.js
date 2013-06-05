@@ -3,16 +3,11 @@ FormModel = Backbone.Model.extend({
 		name : "",
 		nameReadable : "",
 		description : "",
-		path : "",
 		global : {},
 		pages : []
 	},
 	
 	initialize : function() {
-		if (!this.get('path')) {
-			this.set('path', getParameterByName('formFilePath'));
-		}
-		
 		PageService.setPageModels(this.get('pages'));
 	}
 });

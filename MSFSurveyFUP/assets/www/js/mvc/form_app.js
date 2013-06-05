@@ -65,8 +65,8 @@ init = function() {
 	$(document).on('pageshow', positionFooter);
 	$(window).on('resize', positionFooter);
 
-	var encounter = getParameterByName('encounter');
-	var formFilePath = getParameterByName('formFilePath');
+	encounter = getParameterByName('encounter') || sessionStorage.encounter;
+	formFilePath = getParameterByName('formFilePath') || sessionStorage.formFilePath;
 	
 	if (encounter) {
 		cordova.exec(function(data) {
@@ -76,10 +76,6 @@ init = function() {
 	} else {
 		loadFromJSONForm(formFilePath);
 	}
-	
-	
-
-	
 //	var savedDataFile = getParameterByName('savedDataFile');
 //	var savedObs = cordova.exec(this.submitSuccessCallback,
 //			this.submitFailCallback, "MSF", "getObs", [ savedDataFile ]);
