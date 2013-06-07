@@ -21,21 +21,51 @@ EncounterCollection = Backbone.Collection.extend({
 });
 
 EncounterList = Backbone.View.extend({
+	el : '#encounterList',
+	
 	initialize : function() {
-		this.render();
 	},
 	
-	render : function() {
-		this.$el.html(_.template($("#tmpl-encounterList").html(), {encounterFiles : this.options.encounterJSON}));
+	render : function(encounters) {
+		this.$el.html(_.template($("#tmpl-encounterList").html(), {encounterFiles : encounters}));
 		this.$el.trigger('create');
 	}
 });
+
+FormSelect = Backbone.View.extend({
+	el : "#formSelectContainer",
+	
+	events : {
+		'change' : 'change'
+	},
+	
+	initialize : function() {
+		var that = this;
+		var success = function(forms) {
+			that.forms = forms;
+			that.render();
+			that.change();
+		};
+		var fail = function(message) {
+			alert(message);
+		};
+		
+		cordova.exec(success, fail, "MSF", "getForms", []);
+	},
+	
+	render : function() {
+		this.$el.html(_.template($("#tmpl-formSelect").html(), {forms : this.forms}));
+		this.$el.trigger('create');
+	},
+	
+	change : function() {
+		cordova.exec(function(form) {
+			encounterList.render(form);
+		}, function(message) {alert('ERROR: ' + message)}, "MSF", "getEncounters", [{formName : this.$el.find(":checked").attr('value')}]);
+	}
+});
+
 $(document).on('deviceready', function() {
-	//alert('ready');
-	//$("#encounterList").parents(":jqmData(role='page')").on('pageshow', function() {
-	cordova.exec(function(result) {
-//		alert('success');
-		encounterList = new EncounterList({el : $("#encounterList"), encounterJSON : result});
-	}, function() {alert('ERROR')}, "MSF", "getEncounterFiles", []);
-	//});
+	encounterList = new EncounterList();
+	formSelect = new FormSelect();
 });

@@ -1,17 +1,3 @@
-FormModel = Backbone.Model.extend({
-	defaults : {
-		name : "",
-		nameReadable : "",
-		description : "",
-		global : {},
-		pages : []
-	},
-	
-	initialize : function() {
-		PageService.setPageModels(this.get('pages'));
-	}
-});
-
 BodyView = Backbone.View.extend({
 	events : {
 		'pagebeforeshow' : 'pagebeforeshow',

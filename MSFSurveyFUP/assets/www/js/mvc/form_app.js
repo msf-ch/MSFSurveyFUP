@@ -44,30 +44,35 @@ function getParameterByName(name) {
 }
 
 loadFromJSONForm = function(formFilePath) {
-	$.get(formFilePath, undefined, undefined, "text").
-	success(function(data, textStatus, jqXHR) {
-		$.mobile.loading( "show", {
-			text: "Générant forme...",
-			textVisible: true,
-			theme: "b",
-			html: ""
+	$.get(formFilePath, undefined, undefined, "json")
+		.success(function(data, textStatus, jqXHR) {
+			$.mobile.loading( "show", {
+				text: "Générant forme...",
+				textVisible: true,
+				theme: "b",
+				html: ""
+			});
+			
+			console.log(formFilePath);
+			console.log(textStatus);
+			console.log(data.length);
+			
+			Form = new FormModel(data);
+			Body = new BodyView({
+				el : $("body")
+			});
+	
+			PageService.setPageModels(Form.get('pages'));
+			PageService.renderPages();
+			PageService.setActivePageIndex(0);
+	
+			FormService.ready();
+			
+			$.mobile.loading("hide");
+		})
+		.fail(function(jqXHR, textStatus, errorThrown) {
+			console.error(textStatus + ":\n" + jqXHR.responseText)
 		});
-		
-		var formData = new Function(data).apply(this);
-		Form = new FormModel(formData);
-		Body = new BodyView({
-			el : $("body")
-		});
-
-		PageService.renderPages();
-		PageService.setActivePageIndex(0);
-
-		FormService.ready();
-		
-		$.mobile.loading("hide");
-	}).fail(function(jqXHR, textStatus, errorThrown) {
-		console.error(textStatus + ":\n" + jqXHR.responseText)
-	});
 }
 
 init = function() {
@@ -75,11 +80,14 @@ init = function() {
 	$(window).on('resize', positionFooter);
 
 	encounter = getParameterByName('encounter') || sessionStorage.encounter;
+	sessionStorage.encounter = undefined;
 	formFilePath = getParameterByName('formFilePath') || sessionStorage.formFilePath;
+	sessionStorage.formFilePath = undefined;
 	
 	if (encounter) {
 		cordova.exec(function(data) {
-			obsList.set(data.obs);
+			encounter = data;
+			obsList.set(encounter.obs);
 			loadFromJSONForm(formFilePath);
 		}, undefined, "MSF", "getEncounter", [encounter]);
 	} else {

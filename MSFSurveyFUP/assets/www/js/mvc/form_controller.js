@@ -18,7 +18,6 @@ FormService = {
 		
 		var conceptId = view.model.get('conceptId');
 		var value = ObsService.getObs(conceptId);
-		ViewIdService.setViewId(conceptId, view.$el);
 		
 		if (value) {
 			view.setValue(value);
@@ -59,9 +58,18 @@ FormService = {
 	},
 	
 	submit : function() {
-		var encounterToSave = {obs : obsList.toJSON(), lastSaved : new Date().getTime(), formPath : formFilePath, formNameReadable : Form.get('nameReadable')};
+		var encounterToSave = {};
+		if (encounter) {
+			encounterToSave = encounter;
+			encounterToSave.obs = undefined;
+		}
+		encounterToSave.obs = obsList.toJSON();
+		encounterToSave.lastSaved = new Date().getTime();
+		encounterToSave.formName = Form.get('name');
+		encounterToSave.formNameReadable = Form.get('nameReadable');
 		
-		cordova.exec(this.submitSuccessCallback, this.submitFailCallback, "MSF", "submit", [encounterToSave, formData]);
+//		var encounterToSave = {obs : obsList.toJSON(), lastSaved : new Date().getTime(), formName : Form.get('name'), formNameReadable : Form.get('nameReadable')};
+		cordova.exec(this.submitSuccessCallback, this.submitFailCallback, "MSF", "submit", [encounterToSave]);
 	},
 	
 	submitSuccessCallback : function(args) {
@@ -97,16 +105,6 @@ ObsService = {
 		return func.apply(func, args);
 	}
 };
-
-ViewIdService = {
-		setViewId : function(conceptId, ele) {
-			return viewidList.setValue(conceptId, ele);
-		},
-
-		getViewId : function(conceptId) {
-			return viewidList.getValue(conceptId);
-		}
-	};
 
 PageService = {
 	pageModels : undefined,
