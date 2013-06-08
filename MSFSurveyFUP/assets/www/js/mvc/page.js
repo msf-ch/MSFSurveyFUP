@@ -86,9 +86,6 @@ PageModel = Backbone.Model.extend({
 PageView = Backbone.View.extend({
 	tagName: "div",
 	
-	events : {
-	},
-	
 	initialize : function() {
 		console.log("PageView initializing");
 		this.model = this.options.model;
@@ -99,6 +96,8 @@ PageView = Backbone.View.extend({
 	},
 	
 	render : function() {
+		this.$el.data('pageView', this);
+		
 		this.$el.html(_.template(this.template, {}, {variable : "data"}));
 		this.$el.attr('data-role', 'page').attr('data-theme', this.model.get('theme'));
 		
@@ -112,6 +111,8 @@ PageView = Backbone.View.extend({
 		this.footer.render();
 		
 		this.$el.page();
+		
+		this.content.registerViews();
 	},
 	
 	beforeShow : function() {
@@ -143,7 +144,7 @@ PageView = Backbone.View.extend({
 		
 		if (viewsWithErrors.length > 0) {
 			this.content.$el.find('.errorheader').remove();
-			this.content.$el.prepend(_.template($("#tmpl-errorheader").html(), {'errors' : viewsWithErrors}, {variable : "data"}));
+			this.content.$el.prepend(_.template($("#tmpl-errorheader").html(), {'errors' : viewsWithErrors}));
 			$.mobile.silentScroll(0);
 		} else {
 			this.content.$el.find('.errorheader').remove();
@@ -185,8 +186,17 @@ Content = Backbone.View.extend({
 		modelList.each(function(model) {
 			model.generateView($("<div></div>").appendTo(parentElement), {page : this.page});
 		}, this);
-		dd = $(this.el).find("AFTER SHOW");
-		dd.hide();
+	},
+	
+	registerViews : function() {
+		var content = this;
+		$("[formview]").each(function(index, element) {
+			var formView = $(element).data('formview');
+			if (formView) {
+				formView.page = content.page;
+				FormService.registerView(formView);
+			}
+		});
 	}
 });
 

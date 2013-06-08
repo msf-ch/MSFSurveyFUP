@@ -2,6 +2,7 @@
    "name":"Child_Inclusion",
    "nameReadable":"Child Inclusion",
    "description":"",
+   "descriptors" : [{"label" : "Date du suivi", "conceptId" : "datenq"}, {"label" : "Identification de l'enfant", "conceptId" : "enfid"}],
    "global":{
 
    },

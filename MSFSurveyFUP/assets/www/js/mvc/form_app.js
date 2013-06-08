@@ -46,12 +46,7 @@ function getParameterByName(name) {
 loadFromJSONForm = function(formFilePath) {
 	$.get(formFilePath, undefined, undefined, "json")
 		.success(function(data, textStatus, jqXHR) {
-			$.mobile.loading( "show", {
-				text: "Générant forme...",
-				textVisible: true,
-				theme: "b",
-				html: ""
-			});
+			var loadFormTime = new Date().getTime();
 			
 			console.log(formFilePath);
 			console.log(textStatus);
@@ -67,8 +62,9 @@ loadFromJSONForm = function(formFilePath) {
 			PageService.setActivePageIndex(0);
 	
 			FormService.ready();
-			
-			$.mobile.loading("hide");
+			$("#loader").hide();
+			var loadFormTime = loadFormTime - new Date().getTime();
+			console.log("Time for load form: " + loadFormTime);
 		})
 		.fail(function(jqXHR, textStatus, errorThrown) {
 			console.error(textStatus + ":\n" + jqXHR.responseText)
@@ -76,13 +72,14 @@ loadFromJSONForm = function(formFilePath) {
 }
 
 init = function() {
+	var initStart = new Date().getTime();
 	$(document).on('pageshow', positionFooter);
 	$(window).on('resize', positionFooter);
 
 	encounter = getParameterByName('encounter') || sessionStorage.encounter;
-	sessionStorage.encounter = undefined;
+	sessionStorage.encounter = "";
 	formFilePath = getParameterByName('formFilePath') || sessionStorage.formFilePath;
-	sessionStorage.formFilePath = undefined;
+	sessionStorage.formFilePath = "";
 	
 	if (encounter) {
 		cordova.exec(function(data) {
@@ -93,18 +90,15 @@ init = function() {
 	} else {
 		loadFromJSONForm(formFilePath);
 	}
-//	var savedDataFile = getParameterByName('savedDataFile');
-//	var savedObs = cordova.exec(this.submitSuccessCallback,
-//			this.submitFailCallback, "MSF", "getObs", [ savedDataFile ]);
-//	if (savedObs) {
-//		obsList.reset(savedObs);
-//	}
+	console.log("Time for init: " + initStart);
 };
 
 initialized = false;
 $(document).on('deviceready', function() {
-	if (!initialized) {
-		initialized = true;
-		init();
-	}
+	$(document).ready(function() {
+		if (!initialized) {
+			initialized = true;
+			init();
+		}
+	});
 });

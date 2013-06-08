@@ -3,7 +3,7 @@ FormModel = Backbone.Model.extend({
 		name : undefined,
 		nameReadable : undefined,
 		description : undefined,
-		fileName : undefined,
+		descriptors : [],
 		global : {},
 		pages : []
 	},

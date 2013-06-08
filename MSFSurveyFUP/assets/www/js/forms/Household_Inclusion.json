@@ -2,6 +2,7 @@
    "name":"Household_Inclusion",
    "nameReadable":"Household Inclusion",
    "description":"",
+   "descriptors" : [{"label" : "Date du suivi", "conceptId" : "datenq"}, {"label" : "Numéro du ménage", "conceptId" : "nummen"}],
    "global":{
 
    },

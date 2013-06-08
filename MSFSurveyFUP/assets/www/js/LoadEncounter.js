@@ -59,13 +59,15 @@ FormSelect = Backbone.View.extend({
 	},
 	
 	change : function() {
-		cordova.exec(function(form) {
-			encounterList.render(form);
+		cordova.exec(function(encounters) {
+			encounterList.render(encounters);
 		}, function(message) {alert('ERROR: ' + message)}, "MSF", "getEncounters", [{formName : this.$el.find(":checked").attr('value')}]);
 	}
 });
 
 $(document).on('deviceready', function() {
-	encounterList = new EncounterList();
-	formSelect = new FormSelect();
+	$(document).ready(function() {
+		encounterList = new EncounterList();
+		formSelect = new FormSelect();
+	});
 });

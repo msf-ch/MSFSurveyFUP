@@ -2,6 +2,7 @@
    "name":"Household_FUP",
    "nameReadable":"Household FUP",
    "description":"",
+   "descriptors" : [{"label" : "Date du suivi", "conceptId" : "datenq"}, {"label" : "Numéro du ménage", "conceptId" : "nummen"}],
    "global":{
 
    },

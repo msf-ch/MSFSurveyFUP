@@ -4,14 +4,14 @@ FormService = {
 	viewValueChange : function(sourceView) {
 		var conceptId = sourceView.model.get('conceptId');
 		var value = sourceView.getValue();
-		console.log('FormService registered viewValueChange: ' + conceptId + ' - Value = ' + value);
+		//console.log('FormService registered viewValueChange: ' + conceptId + ' - Value = ' + value);
 		ObsService.setObs(conceptId, value);
 		this.model.defaultValue = value;
 	},
 
 	
 	registerView : function(view) {
-		console.log('register view ' + view.id);
+		//console.log('register view ' + view.id);
 		
 		this.views.push(view);
 		this.addListeners(view);
@@ -67,6 +67,14 @@ FormService = {
 		encounterToSave.lastSaved = new Date().getTime();
 		encounterToSave.formName = Form.get('name');
 		encounterToSave.formNameReadable = Form.get('nameReadable');
+		encounterToSave.descriptors = [];
+		var descriptors = Form.get('descriptors');
+		if (descriptors && descriptors.length > 0) {
+			for (var i = 0; i < descriptors.length; i++) {
+				var generatedDescriptor = {label : descriptors[i].label, conceptId : descriptors[i].conceptId, value : ObsService.getObs(descriptors[i].conceptId)};
+				encounterToSave.descriptors.push(generatedDescriptor);
+			}
+		}
 		
 //		var encounterToSave = {obs : obsList.toJSON(), lastSaved : new Date().getTime(), formName : Form.get('name'), formNameReadable : Form.get('nameReadable')};
 		cordova.exec(this.submitSuccessCallback, this.submitFailCallback, "MSF", "submit", [encounterToSave]);
@@ -91,7 +99,7 @@ ObsService = {
 	},
 
 	getObs : function(conceptId) {
-		console.log('get obs ' + conceptId);
+		//console.log('get obs ' + conceptId);
 		return obsList.getValue(conceptId);
 	},
 	
@@ -161,7 +169,7 @@ PageService = {
 		if (this.activeIndex == 0) {
 			for(var i = 0; i < obsList.length; i++) {
 				var model = obsList.at(i).attributes;
-				console.log('KEY = ' + model.conceptId + ' VALUE = ' + model.value);
+				//console.log('KEY = ' + model.conceptId + ' VALUE = ' + model.value);
 			}
 		}
 		

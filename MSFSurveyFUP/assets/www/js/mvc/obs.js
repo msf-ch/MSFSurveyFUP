@@ -8,18 +8,18 @@ var Obs = Backbone.Model.extend({
 	},
 	
 	getValue : function() {
-		console.log("GET VALUE of element '" + conceptId + " -----  to value'" + value + "' backbonemodel.extend");
+//		console.log("GET VALUE of element '" + conceptId + " -----  to value'" + value + "' backbonemodel.extend");
 		return this.get("value");
 	},
 	
 	setValue : function(value) {
 		this.set("value", value);
-		console.log("Value of element '" + conceptId + " -----  to value'" + value + "' backbonemodel.extend");
+//		console.log("Value of element '" + conceptId + " -----  to value'" + value + "' backbonemodel.extend");
 	},
 	
 	setValueSilent : function(value) {
 		this.set("value", value, {silent : true});
-		console.log(" --- setValueSilent --- Value of element '" + conceptId + " -----  to value'" + value + "' backbonemodel.extend");
+//		console.log(" --- setValueSilent --- Value of element '" + conceptId + " -----  to value'" + value + "' backbonemodel.extend");
 	}
 });
 
@@ -30,7 +30,7 @@ var ObsList = Backbone.Collection.extend({
 	initialize : function() {
 		//trigger event specific to the conceptId. (model, value, options)
 		this.on("change:value",
-				function(model, value, options) {console.log("change:value triggered for " + model.get('conceptId')); this.trigger('changeObsValue:' + model.get('conceptId'), model, value, options)},
+				function(model, value, options) {/*console.log("change:value triggered for " + model.get('conceptId'));*/ this.trigger('changeObsValue:' + model.get('conceptId'), model, value, options)},
 				this);
 		this.on("add",
 				function(model, options) {this.trigger('changeObsValue:' + model.get('conceptId'), model, model.get('value'), options)},
@@ -62,7 +62,7 @@ var ObsList = Backbone.Collection.extend({
 		var ob = this.findObsFromConceptId(conceptId);
 		if (ob) {
 			ob.set('value', value);
-			console.log("LIST:::::::   Set conceptid '" + conceptId + "to value'" + value + "' DUY DUY");
+			//console.log("LIST:::::::   Set conceptid '" + conceptId + "to value'" + value + "' DUY DUY");
 		} else {
 			this.add({conceptId : conceptId, value : value});
 		}

@@ -2,6 +2,7 @@
    "name":"Child_FUP",
    "nameReadable":"Child FUP",
    "description":"",
+   "descriptors":[{"label" : "Date du suivi", "conceptId" : "datenq"}, {"label" : "Identification de l'enfant", "conceptId" : "enfid"}],
    "global":{
 
    },

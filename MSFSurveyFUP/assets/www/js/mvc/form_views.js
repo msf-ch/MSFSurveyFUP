@@ -1,4 +1,5 @@
-var FormItemViewModel = Backbone.Model.extend({
+$(function() {
+FormItemViewModel = Backbone.Model.extend({
 	defaults : {
 		viewType : "",
 		id : undefined,
@@ -56,8 +57,6 @@ var FormItemViewModel = Backbone.Model.extend({
 		this.view = new formItemViewCodes[viewType]({model : this,
 			el : element});
 		this.view.render();
-		
-		FormService.registerView(this.view);
 	},
 	
 	destroyView : function() {
@@ -104,12 +103,18 @@ var FormItemViewModel = Backbone.Model.extend({
 });
 
 //stupid name
-var FormItemViewModelList = Backbone.Collection.extend({
+FormItemViewModelList = Backbone.Collection.extend({
 	model : FormItemViewModel
 });
 
-var FormItemView = Backbone.View.extend({
+FormItemView = Backbone.View.extend({
+	template : undefined,
+	
 	decorated : false,
+	
+	registered : false,
+	
+	page : undefined,
 	
 	customPropertyDescriptors : {
 	},
@@ -117,6 +122,7 @@ var FormItemView = Backbone.View.extend({
 	//set model by passing {model : modelObject} to constructor
 	initialize : function(options) {
 		this.model = options.model;
+		this.$el.data('formview', this);
 		
 		//generate a unique ID if not specified already
 		var id = options.id;
@@ -133,15 +139,13 @@ var FormItemView = Backbone.View.extend({
 		}
 	},
 	
-	renderDefault : function(templateId, processBeforeCreateFunction) {
+	renderDefault : function(processBeforeCreateFunction) {
 		this.$el.attr('id', this.id).attr('formview', this.model.get('viewType')).data('view', this).addClass('formview');
 		
-		this.$el.html(_.template($("#" + templateId).html(), {model : this.model, view : this}, {variable : "data"}));
-		
-		if (processBeforeCreateFunction) {
-			processBeforeCreateFunction.apply(this, this.$el);
+		this.$el.html(this.template({model : this.model, view : this}));
+		if (this.registered) {
+			this.decorate();
 		}
-		this.decorate();
 	},
 	
 	decorate : function() {
@@ -154,7 +158,6 @@ var FormItemView = Backbone.View.extend({
 	},
 	
 	defaultValueChanged : function() {
-		console.log('defaultValueChanged');
 		this.trigger('viewValueChange', this);
 		this.trigger('save', this);
 	},
@@ -170,13 +173,16 @@ var FormItemView = Backbone.View.extend({
 	
 	show : function() {
 		this.$el.removeClass('viewhidden');
-//		this.$el.show();
 	},
 	
 	hide : function() {
 		this.setValue(undefined);
+		this.$el.find("[formview]").each(function(index, element) {
+			$(element).data('formview').setValue(undefined);
+		});
+		
+		this.$el.find('')
 		this.$el.addClass('viewhidden');
-//		this.$el.hide();
 	},
 	
 	error : function(showError, messages) {
@@ -187,8 +193,7 @@ var FormItemView = Backbone.View.extend({
 		} else {
 			this.$el.addClass('viewwitherror');
 			var errorHtml = _.template($("#tmpl-errormsg").html(),
-					{model : this.model, view : this, errors : messages},
-					{variable : "data"});
+					{model : this.model, view : this, errors : messages});
 			this.$el.prepend(errorHtml);
 		}
 	},
@@ -201,7 +206,9 @@ var FormItemView = Backbone.View.extend({
 	}
 });
 
-var TextView = FormItemView.extend({
+TextView = FormItemView.extend({
+	template : _.template($("#tmpl-textview").html()),
+	
 	events : {
 		"keyup input" : "defaultValueChanged",
 		"change input" : "defaultValueChanged"
@@ -213,7 +220,7 @@ var TextView = FormItemView.extend({
 	},
 	
 	render : function() {
-		this.renderDefault("tmpl-textview");
+		this.renderDefault();
 	},
 	
 	getValue : function() {
@@ -222,12 +229,13 @@ var TextView = FormItemView.extend({
 	
 	setValue : function(value) {
 		this.$el.find("input").val(value);
-		console.log("Value'" + value + "TEST" + "'");
 		this.model.defaultValue = value
 	}
 });
 
-var NumberView = TextView.extend({
+NumberView = TextView.extend({
+	template : _.template($("#tmpl-numberview").html()),
+	
 	events : {
 		"change input" : "defaultValueChanged",
 		"keyup input" : "defaultValueChanged",
@@ -235,7 +243,7 @@ var NumberView = TextView.extend({
 	},
 	
 	catchNumbers: function(e) {
-		if ((e.keyCode >=48 && e.keyCode <= 57) || e.keyCode == 190) {
+		if ((e.keyCode >=48 && e.keyCode <= 57) || e.keyCode == 110 || e.KeyCode == 190 || e.keyCode == 46) {
 			return true; //let it go
 		} else {
 			return false; //catch it and prevent it from propagating
@@ -243,17 +251,19 @@ var NumberView = TextView.extend({
 	},
 	
 	render : function() {
-		this.renderDefault("tmpl-numberview");
+		this.renderDefault();
 	},
 });
 
-var RadioView = TextView.extend({
+RadioView = TextView.extend({
+	template : _.template($("#tmpl-radioview").html()),
+	
 	events : {
 		"change input" : "defaultValueChanged"
 	},
 	
 	render : function() {
-		this.renderDefault("tmpl-radioview");
+		this.renderDefault();
 	},
 	
 	getValue : function() {
@@ -274,19 +284,19 @@ var RadioView = TextView.extend({
 	}
 });
 
-var CheckGroupView = FormItemView.extend({
+CheckGroupView = FormItemView.extend({
+	template : _.template($("#tmpl-checkgroupview").html()),
+	
 	render : function() {		
-		this.renderDefault("tmpl-checkgroupview", function() {
-			//generate checkboxes before creating
-			this.model.childrenModels.each(function(childModel, index, list) {
-				var newElement = $("<div></div>").appendTo(this.$el.find('fieldset'));
-				childModel.generateView(newElement, {viewType: 'checkbox'});
-			}, this);
-		});
+		this.renderDefault()
+		this.model.childrenModels.each(function(childModel, index, list) {
+			var newElement = $("<div></div>").appendTo(this.$el.find('fieldset'));
+			childModel.generateView(newElement, {viewType: 'checkbox'});
+		}, this);
 	}
 });
 
-var CheckView = FormItemView.extend({ 
+CheckView = FormItemView.extend({ 
 	template : _.template($("#tmpl-checkview").html()),
 	
 	events : {
@@ -294,42 +304,34 @@ var CheckView = FormItemView.extend({
 	},
 	
 	render : function() {
-		this.renderDefault("tmpl-checkview");
+		this.renderDefault();
 		this.input = this.$el.find("input");
 	},
 	
 	getValue : function() {
-		var selected = this.input.is(":checked");
-		
-//		ci = this.model.toJSON().conceptId;
-//		if (ci == "ppdautre")
-//			if (selected == true) 
-//				RadioGroupService.showItem("ppdautreprecise", true);
-//			else
-//				RadioGroupService.showItem("ppdautreprecise", false);
-		
-		return selected;
+		return this.input.is(":checked");
 	},
 	
 	setValue : function(value) {
-		var checked;
-		if (value) {
-			checked = 'checked';
-		} else {
-			checked = '';
+		if (value == undefined) {
+			value = false;
 		}
-		this.input.attr('checked', value).checkboxradio('refresh');
+		this.input.prop('checked', value).checkboxradio('refresh');
 	}
 });
 
-var DateView = TextView.extend({
+DateView = TextView.extend({
+	template : _.template($("#tmpl-dateview").html()),
+	
 	render : function() {
-		this.renderDefault("tmpl-dateview");
+		this.renderDefault();
 		this.$el.find('input').mobiscroll().date({lang: 'fr', display: 'bubble'});
 	}
 });
 
-var SubmitPageView = FormItemView.extend({
+SubmitPageView = FormItemView.extend({
+	template : _.template($("#tmpl-submitpage").html()),
+	
 	initialize2 : function() {
 		if(this.model.page) {
 			this.listenTo(this.model.page, 'pagebeforeshow', this.renderBeforeShow);
@@ -340,10 +342,12 @@ var SubmitPageView = FormItemView.extend({
 	},
 	
 	renderBeforeShow : function() {
+		template : _.template($("#tmpl-submitpage").html()),
+				
 		this.$el.attr('id', this.id).attr('formview', this.model.get('viewType'));
-		this.$el.html(_.template($("#tmpl-submitpage").html(), {model : this.model, view : this}, {variable : "data"}));
+		this.$el.html(this.template( {model : this.model, view : this}, {variable : "data"} ));
 		
-		this.$el.trigger('create');
+		this.decorate();
 	}
 });
 
@@ -358,4 +362,4 @@ window.formItemViewCodes = {text : TextView,
 		submitpage : SubmitPageView,
 		date : DateView};
 
-
+});

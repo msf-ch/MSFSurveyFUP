@@ -40,6 +40,13 @@
 </head>
 
 <body>
+
+<div id="loader" style="position: fixed; z-index: 100; top : 50%; left : 50%;  margin : -140px 0 0 -142px; text-align: center;">
+	<img alt="Loader" src="img/msf_running_man.png" style="width : 285px; height : 245px;">
+	<h2 style="width : 100%; text-align: center;">Faisant forme...</h2>
+</div>
+
+
 <script id='tmpl-page' type='text/template'>
 	<div pageheader="true">
 	</div>
@@ -72,35 +79,35 @@
 
 <script id='tmpl-textview' type='text/template'>
 <%
-var inputId = data.view.id + '_input';
+var inputId = view.id + '_input';
 %>
 <div class="textview" data-role="fieldcontain">
-	<label for="<%= inputId %>"><%= data.model.get('label') %></label>
+	<label for="<%= inputId %>"><%= model.get('label') %></label>
 	<input type="text" id="<%= inputId %>" value="" />
 </div>
 </script>
 
 <script id='tmpl-numberview' type='text/template'>
 <%
-var inputId = data.view.id + '_input';
+var inputId = view.id + '_input';
 %>
 <div class="numberview" data-role="fieldcontain">
-	<label for="<%= inputId %>"><%= data.model.get('label') %></label>
-	<input type="number" id="<%= inputId %>" value="" />
+	<label for="<%= inputId %>"><%= model.get('label') %></label>
+	<input type="number" id="<%= inputId %>" value="" step="any" />
 </div>
 </script>
 
 <script id='tmpl-radioview' type='text/template'>
 <%
-var inputId = data.view.id + '-input';
+var inputId = view.id + '-input';
 %>
 <div class="radioview" data-role="fieldcontain">
 	<fieldset data-role="controlgroup">
-		<legend><%= data.model.get('label') %></legend>
+		<legend><%= model.get('label') %></legend>
 		<div>
-		<% _.each(data.model.get('options'), function(option, index) {
+		<% _.each(model.get('options'), function(option, index) {
 			var currentId = inputId + '-' + index; %>
-			<input type="radio" id="<%= currentId %>" name="<%= data.view.id %>" value="<%= option.value %>" />
+			<input type="radio" id="<%= currentId %>" name="<%= view.id %>" value="<%= option.value %>" />
 			<label for="<%= currentId %>"><%= option.label %></label>
 		<% }); %>
 		</div>
@@ -111,26 +118,26 @@ var inputId = data.view.id + '-input';
 
 <script id='tmpl-checkgroupview' type='text/template'>
 <%
-var inputId = data.view.id + '-input';
+var inputId = view.id + '-input';
 %>
 <div class="checkgroupview" data-role="fieldcontain">
 	<fieldset data-role="controlgroup">
-		<legend><%= data.model.get('label') %></legend>
+		<legend><%= model.get('label') %></legend>
 	</fieldset>
 </div>
 </script>
 
 <script id='tmpl-checkview' type='text/template'>
-	<input type="checkbox" id="<%= data.view.id %>" conceptId="<%= data.model.conceptId %>" />
-	<label for="<%= data.view.id %>"><%= data.model.get('label') %></label>
+	<input type="checkbox" id="<%= view.id %>" conceptId="<%= model.conceptId %>" />
+	<label for="<%= view.id %>"><%= model.get('label') %></label>
 </script>
 
 <script id='tmpl-dateview' type='text/template'>
 <%
-var inputId = data.view.id + '_input';
+var inputId = view.id + '_input';
 %>
 <div class="dateview" data-role="fieldcontain">
-	<label for="<%= inputId %>"><%= data.model.get('label') %></label>
+	<label for="<%= inputId %>"><%= model.get('label') %></label>
 	<input type="text" id="<%= inputId %>" value=""/>
 </div>
 </script>
@@ -175,8 +182,8 @@ var inputId = data.view.id + '_input';
 <script id='tmpl-errormsg' type='text/template'>
 	<div class="errorfield ui-body ui-body-e">
 		<ul>
-			<% for (var i = 0; i < data.errors.length; i++) { %>
-				<li><%= data.errors[i] %></li>
+			<% for (var i = 0; i < errors.length; i++) { %>
+				<li><%= errors[i] %></li>
 			<% } %>
 		</ul>
 	</div>
@@ -185,7 +192,7 @@ var inputId = data.view.id + '_input';
 <script id='tmpl-errorheader' type='text/template'>
 	<div class="errorheader ui-body ui-body-e">
 		<h2>Please fix errors before continuing</h2>
-		<h3>There are <strong style="color : red"><%= data.errors.length %></strong> questions to fix.</h3>
+		<h3>There are <strong style="color : red"><%= errors.length %></strong> questions to fix.</h3>
 	</div>
 </script>
 

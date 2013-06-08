@@ -77,7 +77,7 @@ public class MSFPlugin extends CordovaPlugin {
 
 	public void getForms(JSONArray args, CallbackContext callbackContext)
 			throws IOException {
-		boolean includePages = true;
+		boolean includePages = false;
 
 		try {
 			if (args.length() > 0 && args.get(0) instanceof JSONObject) {
@@ -172,7 +172,7 @@ public class MSFPlugin extends CordovaPlugin {
 			}
 		}
 
-		return results;
+		return new JSONArray().put(results);
 	}
 
 	public String readStringFromAsset(String assetPath) throws IOException,
