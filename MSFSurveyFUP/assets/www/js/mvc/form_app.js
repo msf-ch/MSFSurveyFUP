@@ -62,7 +62,6 @@ loadFromJSONForm = function(formFilePath) {
 			PageService.setActivePageIndex(0);
 	
 			FormService.ready();
-			$("#loader").hide();
 			var loadFormTime = loadFormTime - new Date().getTime();
 			console.log("Time for load form: " + loadFormTime);
 		})

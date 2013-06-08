@@ -1,5 +1,14 @@
 @CHARSET "UTF-8";
 
+#submitdialog {
+	position: fixed;
+	z-index: 100;
+	top: 30%;
+	left: 50%;
+	margin: -140px 0 0 -142px;
+	text-align: center;
+}
+
 [pageheader] {
 	text-align: center;
 	font-size: 16px;
@@ -8,7 +17,6 @@
 	padding-right: 10px;
 	padding-top: 0.6em;
 	padding-bottom: 0.8em;
-	
 	border-left-width: 0;
 	border-right-width: 0;
 }
@@ -18,7 +26,7 @@
 }
 
 .viewhidden {
-	display : none;
+	display: none;
 }
 
 .viewwitherror {
@@ -38,13 +46,11 @@
 	list-style-type: disc;
 }
 
-
 .errorheader {
 	padding-top: 5px;
 	padding-bottom: 5px;
 	padding-left: 5px;
 	padding-right: 5px;
-	
 	text-align: center;
 }
 

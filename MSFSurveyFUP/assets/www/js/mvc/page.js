@@ -41,17 +41,17 @@ FooterModel = Backbone.Model.extend({
 		
 		footerIconPosition : "top",
 		
-		footerButton1Text : "Pr�c�dent",
+		footerButton1Text : "Précédent",
 		footerButton1Theme : "a",
 		footerButton1Icon : "arrow-l",
 		footerButton1Action : "prev",
 		footerButton1Disabled : false,
 		
 
-		footerButton2Text : "Aide",
+		footerButton2Text : "Sauver",
 		footerButton2Theme : "a",
 		footerButton2Icon : "info",
-		footerButton2Action : "help",
+		footerButton2Action : "save",
 		footerButton2Disabled : false,
 		
 
@@ -211,7 +211,7 @@ Footer = Backbone.View.extend({
 	events: {
 		"click" : "render",
 		"click a[action='prev']" : "prev",
-		"click a[action='help']" : "help",
+		"click a[action='save']" : "save",
 		"click a[action='next']" : "next",
 		"click a[action='submit']" : "submit"
 	},
@@ -259,8 +259,8 @@ Footer = Backbone.View.extend({
 		}
 	},
 	
-	help : function(e) {
-		console.log('help button pressed');
+	save : function(e) {
+		console.log('save button pressed');
 		if(this.isEnabled()) {
 		}
 	},

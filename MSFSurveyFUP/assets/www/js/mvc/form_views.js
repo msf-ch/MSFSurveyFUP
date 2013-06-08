@@ -330,7 +330,7 @@ DateView = TextView.extend({
 });
 
 SubmitPageView = FormItemView.extend({
-	template : _.template($("#tmpl-submitpage").html()),
+	template : _.template($("#tmpl-submitpage2").html()),
 	
 	initialize2 : function() {
 		if(this.model.page) {

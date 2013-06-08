@@ -57,7 +57,7 @@ FormService = {
 		}
 	},
 	
-	submit : function() {
+	submit : function(complete) {
 		var encounterToSave = {};
 		if (encounter) {
 			encounterToSave = encounter;
@@ -81,6 +81,7 @@ FormService = {
 	},
 	
 	submitSuccessCallback : function(args) {
+		document.location.href = "home.html";
 	},
 	
 	submitFailCallback : function(args) {

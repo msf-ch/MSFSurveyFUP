@@ -41,9 +41,18 @@
 
 <body>
 
-<div id="loader" style="position: fixed; z-index: 100; top : 50%; left : 50%;  margin : -140px 0 0 -142px; text-align: center;">
-	<img alt="Loader" src="img/msf_running_man.png" style="width : 285px; height : 245px;">
-	<h2 style="width : 100%; text-align: center;">Faisant forme...</h2>
+
+<div data-role="page" id="loadingPage">
+	<div data-role="header" data-theme="e">
+		<h1>Loading MSF Form...</h1>
+	</div>
+
+	<div data-role="content">
+		<div id="loader" style="margin-top: 100px;">
+			<img alt="Loader" src="img/msf_running_man.png" style="display: block; width : 285px; height : 245px; margin-left: auto; margin-right: auto;">
+			<h2 style="width : 100%; text-align: center;">Faisant forme...</h2>
+		</div>
+	</div>
 </div>
 
 
@@ -56,6 +65,17 @@
 	</div>
 </script>
 
+<div class="viewhidden" id="submitdialog" data-role="dialog">
+		<div data-role="header" data-theme="e">
+			<h1>Submit form?</h1>
+		</div>
+
+		<div data-role="content">
+			<h1>Are you sure you want to submit this form?</h1>
+			<a id="cancel" href="#" data-role="button" data-rel="back" data-theme="a">Cancel</a>
+			<a id="submit" href="#" data-role="button" data-rel="back">Submit</a>
+		</div>
+</div>
 
 <script id='tmpl-header' type='text/template'>
 	<%= data.title %>
@@ -177,6 +197,13 @@ var inputId = view.id + '_input';
 	<% } %>
 
 	</ul>
+</script>
+
+<script id='tmpl-submitpage2' type='text/template'>
+	<div class="ui-body ui-body-e" style="text-align:center;">
+		<h2>Have you completed the form?</h2>
+		<h3>If you are done, press "submit" at the bottom of the page.</h3>
+	</div>
 </script>
 
 <script id='tmpl-errormsg' type='text/template'>

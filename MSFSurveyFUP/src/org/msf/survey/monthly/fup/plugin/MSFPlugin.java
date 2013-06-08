@@ -267,10 +267,10 @@ public class MSFPlugin extends CordovaPlugin {
 		}
 
 		callbackContext.success();
-		Intent intent = new Intent(cordova.getActivity(), FinalActivity.class);
-		intent.putExtra("ABCD", "TETA");
-		cordova.getActivity().startActivity(intent);
-		cordova.getActivity().finish();
+//		Intent intent = new Intent(cordova.getActivity(), FinalActivity.class);
+//		intent.putExtra("ABCD", "TETA");
+//		cordova.getActivity().startActivity(intent);
+//		cordova.getActivity().finish();
 	}
 
 	public void getEncounter(JSONArray args, CallbackContext callbackContext)
