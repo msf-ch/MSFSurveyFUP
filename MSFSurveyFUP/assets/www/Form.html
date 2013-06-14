@@ -122,7 +122,7 @@ var inputId = view.id + '_input';
 var inputId = view.id + '-input';
 %>
 <div class="radioview" data-role="fieldcontain">
-	<fieldset data-role="controlgroup">
+	<fieldset data-role="controlgroup" <% if(model.get('horizontalMode')) {%> data-type="horizontal"<% } %>>
 		<legend><%= model.get('label') %></legend>
 		<div>
 		<% _.each(model.get('options'), function(option, index) {

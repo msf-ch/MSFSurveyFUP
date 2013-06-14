@@ -17,6 +17,7 @@ FormItemViewModel = Backbone.Model.extend({
 								// condition script can use variables view (the view object) and value (the value of the view object)
 		bounds : undefined, // {minValue : 0, maxValue : 1, minLength : 0, maxLength : 1, exactLength : 1}
 		dateBounds : undefined, //{maxDate : [4-digit year, month, day], minDate : [4-digit year, month, day], dateFormat : "", dateOrder : ""}
+		horizontalMode : false,
 		required : true
 	},
 	
