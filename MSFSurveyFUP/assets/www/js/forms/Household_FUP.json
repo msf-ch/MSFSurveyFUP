@@ -1038,6 +1038,11 @@
                },
                {
                   "viewType":"number",
+                  "conceptId":"numenf2ans",
+                  "label":"Nombre d'enfant moins de 2 ans dans le ménage"
+               },
+               {
+                  "viewType":"number",
                   "conceptId":"numnour",
                   "label":"Nombre d'enfant moins de 6 mois"
                },
@@ -1070,6 +1075,17 @@
                         "dcnomtot"
                      ],
                      "condition":"dcnomtot > 0"
+                  }
+               },
+               {
+                  "viewType":"number",
+                  "conceptId":"dcm5tot",
+                  "label":"Nombre d'enfants de moins 2 ans décédés",
+                  "showIf":{
+                     "conceptIds":[
+                        "dcm2tot"
+                     ],
+                     "condition":"dcm2tot > 0"
                   }
                },
                {
@@ -1124,7 +1140,7 @@
                      "conceptIds":[
                         "dcm5tot"
                      ],
-                     "condition":"dcm5tot == 5"
+                     "condition":"dcm5tot >= 5"
                   }
                }
             ]
