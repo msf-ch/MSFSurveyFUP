@@ -4,12 +4,9 @@
 package org.msf.survey.monthly.fup.plugin;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -22,9 +19,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.msf.survey.monthly.fup.Constants;
-import org.msf.survey.monthly.fup.FinalActivity;
+import org.msf.survey.monthly.fup.FileUtilities;
 
-import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Environment;
 import android.util.Log;
@@ -178,18 +174,7 @@ public class MSFPlugin extends CordovaPlugin {
 	public String readStringFromAsset(String assetPath) throws IOException,
 			JSONException {
 		InputStream is = cordova.getActivity().getAssets().open(assetPath);
-		BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-
-		String line = null;
-		StringBuilder stringBuilder = new StringBuilder();
-		String ls = System.getProperty("line.separator");
-
-		while ((line = reader.readLine()) != null) {
-			stringBuilder.append(line);
-			stringBuilder.append(ls);
-		}
-		reader.close();
-		String jsonString = stringBuilder.toString();
+		String jsonString = FileUtilities.readStringFromInputStream(is);
 
 		return jsonString;
 	}
@@ -213,7 +198,7 @@ public class MSFPlugin extends CordovaPlugin {
 		JSONObject o;
 		for (File f : files) {
 			try {
-				o = readJSONObjectFromFile(f);
+				o = FileUtilities.readJSONObjectFromFile(f);
 				o.remove("obs");
 
 				if (formName != null
@@ -254,12 +239,11 @@ public class MSFPlugin extends CordovaPlugin {
 						+ new Date().getTime() + ".enc";
 			}
 			File outputFile = new File(saveDirectory, fileName);
-			// Log.d("MSFPlugin", outputFile.toString());
 
 			outputFile.delete();
 			outputFile.createNewFile();
 
-			writeJSONObjectToFile(outputFile, encounter);
+			FileUtilities.writeJSONObjectToFile(outputFile, encounter);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -267,10 +251,6 @@ public class MSFPlugin extends CordovaPlugin {
 		}
 
 		callbackContext.success();
-//		Intent intent = new Intent(cordova.getActivity(), FinalActivity.class);
-//		intent.putExtra("ABCD", "TETA");
-//		cordova.getActivity().startActivity(intent);
-//		cordova.getActivity().finish();
 	}
 
 	public void getEncounter(JSONArray args, CallbackContext callbackContext)
@@ -294,7 +274,7 @@ public class MSFPlugin extends CordovaPlugin {
 		}
 
 		try {
-			JSONObject obsObject = readJSONObjectFromFile(files[0]);
+			JSONObject obsObject = FileUtilities.readJSONObjectFromFile(files[0]);
 			obsObject.put("fileName", files[0].getName());
 			callbackContext.success(obsObject);
 		} catch (Exception e) {
@@ -302,51 +282,5 @@ public class MSFPlugin extends CordovaPlugin {
 			callbackContext.error("Error loading file");
 			return;
 		}
-	}
-
-	public static String readFileToString(File file) throws IOException {
-		BufferedReader reader = new BufferedReader(new FileReader(file));
-		String line = null;
-		StringBuilder stringBuilder = new StringBuilder((int) file.length() / 3);
-		String ls = System.getProperty("line.separator");
-
-		while ((line = reader.readLine()) != null) {
-			stringBuilder.append(line);
-			stringBuilder.append(ls);
-		}
-		reader.close();
-
-		String result = stringBuilder.toString();
-		return result;
-	}
-
-	public static void writeStringToFile(File file, String stringToWrite)
-			throws IOException {
-		BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-		writer.write(stringToWrite);
-
-		writer.close();
-	}
-
-	public static JSONObject readJSONObjectFromFile(File jsonFile)
-			throws IOException, JSONException {
-		String jsonString = readFileToString(jsonFile);
-		JSONObject jsonObject = new JSONObject(jsonString);
-
-		return jsonObject;
-	}
-
-	public static JSONArray readJSONArrayFromFile(File jsonFile)
-			throws IOException, JSONException {
-		String jsonString = readFileToString(jsonFile);
-		JSONArray jsonArray = new JSONArray(jsonString);
-
-		return jsonArray;
-	}
-
-	public static void writeJSONObjectToFile(File file, JSONObject jsonObject)
-			throws IOException, JSONException {
-		String jsonString = jsonObject.toString();
-		writeStringToFile(file, jsonString);
 	}
 }

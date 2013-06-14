@@ -1,6 +1,6 @@
 {
    "name":"Household_Inclusion",
-   "nameReadable":"Household Inclusion",
+   "nameReadable":"Inclusion des ménages",
    "description":"",
    "descriptors" : [{"label" : "Date du suivi", "conceptId" : "datenq"}, {"label" : "Numéro du ménage", "conceptId" : "nummen"}],
    "global":{
@@ -9,7 +9,7 @@
    "pages":[
       {
          "header":{
-            "title":"Page 12 : INFORMATION INCLUSION ENFANT",
+            "title":"Page 1 : INFORMATION INCLUSION ENFANT",
             "theme":"b"
          },
          "footer":{
@@ -26,27 +26,875 @@
                {
                   "viewType":"number",
                   "conceptId":"nomenq",
-                  "label":"Numéro de l'enquêteur"
+                  "label":"Numéro de l'enquêteur",
+                  "bounds":{
+                     "maxLength":3
+                  }
                },
                {
                   "viewType":"text",
                   "conceptId":"zonenom",
-                  "label":"Nom de la zone"
+                  "label":"Nom de la zone",
+                  "bounds":{
+                     "maxLength":25
+                  }
                },
                {
                   "viewType":"number",
                   "conceptId":"zonenum",
-                  "label":"Numéro de la zone"
+                  "label":"Numéro de la zone",
+                  "bounds":{
+                     "minValue":1,
+                     "maxValue":3
+                  }
+               },
+               {
+                  "viewType":"select",
+                  "conceptId":"nuvill1",
+                  "label":"Nom du village, zone 1",
+                  "showIf":{
+                     "conceptIds":[
+                        "zonenum"
+                     ],
+                     "condition":"zonenum == '1'"
+                  },
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Kamerom Centre / Manair"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Kamerom Kangoumr"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Kamerom Chomaro"
+                     },
+                     {
+                        "value":"4",
+                        "label":"Kamerom Adoumacher"
+                     },
+                     {
+                        "value":"5",
+                        "label":"Kamerom Konliaki /Kouiat"
+                     },
+                     {
+                        "value":"6",
+                        "label":"Andila Boteri /Bader"
+                     },
+                     {
+                        "value":"7",
+                        "label":"Keiri Nguili"
+                     },
+                     {
+                        "value":"8",
+                        "label":"Assangaïr"
+                     },
+                     {
+                        "value":"9",
+                        "label":"Wander"
+                     },
+                     {
+                        "value":"10",
+                        "label":"Kamerom Maïnar"
+                     },
+                     {
+                        "value":"11",
+                        "label":"Lordo Alimaï"
+                     },
+                     {
+                        "value":"12",
+                        "label":"Lordo Kaller"
+                     },
+                     {
+                        "value":"13",
+                        "label":"Lordo Tirer"
+                     },
+                     {
+                        "value":"14",
+                        "label":"Lordo Madar"
+                     },
+                     {
+                        "value":"15",
+                        "label":"Loukyari 1"
+                     },
+                     {
+                        "value":"16",
+                        "label":"Loukyari 2 I"
+                     },
+                     {
+                        "value":"17",
+                        "label":"Koreli - Korit"
+                     },
+                     {
+                        "value":"18",
+                        "label":"Tchotcho 1"
+                     },
+                     {
+                        "value":"19",
+                        "label":"Tchotcho 2 I"
+                     },
+                     {
+                        "value":"20",
+                        "label":"Lordo Adalar"
+                     },
+                     {
+                        "value":"21",
+                        "label":"Andila Malassat"
+                     },
+                     {
+                        "value":"22",
+                        "label":"Andila Ndyoliki /Ndajelt"
+                     },
+                     {
+                        "value":"23",
+                        "label":"Andila Blat"
+                     },
+                     {
+                        "value":"24",
+                        "label":"Lordo Blat"
+                     },
+                     {
+                        "value":"25",
+                        "label":"Lordo Ali Boltr"
+                     },
+                     {
+                        "value":"26",
+                        "label":"Lordo Choir"
+                     },
+                     {
+                        "value":"27",
+                        "label":"Gueler"
+                     },
+                     {
+                        "value":"28",
+                        "label":"Kourar"
+                     },
+                     {
+                        "value":"29",
+                        "label":"Mbodou Seitchir"
+                     },
+                     {
+                        "value":"30",
+                        "label":"Djourous Moussa yindi"
+                     },
+                     {
+                        "value":"31",
+                        "label":"Balladja Bili"
+                     },
+                     {
+                        "value":"32",
+                        "label":"Taka Douari 1 "
+                     },
+                     {
+                        "value":"33",
+                        "label":"Taka Douary 2 I"
+                     },
+                     {
+                        "value":"34",
+                        "label":"Taka Douary sout"
+                     },
+                     {
+                        "value":"35",
+                        "label":"Taka Touart"
+                     },
+                     {
+                        "value":"36",
+                        "label":"Taka Douary Amachoukou"
+                     },
+                     {
+                        "value":"37",
+                        "label":"Taka Douary Maratart"
+                     },
+                     {
+                        "value":"38",
+                        "label":"Taka Alir"
+                     },
+                     {
+                        "value":"39",
+                        "label":"Taka Tirer"
+                     },
+                     {
+                        "value":"40",
+                        "label":"Larkola 1 "
+                     },
+                     {
+                        "value":"41",
+                        "label":"Larkola 2 I"
+                     },
+                     {
+                        "value":"42",
+                        "label":"Dalla Mbodr"
+                     },
+                     {
+                        "value":"43",
+                        "label":"Afenga 1 "
+                     },
+                     {
+                        "value":"44",
+                        "label":"Taka Ngourtro"
+                     },
+                     {
+                        "value":"45",
+                        "label":"Albout Galaot"
+                     },
+                     {
+                        "value":"46",
+                        "label":"Adety Kour"
+                     },
+                     {
+                        "value":"47",
+                        "label":"Adety Our"
+                     },
+                     {
+                        "value":"48",
+                        "label":"Kafar"
+                     },
+                     {
+                        "value":"49",
+                        "label":"Issa Doumbar"
+                     },
+                     {
+                        "value":"50",
+                        "label":"Afenga 2 I"
+                     },
+                     {
+                        "value":"51",
+                        "label":"Brawt"
+                     },
+                     {
+                        "value":"52",
+                        "label":"Darkafia 3 II"
+                     },
+                     {
+                        "value":"53",
+                        "label":"Moussa Foderi /Fatr"
+                     },
+                     {
+                        "value":"54",
+                        "label":"Koukouri /kangouri Alfo"
+                     },
+                     {
+                        "value":"55",
+                        "label":"Boltrom Mals 2 I"
+                     },
+                     {
+                        "value":"56",
+                        "label":"Djourous Kanoumbr"
+                     },
+                     {
+                        "value":"57",
+                        "label":"Djourous Kouk"
+                     },
+                     {
+                        "value":"58",
+                        "label":"Djourous Mbodouyakomr"
+                     },
+                     {
+                        "value":"59",
+                        "label":"Djourous Kalkota 1 "
+                     },
+                     {
+                        "value":"60",
+                        "label":"Djourous Kalkota 2 I"
+                     },
+                     {
+                        "value":"61",
+                        "label":"Djourous Nguidat"
+                     },
+                     {
+                        "value":"62",
+                        "label":"Djourous Flatr"
+                     },
+                     {
+                        "value":"63",
+                        "label":"Djourous Moussa Kaleri 1 "
+                     },
+                     {
+                        "value":"64",
+                        "label":"Djourous Moussa Kaleri 2 I"
+                     },
+                     {
+                        "value":"65",
+                        "label":"Djourous Moussa Kaleri 3 II"
+                     },
+                     {
+                        "value":"66",
+                        "label":"Djourous Bader"
+                     },
+                     {
+                        "value":"67",
+                        "label":"Djourous Katechar"
+                     },
+                     {
+                        "value":"68",
+                        "label":"Djourous Komyar"
+                     },
+                     {
+                        "value":"69",
+                        "label":"Boltrom Adoumakekr"
+                     },
+                     {
+                        "value":"70",
+                        "label":"Boltrom Choukara"
+                     },
+                     {
+                        "value":"71",
+                        "label":"Boltrom Mals 1 "
+                     },
+                     {
+                        "value":"72",
+                        "label":"Boltrom Mals 3 II"
+                     },
+                     {
+                        "value":"73",
+                        "label":"Boltrom Kaniar"
+                     },
+                     {
+                        "value":"74",
+                        "label":"Boltron Hansan ndr"
+                     },
+                     {
+                        "value":"75",
+                        "label":"Boltrom Kaler"
+                     },
+                     {
+                        "value":"76",
+                        "label":"Boltrom Wart"
+                     },
+                     {
+                        "value":"77",
+                        "label":"Boltrom Aïr"
+                     },
+                     {
+                        "value":"78",
+                        "label":"Kokoul Abort"
+                     },
+                     {
+                        "value":"79",
+                        "label":"Kitchimaro"
+                     },
+                     {
+                        "value":"80",
+                        "label":"Blakaly"
+                     },
+                     {
+                        "value":"81",
+                        "label":"Michitir"
+                     },
+                     {
+                        "value":"82",
+                        "label":"Darkafia 1 "
+                     },
+                     {
+                        "value":"83",
+                        "label":"Darkafia 2 I"
+                     },
+                     {
+                        "value":"84",
+                        "label":"kara Brourour"
+                     },
+                     {
+                        "value":"85",
+                        "label":"Boltrom Mait"
+                     },
+                     {
+                        "value":"86",
+                        "label":"Issangar"
+                     },
+                     {
+                        "value":"99",
+                        "label":"Inconn"
+                     }
+                  ]
+               },
+               {
+                  "viewType":"select",
+                  "conceptId":"nuvill2",
+                  "label":"Nom du village, zone 2",
+                  "showIf":{
+                     "conceptIds":[
+                        "zonenum"
+                     ],
+                     "condition":"zonenum == '2'"
+                  },
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Wandall"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Mahara albaka"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Mahara 1 "
+                     },
+                     {
+                        "value":"4",
+                        "label":"Tobiyo 1 "
+                     },
+                     {
+                        "value":"5",
+                        "label":"Tobiyo 2 I"
+                     },
+                     {
+                        "value":"6",
+                        "label":"Tobiyo 3 II"
+                     },
+                     {
+                        "value":"7",
+                        "label":"Mahara in"
+                     },
+                     {
+                        "value":"8",
+                        "label":"Djimesse 4 I"
+                     },
+                     {
+                        "value":"9",
+                        "label":"Mahara alhami"
+                     },
+                     {
+                        "value":"10",
+                        "label":"Mahara albarbe"
+                     },
+                     {
+                        "value":"11",
+                        "label":"Mahara 2 I"
+                     },
+                     {
+                        "value":"12",
+                        "label":"Djimesse 2 I"
+                     },
+                     {
+                        "value":"13",
+                        "label":"Djimesse 3 II"
+                     },
+                     {
+                        "value":"14",
+                        "label":"Djimesse 1 "
+                     },
+                     {
+                        "value":"15",
+                        "label":"Odja 2 I"
+                     },
+                     {
+                        "value":"16",
+                        "label":"Odja 1 "
+                     },
+                     {
+                        "value":"17",
+                        "label":"Mandoull"
+                     },
+                     {
+                        "value":"18",
+                        "label":"Dal dredi"
+                     },
+                     {
+                        "value":"19",
+                        "label":"Hayab"
+                     },
+                     {
+                        "value":"20",
+                        "label":"Tororo 1 "
+                     },
+                     {
+                        "value":"21",
+                        "label":"Tororo 2 I"
+                     },
+                     {
+                        "value":"22",
+                        "label":"Hamara 2 I"
+                     },
+                     {
+                        "value":"23",
+                        "label":"Hamara 1 "
+                     },
+                     {
+                        "value":"24",
+                        "label":"Tileha 1 "
+                     },
+                     {
+                        "value":"25",
+                        "label":"Tileha 2 I"
+                     },
+                     {
+                        "value":"26",
+                        "label":"Goumboya 1 "
+                     },
+                     {
+                        "value":"27",
+                        "label":"Goumboya 2 I"
+                     },
+                     {
+                        "value":"28",
+                        "label":"Maguadat 2 I"
+                     },
+                     {
+                        "value":"29",
+                        "label":"Maguadat 1 "
+                     },
+                     {
+                        "value":"30",
+                        "label":"Kitir"
+                     },
+                     {
+                        "value":"31",
+                        "label":"Am-Achach"
+                     },
+                     {
+                        "value":"32",
+                        "label":"Tomate 1 "
+                     },
+                     {
+                        "value":"33",
+                        "label":"Tomate 2 I"
+                     },
+                     {
+                        "value":"34",
+                        "label":"Tomate 3 II"
+                     },
+                     {
+                        "value":"35",
+                        "label":"Wal-Damballa (Waldamla"
+                     },
+                     {
+                        "value":"36",
+                        "label":"Seibay"
+                     },
+                     {
+                        "value":"37",
+                        "label":"Iterine Ria"
+                     },
+                     {
+                        "value":"38",
+                        "label":"Iterine 1 "
+                     },
+                     {
+                        "value":"39",
+                        "label":"Ganatir Noi"
+                     },
+                     {
+                        "value":"40",
+                        "label":"Macksou"
+                     },
+                     {
+                        "value":"41",
+                        "label":"Gamar-Bag"
+                     },
+                     {
+                        "value":"42",
+                        "label":"Gounar"
+                     },
+                     {
+                        "value":"43",
+                        "label":"Grette 2 I"
+                     },
+                     {
+                        "value":"44",
+                        "label":"Grette 1 "
+                     },
+                     {
+                        "value":"45",
+                        "label":"Djanabar"
+                     },
+                     {
+                        "value":"46",
+                        "label":"Dilema 1 "
+                     },
+                     {
+                        "value":"47",
+                        "label":"Delema 2 I"
+                     },
+                     {
+                        "value":"48",
+                        "label":"Tamada"
+                     },
+                     {
+                        "value":"49",
+                        "label":"Walla 2 I"
+                     },
+                     {
+                        "value":"50",
+                        "label":"Walla 1 "
+                     },
+                     {
+                        "value":"51",
+                        "label":"Mbireme (Bremi) II"
+                     },
+                     {
+                        "value":"52",
+                        "label":"MBirime (Bremi) 4 I"
+                     },
+                     {
+                        "value":"53",
+                        "label":"Mbireme (Bremi) 1 "
+                     },
+                     {
+                        "value":"54",
+                        "label":"Mbireme (Bremi) 2 I"
+                     },
+                     {
+                        "value":"55",
+                        "label":"Am-Dog"
+                     },
+                     {
+                        "value":"56",
+                        "label":"Grette 3 II"
+                     },
+                     {
+                        "value":"57",
+                        "label":"Kale-Kor"
+                     },
+                     {
+                        "value":"58",
+                        "label":"Hassabalari 1 "
+                     },
+                     {
+                        "value":"59",
+                        "label":"Hassabalari 2 I"
+                     },
+                     {
+                        "value":"60",
+                        "label":"Nibeck Fadit"
+                     },
+                     {
+                        "value":"61",
+                        "label":"Fanta 1 "
+                     },
+                     {
+                        "value":"62",
+                        "label":"Fanta 2 I"
+                     },
+                     {
+                        "value":"63",
+                        "label":"Nabaga"
+                     },
+                     {
+                        "value":"64",
+                        "label":"Motar"
+                     },
+                     {
+                        "value":"65",
+                        "label":"Yaman"
+                     },
+                     {
+                        "value":"66",
+                        "label":"Aliri (Ali Weleri"
+                     },
+                     {
+                        "value":"67",
+                        "label":"Kaltour"
+                     },
+                     {
+                        "value":"68",
+                        "label":"Ali-Gourt"
+                     },
+                     {
+                        "value":"69",
+                        "label":"Galdjar"
+                     },
+                     {
+                        "value":"70",
+                        "label":"Kaliar"
+                     },
+                     {
+                        "value":"71",
+                        "label":"Mait"
+                     },
+                     {
+                        "value":"72",
+                        "label":"Maïti Kadikad"
+                     },
+                     {
+                        "value":"73",
+                        "label":"Attichene 2 I"
+                     },
+                     {
+                        "value":"74",
+                        "label":"Attichene 1 "
+                     },
+                     {
+                        "value":"75",
+                        "label":"Attichene 3 II"
+                     },
+                     {
+                        "value":"76",
+                        "label":"Malari Indji Hadj"
+                     },
+                     {
+                        "value":"77",
+                        "label":"Bir Haralah 2 I"
+                     },
+                     {
+                        "value":"78",
+                        "label":"Bir Haralah 1 "
+                     },
+                     {
+                        "value":"79",
+                        "label":"Bir Haralah 3 II"
+                     },
+                     {
+                        "value":"80",
+                        "label":"Bir Haralah 4 I"
+                     },
+                     {
+                        "value":"81",
+                        "label":"Kir Kitch"
+                     },
+                     {
+                        "value":"82",
+                        "label":"Anga shir"
+                     },
+                     {
+                        "value":"83",
+                        "label":"Tourba Tor"
+                     },
+                     {
+                        "value":"84",
+                        "label":"Tourb"
+                     },
+                     {
+                        "value":"85",
+                        "label":"Atai"
+                     },
+                     {
+                        "value":"86",
+                        "label":"Arera -Arer"
+                     },
+                     {
+                        "value":"87",
+                        "label":"Mbireme Haraaz"
+                     },
+                     {
+                        "value":"99",
+                        "label":"Inconn"
+                     }
+                  ]
+               },
+               {
+                  "viewType":"select",
+                  "conceptId":"nuvill3",
+                  "label":"Nom du village, zone 3",
+                  "showIf":{
+                     "conceptIds":[
+                        "zonenum"
+                     ],
+                     "condition":"zonenum == '3'"
+                  },
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Kara"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Nabagay"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Nabagaya "
+                     },
+                     {
+                        "value":"4",
+                        "label":"Domay"
+                     },
+                     {
+                        "value":"5",
+                        "label":"Habad"
+                     },
+                     {
+                        "value":"6",
+                        "label":"N'Djamena Falat"
+                     },
+                     {
+                        "value":"7",
+                        "label":"Guirb"
+                     },
+                     {
+                        "value":"8",
+                        "label":"MaloumR"
+                     },
+                     {
+                        "value":"9",
+                        "label":"Maloum-Ri "
+                     },
+                     {
+                        "value":"10",
+                        "label":"Toumray"
+                     },
+                     {
+                        "value":"11",
+                        "label":"Roumay"
+                     },
+                     {
+                        "value":"12",
+                        "label":"Hile Falat"
+                     },
+                     {
+                        "value":"13",
+                        "label":"Isray"
+                     },
+                     {
+                        "value":"14",
+                        "label":"Garaday"
+                     },
+                     {
+                        "value":"15",
+                        "label":"Garman"
+                     },
+                     {
+                        "value":"16",
+                        "label":"Ria"
+                     },
+                     {
+                        "value":"17",
+                        "label":"Boussay"
+                     },
+                     {
+                        "value":"18",
+                        "label":"N'Djamena Michetir"
+                     },
+                     {
+                        "value":"19",
+                        "label":"Am-Maloudo"
+                     },
+                     {
+                        "value":"20",
+                        "label":"Salay"
+                     },
+                     {
+                        "value":"21",
+                        "label":"Ardeb"
+                     },
+                     {
+                        "value":"22",
+                        "label":"Drick 1 "
+                     },
+                     {
+                        "value":"23",
+                        "label":"Drick 2 I"
+                     },
+                     {
+                        "value":"24",
+                        "label":"Angourouto"
+                     },
+                     {
+                        "value":"25",
+                        "label":"Hile Falata "
+                     },
+                     {
+                        "value":"99",
+                        "label":"Inconn"
+                     }
+                  ]
                },
                {
                   "viewType":"number",
                   "conceptId":"nummen",
                   "label":"Numéro du ménage"
-               },
-               {
-                  "viewType":"number",
-                  "conceptId":"nuvill",
-                  "label":"Numéro du village"
                },
                {
                   "viewType":"number",
@@ -76,7 +924,8 @@
                {
                   "viewType":"text",
                   "conceptId":"tel",
-                  "label":"Numéro de téléphone"
+                  "label":"Numéro de téléphone",
+                  "required":false
                },
                {
                   "viewType":"radio",
@@ -144,7 +993,7 @@
       },
       {
          "header":{
-            "title":"Page 13 : ORGANISATION DU MENAGE",
+            "title":"Page 2 : ORGANISATION DU MENAGE",
             "theme":"b"
          },
          "footer":{
@@ -384,7 +1233,7 @@
       },
       {
          "header":{
-            "title":"Page 14 : DEMOGRAPHIE DU MENAGE",
+            "title":"Page 3 : DEMOGRAPHIE DU MENAGE",
             "theme":"b"
          },
          "footer":{
@@ -438,7 +1287,7 @@
       },
       {
          "header":{
-            "title":"Page 15 : BIENS, PROPRIETES, TERRES POSSEDEES",
+            "title":"Page 4 : BIENS, PROPRIETES, TERRES POSSEDEES",
             "theme":"b"
          },
          "footer":{
@@ -752,7 +1601,7 @@
       },
       {
          "header":{
-            "title":"Page 16 : SOURCES DE REVENUS / REVENUS EN ARGENT",
+            "title":"Page 5 : SOURCES DE REVENUS / REVENUS EN ARGENT",
             "theme":"b"
          },
          "footer":{
@@ -902,12 +1751,12 @@
                      "conceptIds":[
                         "depautr"
                      ],
-                     "condition":"depautr == 'true'"
+                     "condition":"depautr ==  true"
                   }
                },
                {
                   "viewType":"checkboxgroup",
-                  "label":"Pouvez vous nous dire ce que vous cultivez sur cette surface?",
+                  "label":"Pouvez vous nous dire ce que vous cultivez sur vos terres?",
                   "conceptId":"cultivation2Checkbox",
                   "children":[
                      {
@@ -943,7 +1792,7 @@
                         "conceptId":"culhari"
                      },
                      {
-                        "label":"Bere Bere",
+                        "label":"Gombo",
                         "conceptId":"culberb"
                      },
                      {
@@ -966,7 +1815,7 @@
                      "conceptIds":[
                         "culaut"
                      ],
-                     "condition":"culaut == 'true'"
+                     "condition":"culaut ==  true"
                   }
                },
                {
@@ -1032,7 +1881,7 @@
                         "conceptId":"rechari"
                      },
                      {
-                        "label":"Bere Bere",
+                        "label":"Gombo",
                         "conceptId":"recberb"
                      },
                      {
@@ -1056,7 +1905,7 @@
                      "conceptIds":[
                         "recaut"
                      ],
-                     "condition":"recaut == 'true'"
+                     "condition":"recaut == true"
                   }
                }
             ]
@@ -1064,7 +1913,7 @@
       },
       {
          "header":{
-            "title":"Page 17 : ",
+            "title":"Page 6 : PRODUCTION AGRICOLE / CONSOMMATION",
             "theme":"b"
          },
          "footer":{
@@ -1302,13 +2151,8 @@
                         "ratgfd",
                         "ratnosp"
                      ],
-                     "condition":"ratgfd == '1' && ratnosp =='false'"
+                     "condition":"ratgfd == '1' && ratnosp == false"
                   }
-               },
-               {
-                  "viewType":"text",
-                  "conceptId":"rataut_specif",
-                  "label":"Préciser:"
                },
                {
                   "viewType":"radio",
@@ -1372,7 +2216,7 @@
                         "ratgfd",
                         "rvenosp"
                      ],
-                     "condition":"ratgfd == '1' && rvenosp =='false'"
+                     "condition":"ratgfd == '1' && rvenosp == false"
                   }
                },
                {
@@ -1385,7 +2229,7 @@
       },
       {
          "header":{
-            "title":"Page 18 : DIFFICULTES D'APPROVISONNEMENT / DETTES",
+            "title":"Page 7 : DIFFICULTES D'APPROVISONNEMENT / DETTES",
             "theme":"b"
          },
          "footer":{
@@ -1482,7 +2326,7 @@
                      "conceptIds":[
                         "apautr"
                      ],
-                     "condition":"apautr == 'true'"
+                     "condition":"apautr ==  true"
                   }
                },
                {
@@ -1542,7 +2386,7 @@
                      "conceptIds":[
                         "apautmo"
                      ],
-                     "condition":"apautmo == 'true'"
+                     "condition":"apautmo ==  true"
                   }
                },
                {

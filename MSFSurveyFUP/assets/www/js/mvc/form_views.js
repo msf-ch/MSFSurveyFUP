@@ -9,12 +9,15 @@ FormItemViewModel = Backbone.Model.extend({
 		defaultValue : "",
 		options : [],
 		children : undefined,
-		showIf : undefined, // [conceptId, [values]]
-		hideIf : undefined, // [conceptId, [values]]
-		obsListeners : undefined, // [conceptId, eventName, action]
-		validators : undefined, // [{conceptIds : [], condition : "", errorMessage : ""}]
+		showIf : undefined, // {conceptIds : ["conceptId1", "conceptId2"], condition : "conceptId1 > conceptId2"} 
+							//shows view if conceptId1 is more than conceptId2 (evaluated at form init and upon value changes)
+		hideIf : undefined, // {conceptIds : ["conceptId1", "conceptId2"], condition : "conceptId1 > conceptId2"}
+							//hides view if conceptId1 is more than conceptId2 (evaluated at form init and upon value changes)
+		validators : undefined, // [{conceptIds : ["conceptId1"], condition : "value > conceptId1 && value == view.getValue()", errorMessage : ""}]
+								// condition script can use variables view (the view object) and value (the value of the view object)
 		bounds : undefined, // {minValue : 0, maxValue : 1, minLength : 0, maxLength : 1, exactLength : 1}
-		required : false,
+		dateBounds : undefined, //{maxDate : [4-digit year, month, day], minDate : [4-digit year, month, day], dateFormat : "", dateOrder : ""}
+		required : true
 	},
 	
 	propertyDescriptors : {
@@ -29,14 +32,6 @@ FormItemViewModel = Backbone.Model.extend({
 		if(children) {
 			this.childrenModels = new FormItemViewModelList;
 			this.childrenModels.add(children);
-		}
-		
-		//precompile validators
-		var validators = this.get('validators');
-		if (validators) {
-			for (var i = 0; i < validators.length; i++) {
-				validators[i].compiledFunction = EvaluationService.compileObsEvalFunction(validators[i]);
-			}
 		}
 	},
 	
@@ -71,30 +66,41 @@ FormItemViewModel = Backbone.Model.extend({
 	
 	getValidationErrors : function() {
 		var errors = [];
-		if (this.get('validators')) {
-			//check against validators
-		}
-		var bounds = this.get('bounds');
 		var value = this.view.getValue();
+		
+		var validators = this.get('validators');
+		if (validators) {
+			for (var i = 0; i < validators.length; i++) {
+				if (!EvaluationService.executeViewCondition(validators[i], this.view)) {
+					errors.push(validators[i].errorMessage);
+				}
+			}
+		}
+		
+		if (this.get('required') && this.get('conceptId') && (value == undefined || value == '')) {
+			errors.push("La réponse à cette question est obligatoire."); //This field is required, please enter a value.
+		}
+		
+		var bounds = this.get('bounds');
 		if (bounds && value) { //TRANSLATETHIS
 			var stringValue = value.toString();
 			 if (bounds.maxValue && value > bounds.maxValue) {
-				 errors.push("Answer VALUE must be less than or equal to " + bounds.maxValue);
+				 errors.push("La VALEUR ne doit pas dépasse " + bounds.maxValue); //Answer VALUE must be less than or equal to 
 			 }
 			 if (bounds.minValue && value < bounds.minValue) {
-				 errors.push("Answer VALUE must be more than or equal to " + bounds.minValue);
+				 errors.push("La VALEUR doit être d'au moins " + bounds.minValue); //Answer VALUE must be more than or equal to
 			 }
 
 			var stringValue = value.toString();
 			 if (bounds.maxLength && stringValue.length > bounds.maxLength) {
-				 errors.push("Answer LENGTH must be less than or equal to " + bounds.maxLength + " characters.");
+				 errors.push("La LONGUEUR de la réponse ne doit pas dépasser " + bounds.maxLength + " caractères."); //Answer LENGTH must be less than or equal to x characters
 			 }
 			 if (bounds.minLength && stringValue.length > bounds.minLength) {
-				 errors.push("Answer LENGTH must be more than or equal to " + bounds.minLength + " characters.");
+				 errors.push("La LONGUEUR de la réponse doit être d'au moins " + bounds.minLength + " caractères."); //Answer LENGTH must be more than or equal to x characters
 			 }
 
 			 if (bounds.exactLength && stringValue.length > bounds.exactLength) {
-				 errors.push("Answer LENGTH must be exactly " + bounds.exactLength + " characters.");
+				 errors.push("La LONGUEUR de la réponse doit être exactement " + bounds.exactLength + " characters."); //Answer LENGTH must be exactly x characters.
 			 }
 		}
 		
@@ -284,6 +290,29 @@ RadioView = TextView.extend({
 	}
 });
 
+SelectView = TextView.extend({
+	template : _.template($("#tmpl-selectview").html()),
+	
+	events : {
+		"change select" : "defaultValueChanged"
+	},
+	
+	render : function() {
+		this.renderDefault();
+	},
+	
+	getValue : function() {
+		var value = this.$el.find("select").val();
+		return value;
+	},
+	
+	setValue : function(value) {
+		var select = this.$el.find("select");
+		select.val(value);
+		select.selectmenu('refresh');
+	}
+});
+
 CheckGroupView = FormItemView.extend({
 	template : _.template($("#tmpl-checkgroupview").html()),
 	
@@ -325,7 +354,31 @@ DateView = TextView.extend({
 	
 	render : function() {
 		this.renderDefault();
-		this.$el.find('input').mobiscroll().date({lang: 'fr', display: 'bubble'});
+		var mobiscrollParams = {lang: 'fr', display: 'bubble'};
+		var dateBounds = this.model.get('dateBounds');
+		if (dateBounds) {
+			if (dateBounds.maxDate) {
+				if (dateBounds.maxDate.toLowerCase() == "today") {
+					mobiscrollParams.maxDate = new Date();
+				} else {
+					mobiscrollParams.maxDate = new Date(dateBounds.maxDate);
+				}
+			}
+			if (dateBounds.minDate) {
+				if (dateBounds.minDate.toLowerCase() == "today") {
+					mobiscrollParams.minDate = new Date();
+				} else {
+					mobiscrollParams.minDate = new Date(dateBounds.minDate);
+				}
+			}
+			if (dateBounds.dateFormat) {
+				mobiscrollParams.maxDate = dateBounds.dateFormat;
+			}
+			if (dateBounds.dateOrder) {
+				mobiscrollParams.dateOrder = dateBounds.dateOrder;
+			}
+		}
+		this.$el.find('input').mobiscroll().date(mobiscrollParams);
 	}
 });
 
@@ -357,6 +410,7 @@ SubmitPageView = FormItemView.extend({
 window.formItemViewCodes = {text : TextView,
 		number : NumberView,
 		radio : RadioView,
+		select : SelectView,
 		checkboxgroup : CheckGroupView,
 		checkbox : CheckView,
 		submitpage : SubmitPageView,

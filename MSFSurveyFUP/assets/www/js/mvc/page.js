@@ -130,7 +130,7 @@ PageView = Backbone.View.extend({
 	
 	validate : function() {
 		var viewsWithErrors =[];
-		var formViews = this.$el.find(".formview");
+		var formViews = this.$el.find(".formview:not(.viewhidden, .viewhidden *)"); //don't include any hidden views!
 		
 		var view;
 		var viewErrors;

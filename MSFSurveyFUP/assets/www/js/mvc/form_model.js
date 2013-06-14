@@ -11,3 +11,15 @@ FormModel = Backbone.Model.extend({
 	initialize : function() {
 	}
 });
+
+Encounter = Backbone.Model.extend({
+	defaults : {
+		obs : [],
+		lastSaved : undefined,
+		formName : "",
+		formNameReadable : "",
+		descriptors : [],
+		completed : true,
+		lastPage : undefined
+	}
+});

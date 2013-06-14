@@ -36,7 +36,7 @@
 <body>
 	<div data-role="page" data-theme="c">
 		<div data-role="header">
-			<h3>Load Encounter</h3>
+			<h3>Modifier un formulaire</h3>
 		</div>
 		<div data-role="content">
 			<div id="formSelectContainer" data-role="fieldcontain">
@@ -48,8 +48,19 @@
 	</div>
 
 
+<script id='tmpl-formSelect' type='text/template'>
+<div id="formSelectContainer" data-role="fieldcontain">
+	<label for="formSelect">Choisissez un formulaire:</label>
+	<select name="formSelect" id="formSelect">
+		<% for (var i = 0; i < forms.length; i++) { %>
+			<option value="<%= forms[i].name %>"><%= forms[i].nameReadable %></option>
+		<% } %>
+	</select>
+</div>
+</script>
+
 <script id='tmpl-encounterList' type='text/template'>
-<ul id="formSelect" data-role="listview" data-filter="true">
+<ul id="formSelect" data-role="listview" data-filter="true" data-filter-placeholder="Rechercher...">
 	<% for (var i = 0; i < encounterFiles.length; i++) { %>
 		<li><a href="Form.html?formFilePath=js/forms/<%=encounterFiles[i].formName %>.json&encounter=<%= encounterFiles[i].fileName %>" data-ajax="false">
 			<h2><%= encounterFiles[i].formNameReadable %></h2>
@@ -62,17 +73,6 @@
 		</a></li>
 	<% } %>
 </ul>
-</script>
-
-<script id='tmpl-formSelect' type='text/template'>
-<div id="formSelectContainer" data-role="fieldcontain">
-	<label for="formSelect">Choisissez une forme:</label>
-	<select name="formSelect" id="formSelect">
-		<% for (var i = 0; i < forms.length; i++) { %>
-			<option value="<%= forms[i].name %>"><%= forms[i].nameReadable %></option>
-		<% } %>
-	</select>
-</div>
 </script>
 
 </body>

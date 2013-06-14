@@ -37,7 +37,7 @@ FormService = {
 		var hideIf = view.model.get('hideIf');
 		if (hideIf && hideIf.condition) {
 			view.listenTo(obsList, "initialize changeObsValue:" + hideIf.conceptIds.join(" changeObsValue:"), function(model, value, options) {
-				if(ObsService.evaluateConditionSting(hideIf.conceptIds, hideIf.condition)) {
+				if(EvaluationService.executeObsCondition(hideIf)) {
 					view.hide();
 				} else {
 					view.show();
@@ -48,7 +48,7 @@ FormService = {
 		var showIf = view.model.get('showIf');
 		if (showIf && showIf.condition) {
 			view.listenTo(obsList, "initialize changeObsValue:" + showIf.conceptIds.join(" changeObsValue:"), function(model, value, options) {
-				if(ObsService.evaluateConditionSting(showIf.conceptIds, showIf.condition)) {
+				if(EvaluationService.executeObsCondition(showIf)) {
 					view.show();
 				} else {
 					view.hide();
@@ -102,16 +102,6 @@ ObsService = {
 	getObs : function(conceptId) {
 		//console.log('get obs ' + conceptId);
 		return obsList.getValue(conceptId);
-	},
-	
-	evaluateConditionSting : function(conceptIds, string) {
-		var args = [];
-		for (var i = 0; i < conceptIds.length; i++) {
-			args[i] = ObsService.getObs(conceptIds[i]);
-		}
-		var func = new Function(conceptIds, 'return ' + string + ';');
-		
-		return func.apply(func, args);
 	}
 };
 
@@ -136,7 +126,7 @@ PageService = {
 	},
 	
 	setActivePageIndex : function(pageIndex) {
-		if (pageIndex + 1 > this.pageModels.length) {
+		if (pageIndex >= this.pageModels.length) {
 			alert('PageIndex exceeds number of pages!');
 			return;
 		}
@@ -196,18 +186,53 @@ PageService = {
 };
 
 EvaluationService = {
-		compileObsEvalFunction : function(obsEvalSerialized) {
-			var func = new Function(conceptIds, 'return ' + string + ';');
-			func.serialized = obsEvalSerialized;
+		compileObsCondition : function(obsEvalSerialized) {
+			var func = new Function(obsEvalSerialized.conceptIds, 'return ' + obsEvalSerialized.condition + ';');
+			obsEvalSerialized.compiledCondition = func;
 			
 			return func;
 		},
 		
-		executeObsEvalFunction : function(obsEvalFunction) {
-			var args = [];
-			for (var i = 0; i < conceptIds.length; i++) {
-				args[i] = ObsService.getObs(conceptIds[i]);
+		executeObsCondition : function(obsEvalSerialized) {	
+			var conceptIdValues = [];
+			for (var i = 0; i < obsEvalSerialized.conceptIds.length; i++) {
+				conceptIdValues[i] = ObsService.getObs(obsEvalSerialized.conceptIds[i]);
 			}
-			return obsEvalFunction.apply(obsEvalFunction, args);
-		}
+			
+			if (!obsEvalSerialized.compiledFunction) {
+				//compile
+				EvaluationService.compileObsCondition(obsEvalSerialized);
+			}
+			
+			return obsEvalSerialized.compiledCondition.apply(obsEvalSerialized, conceptIdValues);
+		},
+		
+		compileViewCondition : function(viewEvalSerialized, view) {
+			var paramNames = ['view', 'value'];
+			if (viewEvalSerialized.conceptIds) {
+				paramNames = paramNames.concat(viewEvalSerialized.conceptIds);
+			}
+			
+			var func = new Function(paramNames, 'return ' + viewEvalSerialized.condition + ';');
+			viewEvalSerialized.compiledCondition = func;
+			
+			return func;
+		},
+		
+		executeViewCondition : function(viewEvalSerialized, view) {	
+			var paramValues = [view, view.getValue()];
+			
+			if(viewEvalSerialized.conceptIds) {
+				for (var i = 0; i < viewEvalSerialized.conceptIds.length; i++) {
+					paramValues.push(ObsService.getObs(viewEvalSerialized.conceptIds[i]));
+				}
+			}
+			
+			if (!viewEvalSerialized.compiledFunction) {
+				//compile
+				EvaluationService.compileViewCondition(viewEvalSerialized, view);
+			}
+			
+			return viewEvalSerialized.compiledCondition.apply(viewEvalSerialized, paramValues);
+		},
 };
