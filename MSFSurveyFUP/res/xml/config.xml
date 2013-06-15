@@ -54,6 +54,7 @@
         <plugin name="InAppBrowser" value="org.apache.cordova.InAppBrowser"/>
     
         <plugin name="MSF" value="org.msf.survey.monthly.fup.plugin.MSFPlugin" />
+        <plugin name="ReportService" value="org.msf.survey.monthly.fup.plugin.ReportingPlugin" />
     </plugins>
 </cordova>
 

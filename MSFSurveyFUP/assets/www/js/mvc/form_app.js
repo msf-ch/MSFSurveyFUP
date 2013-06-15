@@ -1,3 +1,5 @@
+Form = new FormModel;
+
 //Ensure that the footer always stays on the bottom
 window.positionFooter = function(event) {
 	var content = $.mobile.activePage.children(":jqmData(role='content')");
@@ -52,7 +54,7 @@ loadFromJSONForm = function(formFilePath) {
 			console.log(textStatus);
 			console.log(data.length);
 			
-			Form = new FormModel(data);
+			Form.set(data);
 			Body = new BodyView({
 				el : $("body")
 			});
@@ -79,6 +81,10 @@ init = function() {
 	sessionStorage.encounter = "";
 	formFilePath = getParameterByName('formFilePath') || sessionStorage.formFilePath;
 	sessionStorage.formFilePath = "";
+	
+	if(sessionStorage["testIterationsRemaining"]) {
+		loadjscssfile('js/mvc/form_test.js');
+	}
 	
 	if (encounter) {
 		cordova.exec(function(data) {

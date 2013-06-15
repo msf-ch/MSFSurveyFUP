@@ -29,6 +29,7 @@ public class MSFSurveyFUP extends DroidGap
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        FileUtilities.ensureDirectoriesExist();
         super.loadUrl("file:///android_asset/www/home.html");
     }
 }

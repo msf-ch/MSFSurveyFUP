@@ -120,12 +120,14 @@ PageView = Backbone.View.extend({
 		this.footer.$el.trigger('create');
 		
 		this.trigger('pagebeforeshow');
+		PageService.trigger('pagebeforeshow', [this]);
 	},
 	
 	onShow : function() {
 		$.mobile.silentScroll(0);
 		
 		this.trigger('pageshow');
+		PageService.trigger('pageshow', [this]);
 	},
 	
 	validate : function() {

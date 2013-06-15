@@ -76,7 +76,6 @@ FormService = {
 			}
 		}
 		
-//		var encounterToSave = {obs : obsList.toJSON(), lastSaved : new Date().getTime(), formName : Form.get('name'), formNameReadable : Form.get('nameReadable')};
 		cordova.exec(this.submitSuccessCallback, this.submitFailCallback, "MSF", "submit", [encounterToSave]);
 	},
 	
@@ -89,6 +88,7 @@ FormService = {
 	
 	ready : function() {
 		obsList.trigger('initialize');
+		Form.trigger('ready');
 	}
 };
 
@@ -105,7 +105,7 @@ ObsService = {
 	}
 };
 
-PageService = {
+PageService = _.extend({
 	pageModels : undefined,
 	activeIndex : -1,
 	
@@ -160,14 +160,17 @@ PageService = {
 		if (this.activeIndex == 0) {
 			for(var i = 0; i < obsList.length; i++) {
 				var model = obsList.at(i).attributes;
-				//console.log('KEY = ' + model.conceptId + ' VALUE = ' + model.value);
 			}
 		}
 		
-		var errors = pageModel.pageView.validate();
-		if (!errors || errors.length == 0) {
-			this.setActivePageIndex(this.activeIndex + 1);
+		if (Form.getGlobalVariable('validation', 'validateOnNextPage')) {
+			var errors = pageModel.pageView.validate();
+			if (errors && errors.length > 0) {
+				return;
+			}
 		}
+		
+		this.setActivePageIndex(this.activeIndex + 1);
 	},
 	
 	getActivePageIndex : function() {
@@ -183,7 +186,7 @@ PageService = {
 			}
 		}
 	}
-};
+}, Backbone.Events);
 
 EvaluationService = {
 		compileObsCondition : function(obsEvalSerialized) {

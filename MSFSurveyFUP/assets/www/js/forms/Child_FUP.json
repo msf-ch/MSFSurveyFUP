@@ -1141,7 +1141,6 @@
                {
                   "viewType":"checkboxgroup",
                   "label":"Si oui quel vaccin a-t-il reçu?",
-                  "conceptId":"vaccinesCheckbox",
                   "children":[
                      {
                         "label":"vaccination polio",
@@ -1195,7 +1194,6 @@
                {
                   "viewType":"checkboxgroup",
                   "label":"Si oui qu'avez-vous remarqué?",
-                  "conceptId":"reactionsCheckbox",
                   "children":[
                      {
                         "label":"Diarrhée",
@@ -1315,7 +1313,6 @@
                {
                   "viewType":"checkboxgroup",
                   "label":"Symptômes",
-                  "conceptId":"symptomesCheckbox",
                   "children":[
                      {
                         "label":"Fièvre",
@@ -1482,7 +1479,6 @@
                {
                   "viewType":"checkboxgroup",
                   "label":"Quelles sont les raisons de n'avoir rien entrepris",
-                  "conceptId":"reasonCheckbox",
                   "children":[
                      {
                         "label":"Raison financière",
@@ -1542,7 +1538,6 @@
                {
                   "viewType":"checkboxgroup",
                   "label":"Si oui, qu'est-ce qui a été fait?",
-                  "conceptId":"whatdoneCheckbox",
                   "children":[
                      {
                         "label":"Consultation au CDS",
@@ -1777,7 +1772,7 @@
                         "conceptIds":[
                            "enfid"
                         ],
-                        "errorMessage":"Infant ID does not match previously entered value: <strong id=\"enfiderrorlabel\"></strong>. <br><br>Please check that this is the correct value. If you believe that there was an error with the previously entered value, please return to the first page and correct it.<a id=\"linktofirstpage\" href=\"#\" data-role=\"button\" onclick=\"PageService.setActivePageIndex(0)\">Click here to return to the first page</a><script type=\"text/javascript\">$('#linktofirstpage').button();$('#enfiderrorlabel').text(ObsService.getObs('enfid'));</script>"
+                        "errorMessage":"Le numéro d'identification ne correspond pas à celui saisi au début du formulaire: <strong id=\"enfiderrorlabel\"></strong>. <br><br>PleaseVeuillez contrôler le numéro. Pour corriger le numéro saisi précédemment, veuillez revenir au début du formulaire.<a id=\"linktofirstpage\" href=\"#\" data-role=\"button\" onclick=\"PageService.setActivePageIndex(0)\">Cliquez ici pour revenir à la première page.</a><script type=\"text/javascript\">$('#linktofirstpage').button();$('#enfiderrorlabel').text(ObsService.getObs('enfid'));</script>"
                      }
                   ]
                }

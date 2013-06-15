@@ -8,13 +8,30 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Date;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class FileUtilities {
+import android.text.format.DateFormat;
 
+public class FileUtilities {
+	
+	public static final String FILE_NAME_DATE_FORMAT_STRING = "yyyy_MM_dd";
+	
+	public static String getSaveFileDatedName(String fileType, String fileDetail, String suffix) {
+		return fileType + "-" + 
+				fileDetail + "-"+ 
+				DateFormat.format(FILE_NAME_DATE_FORMAT_STRING, new Date()) + "-" + 
+				new Date().getTime() + 
+				"." + suffix;
+	}
+
+	public static void ensureDirectoriesExist() {
+		Constants.ENCOUNTER_DIR.mkdirs();
+		Constants.REPORT_STORAGE_DIR.mkdirs();
+	}
 
 	public static String readFileToString(File file) throws IOException {
 		BufferedReader reader = new BufferedReader(new FileReader(file));

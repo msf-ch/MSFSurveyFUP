@@ -115,6 +115,8 @@ FormItemViewModelList = Backbone.Collection.extend({
 });
 
 FormItemView = Backbone.View.extend({
+	type : "",
+	
 	template : undefined,
 	
 	decorated : false,
@@ -214,6 +216,8 @@ FormItemView = Backbone.View.extend({
 });
 
 TextView = FormItemView.extend({
+	type : "text",
+	
 	template : _.template($("#tmpl-textview").html()),
 	
 	events : {
@@ -241,6 +245,8 @@ TextView = FormItemView.extend({
 });
 
 NumberView = TextView.extend({
+	type : "number",
+	
 	template : _.template($("#tmpl-numberview").html()),
 	
 	events : {
@@ -263,6 +269,8 @@ NumberView = TextView.extend({
 });
 
 RadioView = TextView.extend({
+	type : "radio",
+	
 	template : _.template($("#tmpl-radioview").html()),
 	
 	events : {
@@ -292,6 +300,8 @@ RadioView = TextView.extend({
 });
 
 SelectView = TextView.extend({
+	type : "select",
+	
 	template : _.template($("#tmpl-selectview").html()),
 	
 	events : {
@@ -315,6 +325,8 @@ SelectView = TextView.extend({
 });
 
 CheckGroupView = FormItemView.extend({
+	type : "checkboxgroup",
+	
 	template : _.template($("#tmpl-checkgroupview").html()),
 	
 	render : function() {		
@@ -327,6 +339,8 @@ CheckGroupView = FormItemView.extend({
 });
 
 CheckView = FormItemView.extend({ 
+	type : "checkbox",
+	
 	template : _.template($("#tmpl-checkview").html()),
 	
 	events : {
@@ -351,7 +365,13 @@ CheckView = FormItemView.extend({
 });
 
 DateView = TextView.extend({
+	type : "date",
+	
 	template : _.template($("#tmpl-dateview").html()),
+	
+	events : {
+		"change input" : "defaultValueChanged"
+	},
 	
 	render : function() {
 		this.renderDefault();
@@ -384,6 +404,8 @@ DateView = TextView.extend({
 });
 
 SubmitPageView = FormItemView.extend({
+	type : "submitpage",
+	
 	template : _.template($("#tmpl-submitpage2").html()),
 	
 	initialize2 : function() {
@@ -414,7 +436,6 @@ window.formItemViewCodes = {text : TextView,
 		select : SelectView,
 		checkboxgroup : CheckGroupView,
 		checkbox : CheckView,
-		submitpage : SubmitPageView,
-		date : DateView};
-
+		date : DateView,
+		submitpage : SubmitPageView};
 });

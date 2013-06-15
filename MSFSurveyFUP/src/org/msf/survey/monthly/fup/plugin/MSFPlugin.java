@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileNotFoundException;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -38,6 +39,8 @@ public class MSFPlugin extends CordovaPlugin {
 	public static final String GET_ENCOUNTER = "getEncounter";
 	public static final String GET_FORMS = "getForms";
 	public static final String GET_FORM = "getForm";
+	public static final String ERASE_ENCOUNTERS = "eraseEncounters";
+	public static final String ERASE_REPORTS = "eraseReports";
 
 	/*
 	 * (non-Javadoc)
@@ -62,6 +65,10 @@ public class MSFPlugin extends CordovaPlugin {
 				getForms(args, callbackContext);
 			} else if (action.equalsIgnoreCase(GET_FORM)) {
 				getForm(args, callbackContext);
+			} else if (action.equalsIgnoreCase(ERASE_ENCOUNTERS)) {
+				eraseEncounters(args, callbackContext);
+			} else if (action.equalsIgnoreCase(ERASE_REPORTS)) {
+				eraseReports(args, callbackContext);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -189,10 +196,8 @@ public class MSFPlugin extends CordovaPlugin {
 			}
 		}
 
-		File saveDirectory = new File(
-				Environment.getExternalStorageDirectory(),
-				Constants.SAVE_DIR_NAME);
-		File[] files = saveDirectory.listFiles();
+		
+		File[] files = Constants.ENCOUNTER_DIR.listFiles();
 
 		JSONArray result = new JSONArray();
 		JSONObject o;
@@ -224,10 +229,6 @@ public class MSFPlugin extends CordovaPlugin {
 		JSONObject encounter = args.getJSONObject(0);
 
 		try {
-			File saveDirectory = new File(
-					Environment.getExternalStorageDirectory(),
-					Constants.SAVE_DIR_NAME);
-			saveDirectory.mkdirs();
 			String fileName;
 			if (!encounter.isNull("fileName")
 					&& encounter.get("fileName") instanceof String
@@ -235,10 +236,9 @@ public class MSFPlugin extends CordovaPlugin {
 				fileName = encounter.getString("fileName");
 				encounter.remove("fileName"); // put this in programmatically
 			} else {
-				fileName = "form-" + encounter.getString("formName") + "-"
-						+ new Date().getTime() + ".enc";
+				fileName = FileUtilities.getSaveFileDatedName("encounter", encounter.getString("formName"), "enc");
 			}
-			File outputFile = new File(saveDirectory, fileName);
+			File outputFile = new File(Constants.ENCOUNTER_DIR, fileName);
 
 			outputFile.delete();
 			outputFile.createNewFile();
@@ -256,11 +256,8 @@ public class MSFPlugin extends CordovaPlugin {
 	public void getEncounter(JSONArray args, CallbackContext callbackContext)
 			throws JSONException {
 		final String fileName = args.getString(0);
-		File saveDirectory = new File(
-				Environment.getExternalStorageDirectory(),
-				Constants.SAVE_DIR_NAME);
 
-		File[] files = saveDirectory.listFiles(new FileFilter() {
+		File[] files = Constants.ENCOUNTER_DIR.listFiles(new FileFilter() {
 			@Override
 			public boolean accept(File pathname) {
 				return pathname.getName().equals(fileName)
@@ -282,5 +279,37 @@ public class MSFPlugin extends CordovaPlugin {
 			callbackContext.error("Error loading file");
 			return;
 		}
+	}
+	
+	public void eraseEncounters(JSONArray args, CallbackContext callbackContext) {
+		File[] encounters = Constants.ENCOUNTER_DIR.listFiles(new FilenameFilter() {
+			
+			@Override
+			public boolean accept(File dir, String filename) {
+				return filename.endsWith(".enc");
+			}
+		});
+		
+		for (File f : encounters) {
+			f.delete();
+		}
+		
+		callbackContext.success();
+	}
+	
+	public void eraseReports(JSONArray args, CallbackContext callbackContext) {
+		File[] reports = Constants.REPORT_STORAGE_DIR.listFiles(new FilenameFilter() {
+			
+			@Override
+			public boolean accept(File dir, String filename) {
+				return filename.endsWith(".csv") && filename.startsWith("report-");
+			}
+		});
+		
+		for (File f : reports) {
+			f.delete();
+		}
+		
+		callbackContext.success();
 	}
 }
