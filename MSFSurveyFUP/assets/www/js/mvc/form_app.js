@@ -47,7 +47,7 @@ function getParameterByName(name) {
 
 loadFromJSONForm = function(formFilePath) {
 	$.get(formFilePath, undefined, undefined, "json")
-		.success(function(data, textStatus, jqXHR) {
+		.done(function(data, textStatus, jqXHR) {
 			var loadFormTime = new Date().getTime();
 			
 			console.log(formFilePath);
@@ -69,6 +69,9 @@ loadFromJSONForm = function(formFilePath) {
 		})
 		.fail(function(jqXHR, textStatus, errorThrown) {
 			console.error(textStatus + ":\n" + jqXHR.responseText)
+		})
+		.always(function() {
+		    $.mobile.loading( "hide" );
 		});
 }
 
@@ -82,8 +85,9 @@ init = function() {
 	formFilePath = getParameterByName('formFilePath') || sessionStorage.formFilePath;
 	sessionStorage.formFilePath = "";
 	
-	if(sessionStorage["testIterationsRemaining"]) {
-		loadjscssfile('js/mvc/form_test.js');
+	var testIterationsRemaining = sessionStorage["testIterationsRemaining"];
+	if(testIterationsRemaining && testIterationsRemaining > 0) {
+		loadjscssfile('js/mvc/form_test.js', 'js');
 	}
 	
 	if (encounter) {
@@ -107,3 +111,15 @@ $(document).on('deviceready', function() {
 		}
 	});
 });
+
+
+//show loader
+//$(document).one('pageshow', function() {
+//    $.mobile.loading( "show", {
+//        text: "Loading...",
+//        textVisible: true,
+//        theme: "a",
+//        textonly: false,
+//        html: $("#loader").html()
+//    });
+//});

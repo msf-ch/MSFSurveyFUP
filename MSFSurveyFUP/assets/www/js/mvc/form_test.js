@@ -7,7 +7,7 @@ $(function() {
 			location.reload(true);
 		}
 	} else {
-		sessionStorage["testIterationsRemaining"] = undefined;
+		sessionStorage["testIterationsRemaining"] = 0;
 	}
 
 	var count = 1;

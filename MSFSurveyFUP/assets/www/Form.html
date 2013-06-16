@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="js/lib/cordova-2.7.0.js" type="text/javascript" charset="utf-8"></script>
 
 <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
 <meta name="viewport"
@@ -13,7 +14,6 @@
 <link href="css/mobiscroll.jqm.css" rel="stylesheet" type="text/css" />
 <link href="css/mobiscroll.core.css" rel="stylesheet" type="text/css" />
 	
-<script src="js/lib/cordova-2.7.0.js" type="text/javascript" charset="utf-8"></script>
 	
 <script src="js/lib/jquery-1.8.2.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/lib/jquery.mobile-1.3.1.min.js" type="text/javascript" charset="utf-8"></script>
@@ -35,8 +35,6 @@
 <script src="js/mvc/form_controller.js" type="text/javascript" charset="utf-8"></script>
 
 <script src="js/mvc/form_app.js" type="text/javascript" charset="utf-8"></script>
-<script src="js/mvc/form_test.js" type="text/javascript" charset="utf-8"></script>
-
 
 </head>
 
@@ -45,13 +43,14 @@
 
 <div data-role="page" id="loadingPage">
 	<div data-role="header" data-theme="e">
-		<h1>Chargement du formulaire</h1>
+		<h1 pageheader="true">Chargement du formulaire</h1>
 	</div>
 
 	<div data-role="content">
-		<div id="loader" style="margin-top: 100px;">
-			<img alt="Loader" src="img/msf_running_man.png" style="display: block; width : 285px; height : 245px; margin-left: auto; margin-right: auto;">
-			<h2 style="width : 100%; text-align: center;">Préparation du formulaire...</h2>
+		<div class="ui-bar ui-shadow ui-overlay-d ui-corner-all" id="loader" style="margin-top: 100px; width: 340px; margin-left: auto; margin-right: auto; padding-bottom: 40px;">
+			<img alt="Lading image" src="img/msf_running_man.png" style="display: block; width : 285px; height : 245px; margin-left: auto; margin-right: auto;">
+			<img alt="Loading" src="img/ajax-loader.gif" style="display: block; margin-left: auto; margin-right: auto; margin-bottom: 1em;">
+			<h2 style="width: 100%; text-align: center;">Préparation du formulaire...</h2>
 		</div>
 	</div>
 </div>

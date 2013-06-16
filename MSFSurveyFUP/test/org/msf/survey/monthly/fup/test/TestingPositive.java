@@ -21,10 +21,5 @@ public class TestingPositive {
 		assert(appName.equals("MSFSurveyFUP"));
 		
 		InputStream is = Robolectric.application.getAssets().open("www/js/forms/Child_FUP.json");
-		List<String> conceptIds = CSVDataExport.getFormConceptIds(is);
-		
-		assert(conceptIds.size() > 0);
 	}
-	
-	
 }
