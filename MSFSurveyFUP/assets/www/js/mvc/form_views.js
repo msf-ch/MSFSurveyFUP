@@ -78,12 +78,12 @@ FormItemViewModel = Backbone.Model.extend({
 			}
 		}
 		
-		if (this.get('required') && this.get('conceptId') && (value == undefined || value == '')) {
+		if (this.get('required') && this.get('conceptId') && (value === undefined || value === '')) {
 			errors.push("La réponse à cette question est obligatoire."); //This field is required, please enter a value.
 		}
 		
 		var bounds = this.get('bounds');
-		if (bounds && value) { //TRANSLATETHIS
+		if (bounds && value) {
 			var stringValue = value.toString();
 			 if (bounds.maxValue && value > bounds.maxValue) {
 				 errors.push("La VALEUR ne doit pas dépasse " + bounds.maxValue); //Answer VALUE must be less than or equal to 
@@ -162,10 +162,6 @@ FormItemView = Backbone.View.extend({
 		this.decorated = true;
 	},
 	
-	valueChanged : function(view) {
-		this.defaultValueChanged();
-	},
-	
 	defaultValueChanged : function() {
 		this.trigger('viewValueChange', this);
 		this.trigger('save', this);
@@ -239,8 +235,10 @@ TextView = FormItemView.extend({
 	},
 	
 	setValue : function(value) {
-		this.$el.find("input").val(value);
-		this.model.defaultValue = value
+		var input = this.$el.find("input");
+		if (input.val() != value) {
+			this.$el.find("input").val(value);
+		}
 	}
 });
 
@@ -330,7 +328,7 @@ CheckGroupView = FormItemView.extend({
 	template : _.template($("#tmpl-checkgroupview").html()),
 	
 	render : function() {		
-		this.renderDefault()
+		this.renderDefault();
 		this.model.childrenModels.each(function(childModel, index, list) {
 			var newElement = $("<div></div>").appendTo(this.$el.find('fieldset'));
 			childModel.generateView(newElement, {viewType: 'checkbox'});
@@ -403,6 +401,68 @@ DateView = TextView.extend({
 	}
 });
 
+RankingView = FormItemView.extend({
+	type : "ranking",
+	
+	template : _.template($("#tmpl-rankingview").html()),
+	
+	events : {
+		"change input" : "defaultValueChanged",
+		"click a[conceptId]" : "addItem",
+		"click a[moveup]" : "moveUp",
+		"click a[movedown]" : "moveDown",
+		"click a[delete]" : "deleteItem",
+	},
+	
+	items : new Backbone.Collection([], {
+	}),
+	
+	render : function() {		
+		this.renderDefault();
+		this.model.childrenModels.each(function(childModel, index, list) {
+			var newElement = $("<tr rankingitem></tr>").appendTo(this.$el);
+			childModel.generateView(newElement, {viewType: 'rankingitem'});
+		}, this);
+	},
+	
+	refresh : function() {
+		this.$el.find("table").table('refresh');
+	},
+	
+	addItem : function() {
+	},
+	
+	deleteItem : function() {
+	},
+	
+	moveUp : function() {
+	},
+	
+	moveDown : function() {
+	}
+});
+
+RankingItemView = NumberView.extend({ 
+	type : "rankingitem",
+	
+	template : _.template($("#tmpl-rankingitemview").html()),
+	
+	render : function() {
+		this.renderDefault();
+		this.hide();
+	},
+	
+	initialize2 : function() {
+	},
+	
+	setValue : function(val) {
+		var input = this.$el.find("input");
+		if (input.val() && val && input.val() != val) {
+			this.$el.find("input").val(value);
+		}
+	}
+});
+
 SubmitPageView = FormItemView.extend({
 	type : "submitpage",
 	
@@ -437,5 +497,7 @@ window.formItemViewCodes = {text : TextView,
 		checkboxgroup : CheckGroupView,
 		checkbox : CheckView,
 		date : DateView,
+		ranking : DateView,
+		rankingitem : DateView,
 		submitpage : SubmitPageView};
 });
