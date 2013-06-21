@@ -1270,7 +1270,13 @@
                         "value":"3",
                         "label":"m2"
                      }
-                  ]
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "surfcul"
+                     ],
+                     "condition":"surfcul > 0"
+                  }
                },
                {
                   "viewType":"checkboxgroup",

@@ -58,8 +58,29 @@
                   ]
                },
                {
+                  "viewType":"select",
+                  "conceptId":"nuvill1",
+                  "label":"Nom du village, zone 1",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Hide"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Show"
+                     }
+                  ]
+               },
+               {
                   "viewType":"ranking",
                   "label":"Choisir par ordre de priorité (1, 2, 3, 4...)",
+                  "showIf":{
+                     "conceptIds":[
+                        "nuvill1"
+                     ],
+                     "condition":"nuvill1 == '2'"
+                  },
                   "children":[
                      {
                         "label":"Vente de production agricole",

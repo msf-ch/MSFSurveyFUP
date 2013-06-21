@@ -189,7 +189,9 @@ FormItemView = Backbone.View.extend({
 		this.defaultValueChanged();
 		
 		this.$el.find("[formview]").each(function(index, element) {
-			$(element).data('formview').setValue(undefined);
+			var formView = $(element).data('formview');
+			formView.setValue(undefined);
+			formView.defaultValueChanged();
 		});
 		
 		this.$el.find('')
@@ -423,7 +425,7 @@ RankingView = FormItemView.extend({
 	unrankedRowTemplate : _.template($("#tmpl-unrankedrow").html()),
 	
 	events : {
-		"click a[action='add']:not(.ui-disabled)" : "addItem",
+		"click [unranked] tr" : "addItem",
 		"click a[action='moveup']:not(.ui-disabled)" : "moveUp",
 		"click a[action='movedown']:not(.ui-disabled)" : "moveDown",
 		"click a[action='delete']:not(.ui-disabled)" : "deleteItem",
@@ -459,6 +461,10 @@ RankingView = FormItemView.extend({
 			
 			if(itemToMove.get('isValueSet')) {
 				itemToMove.get('rankedRow').hide().fadeIn('slow', function() {
+					$(this).css('display', '');
+				});
+			} else {
+				itemToMove.get('unrankedRow').hide().fadeIn('slow', function() {
 					$(this).css('display', '');
 				});
 			}
@@ -638,6 +644,9 @@ RankingItemView = FormItemView.extend({
 	}, 
 	
 	setValue : function(value) {
+		if (value == undefined) {
+			value = 0;
+		}
 		this.options.parent.items.setRank(this.model.get('conceptId'), value - 1);
 	}
 });
