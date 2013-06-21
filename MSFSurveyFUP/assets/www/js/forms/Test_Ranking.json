@@ -56,6 +56,44 @@
                         "conceptId":"revautr"
                      }
                   ]
+               },
+               {
+                  "viewType":"ranking",
+                  "label":"Choisir par ordre de priorité (1, 2, 3, 4...)",
+                  "children":[
+                     {
+                        "label":"Vente de production agricole",
+                        "conceptId":"revprod2"
+                     },
+                     {
+                        "label":"Emprunts",
+                        "conceptId":"revempr2"
+                     },
+                     {
+                        "label":"Travail contre argent",
+                        "conceptId":"revtrav2"
+                     },
+                     {
+                        "label":"Transfert d'argent",
+                        "conceptId":"revtran2"
+                     },
+                     {
+                        "label":"Travail non qualifié-main oeuvre",
+                        "conceptId":"revmain2"
+                     },
+                     {
+                        "label":"Vente de bétail (boeuf-chameau)",
+                        "conceptId":"revbeta2"
+                     },
+                     {
+                        "label":"Vente de petits animaux",
+                        "conceptId":"revanim2"
+                     },
+                     {
+                        "label":"Autre",
+                        "conceptId":"revautr2"
+                     }
+                  ]
                }
             ]
          }

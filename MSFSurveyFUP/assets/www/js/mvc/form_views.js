@@ -429,7 +429,9 @@ RankingView = FormItemView.extend({
 		"click a[action='delete']:not(.ui-disabled)" : "deleteItem",
 	},
 	
-	items : new (Backbone.Collection.extend({
+	items : undefined,
+	
+	ItemsCollection : Backbone.Collection.extend({
 		model : Backbone.Model.extend({
 			idAttribute : "conceptId",
 			defaults : {"conceptId" : undefined, "isValueSet" : false }
@@ -447,13 +449,19 @@ RankingView = FormItemView.extend({
 				}
 				
 				newIndex = this.indexOfLastSetValue();
-				itemToMove.set('isValueSet', false, {silent : true});
+				itemToMove.set('isValueSet', false);
 			} else {
-				itemToMove.set('isValueSet', true, {silent : true});
+				itemToMove.set('isValueSet', true);
 			}
 			
 			this.remove(itemToMove);
 			this.add(itemToMove, {at : newIndex});
+			
+			if(itemToMove.get('isValueSet')) {
+				itemToMove.get('rankedRow').hide().fadeIn('slow', function() {
+					$(this).css('display', '');
+				});
+			}
 			
 			this.trigger('rearranged', [oldIndex, newIndex]);
 		},
@@ -476,9 +484,11 @@ RankingView = FormItemView.extend({
 			}
 			return i;
 		}
-	})),
+	}),
 	
 	initialize2 : function() {
+		this.items = new this.ItemsCollection;
+		
 		this.listenTo(this.items, 'change:isValueSet', this.valueSetChanged);
 		this.listenTo(this.items, "rearranged", this.rearranged);
 	},
@@ -505,6 +515,7 @@ RankingView = FormItemView.extend({
 		}
 		
 		this.refresh();
+		this.$el.find("tr").css('display', '');
 	},
 	
 	refresh : function() {
@@ -530,7 +541,7 @@ RankingView = FormItemView.extend({
 		visibleRankedItems.first().find("a[action='moveup']").addClass('ui-disabled');
 		visibleRankedItems.last().find("a[action='movedown']").addClass('ui-disabled');
 		
-		if (visibleItems.length > 0) {
+		if (visibleRankedItems.length > 0) {
 			this.$el.find("[ranked] tfoot").hide();
 		} else {
 			this.$el.find("[ranked] tfoot").show();
@@ -543,19 +554,18 @@ RankingView = FormItemView.extend({
 		}
 		
 		if(this.registered) {
-			this.$el.find("table").table('refresh');
+			//this.$el.find("table").table('refresh');
 		}
 	},
 	
 	valueSetChanged : function(model, isValueSet, list) {
-		if (isValueSet) {
-			model.get("rankedRow").fadeIn('fast').removeClass('hidden');
-			model.get("unrankedRow").fadeOut('fast').addClass('hidden');
-		} else {
-			model.get("rankedRow").fadeOut('fast').addClass('hidden');
-			model.get("unrankedRow").fadeIn('fast').removeClass('hidden');
-		}
-		this.refresh();
+//		if (isValueSet) {
+//			model.get("rankedRow").fadeIn('fast').removeClass('hidden');
+//			model.get("unrankedRow").fadeOut('fast', function(){ $(this).addClass('hidden');});
+//		} else {
+//			model.get("rankedRow").fadeOut('fast', function(){ $(this).addClass('hidden');});
+//			model.get("unrankedRow").fadeIn('fast').removeClass('hidden');
+//		}
 	},
 	
 	rearranged : function(options) {
