@@ -1623,6 +1623,7 @@
                   "viewType":"checkboxgroup",
                   "label":"Si oui, qu'avez-vous dû vendre?",
                   "conceptId":"vendreCheckbox",
+				  "showIf":{"conceptIds":["bienvent"],"condition":"bienvent == 1"},
                   "children":[
                      {
                         "label":"Du bétail",

@@ -40,10 +40,12 @@ FormItemViewModel = Backbone.Model.extend({
 		if(this.view) {
 			this.destroyView();
 		}
-		
+		var viewType = undefined;
+		var parent = undefined;
 		if (params) {
 			this.page = params.page;
-			var viewType = params.viewType;
+			viewType = params.viewType;
+			parent = params.parent;
 		}
 		
 		if(!viewType) {
@@ -51,8 +53,10 @@ FormItemViewModel = Backbone.Model.extend({
 		}
 		
 		this.view = new formItemViewCodes[viewType]({model : this,
-			el : element});
+			el : element, "parent" : parent});
 		this.view.render();
+		
+		return this.view;
 	},
 	
 	destroyView : function() {
@@ -78,7 +82,7 @@ FormItemViewModel = Backbone.Model.extend({
 			}
 		}
 		
-		if (this.get('required') && this.get('conceptId') && (value === undefined || value === '')) {
+		if (this.get('required') && this.view.hasValue && (value === undefined || value === '')) {
 			errors.push("La réponse à cette question est obligatoire."); //This field is required, please enter a value.
 		}
 		
@@ -182,6 +186,8 @@ FormItemView = Backbone.View.extend({
 	
 	hide : function() {
 		this.setValue(undefined);
+		this.defaultValueChanged();
+		
 		this.$el.find("[formview]").each(function(index, element) {
 			$(element).data('formview').setValue(undefined);
 		});
@@ -208,7 +214,9 @@ FormItemView = Backbone.View.extend({
 		this.error(validationErrors.length > 0, validationErrors);
 		
 		return validationErrors;
-	}
+	},
+	
+	hasValue : true
 });
 
 TextView = FormItemView.extend({
@@ -325,6 +333,8 @@ SelectView = TextView.extend({
 CheckGroupView = FormItemView.extend({
 	type : "checkboxgroup",
 	
+	hasValue : false,
+	
 	template : _.template($("#tmpl-checkgroupview").html()),
 	
 	render : function() {		
@@ -404,67 +414,228 @@ DateView = TextView.extend({
 RankingView = FormItemView.extend({
 	type : "ranking",
 	
+	hasValue : false,
+	
 	template : _.template($("#tmpl-rankingview").html()),
 	
+	rankedRowTemplate : _.template($("#tmpl-rankedrow").html()),
+	
+	unrankedRowTemplate : _.template($("#tmpl-unrankedrow").html()),
+	
 	events : {
-		"change input" : "defaultValueChanged",
-		"click a[conceptId]" : "addItem",
-		"click a[moveup]" : "moveUp",
-		"click a[movedown]" : "moveDown",
-		"click a[delete]" : "deleteItem",
+		"click a[action='add']:not(.ui-disabled)" : "addItem",
+		"click a[action='moveup']:not(.ui-disabled)" : "moveUp",
+		"click a[action='movedown']:not(.ui-disabled)" : "moveDown",
+		"click a[action='delete']:not(.ui-disabled)" : "deleteItem",
 	},
 	
-	items : new Backbone.Collection([], {
-	}),
+	items : new (Backbone.Collection.extend({
+		model : Backbone.Model.extend({
+			idAttribute : "conceptId",
+			defaults : {"conceptId" : undefined, "isValueSet" : false }
+		}),
+		
+		setRank : function(conceptId, newIndex) {
+			var itemToMove = this.get(conceptId);
+			var oldIndex = this.getRank(conceptId);
+			
+			//if removing...
+			if (newIndex == undefined || newIndex < 0) {
+				if(!itemToMove.get('isValueSet')) {
+					//don't do anything if it's already removed
+					return;
+				}
+				
+				newIndex = this.indexOfLastSetValue();
+				itemToMove.set('isValueSet', false, {silent : true});
+			} else {
+				itemToMove.set('isValueSet', true, {silent : true});
+			}
+			
+			this.remove(itemToMove);
+			this.add(itemToMove, {at : newIndex});
+			
+			this.trigger('rearranged', [oldIndex, newIndex]);
+		},
+		
+		getRank : function(conceptId) {
+			var item = this.get(conceptId);
+			if (item.get('isValueSet')) {
+				return this.indexOf(item);
+			} else {
+				return undefined;
+			}
+		},
+		
+		indexOfLastSetValue : function() {
+			var i = this.length - 1;
+			for (; i >= 0; i--) {
+				if (this.at(i).get('isValueSet')) {
+					break;
+				}
+			}
+			return i;
+		}
+	})),
 	
-	render : function() {		
+	initialize2 : function() {
+		this.listenTo(this.items, 'change:isValueSet', this.valueSetChanged);
+		this.listenTo(this.items, "rearranged", this.rearranged);
+	},
+	
+	render : function() {
 		this.renderDefault();
-		this.model.childrenModels.each(function(childModel, index, list) {
-			var newElement = $("<tr rankingitem></tr>").appendTo(this.$el);
-			childModel.generateView(newElement, {viewType: 'rankingitem'});
-		}, this);
+		for (var i = 0; i < this.model.childrenModels.length; i++) {
+			var childModel = this.model.childrenModels.at(i);
+			var conceptId = childModel.get('conceptId');
+			
+			var formViewElement = $("<div></div>").appendTo(this.$el);
+			var formView = childModel.generateView(formViewElement, {viewType: 'rankingitem', parent : this});
+			
+			var rankedRow = $("<tr></tr>", {"conceptId" : conceptId}).appendTo(this.$el.find("[ranked] tbody"));
+			rankedRow.html(this.rankedRowTemplate({item : childModel}));
+			
+			var unrankedRow = $("<tr></tr>", {"conceptId" : conceptId}).appendTo(this.$el.find("[unranked] tbody"));
+			unrankedRow.html(this.unrankedRowTemplate({item : childModel}));
+			
+			this.items.add({"conceptId" : conceptId,
+							"formView" : formView,
+							"rankedRow" : rankedRow,
+							"unrankedRow" : unrankedRow});
+		}
+		
+		this.refresh();
 	},
 	
 	refresh : function() {
-		this.$el.find("table").table('refresh');
+		var rankedTbody = this.$el.find("[ranked] tbody");
+		for (var i = this.items.length - 1; i >= 0; i--) {
+			var element = this.items.at(i);
+			if(element.get('isValueSet')) {
+				var rank = this.items.getRank(element.get('conceptId')) + 1;
+				element.get('rankedRow').prependTo(rankedTbody).find(".ranknumber").html(rank);
+				element.get("rankedRow").removeClass('hidden');
+				element.get("unrankedRow").addClass('hidden');
+			} else {
+				element.get("rankedRow").addClass('hidden');
+				element.get("unrankedRow").removeClass('hidden');
+			}
+		}
+		
+		var visibleItems = this.$el.find("tbody tr:not(.hidden)");
+		visibleItems.removeClass("alt").filter(":odd").addClass("alt");
+		
+		var visibleRankedItems = visibleItems.filter("[ranked] tr");
+		visibleRankedItems.find("a[action]").removeClass('ui-disabled');
+		visibleRankedItems.first().find("a[action='moveup']").addClass('ui-disabled');
+		visibleRankedItems.last().find("a[action='movedown']").addClass('ui-disabled');
+		
+		if (visibleItems.length > 0) {
+			this.$el.find("[ranked] tfoot").hide();
+		} else {
+			this.$el.find("[ranked] tfoot").show();
+		}
+		
+		if (this.$el.find("[unranked] tbody tr:not(.hidden)").length > 0) {
+			this.$el.find("[unranked] thead").show();
+		} else {
+			this.$el.find("[unranked] thead").hide();
+		}
+		
+		if(this.registered) {
+			this.$el.find("table").table('refresh');
+		}
 	},
 	
-	addItem : function() {
+	valueSetChanged : function(model, isValueSet, list) {
+		if (isValueSet) {
+			model.get("rankedRow").fadeIn('fast').removeClass('hidden');
+			model.get("unrankedRow").fadeOut('fast').addClass('hidden');
+		} else {
+			model.get("rankedRow").fadeOut('fast').addClass('hidden');
+			model.get("unrankedRow").fadeIn('fast').removeClass('hidden');
+		}
+		this.refresh();
 	},
 	
-	deleteItem : function() {
+	rearranged : function(options) {
+		var startIndex = 0;
+		var endIndex = this.items.length;
+		
+		if (options) {
+			endIndex = options[1];
+			if (options[0] != undefined) {
+				startIndex = options[0];
+			} else {
+				//If you're adding a new element (options[0] == undefined), only update that element
+				startIndex = endIndex;
+			}
+		}
+		
+		for (var i = Math.min(startIndex, endIndex); i <= Math.max(startIndex, endIndex); i++) {
+			this.items.at(i).get('formView').defaultValueChanged();
+		}
+		
+		this.refresh();
 	},
 	
-	moveUp : function() {
+	addItem : function(event) {
+		var conceptId = $(event.srcElement).parents("tr").attr('conceptId');
+		var item = this.items.get(conceptId);
+		
+		//get the index of the last ranked item
+		var lastValue = this.items.indexOfLastSetValue();
+		
+		//make sure everything hasn't been ranked... this shouldn't ever really be an issue
+		if (lastValue < this.items.length - 1) {
+			this.items.setRank(conceptId, lastValue+1);
+		}
 	},
 	
-	moveDown : function() {
+	deleteItem : function(item) {
+		var conceptId = $(event.srcElement).parents("tr").attr('conceptId');
+		
+		this.items.setRank(conceptId, undefined);
+	},
+	
+	moveDown : function(item) {
+		var conceptId = $(event.srcElement).parents("tr").attr('conceptId');
+		var oldRank = this.items.getRank(conceptId);
+		
+		this.items.setRank(conceptId, Math.min(oldRank + 1, this.items.length - 1));
+	},
+	
+	moveUp : function(item) {
+		var conceptId = $(event.srcElement).parents("tr").attr('conceptId');
+		var oldRank = this.items.getRank(conceptId);
+		
+		this.items.setRank(conceptId, Math.max(oldRank - 1, 0));
 	}
 });
 
-RankingItemView = NumberView.extend({ 
+RankingItemView = FormItemView.extend({ 
 	type : "rankingitem",
 	
 	template : _.template($("#tmpl-rankingitemview").html()),
 	
 	render : function() {
 		this.renderDefault();
-		this.hide();
+		this.$el.hide();
 	},
 	
-	initialize2 : function() {
-	},
+	getValue : function() {
+		return this.options.parent.items.getRank(this.model.get('conceptId')) + 1;
+	}, 
 	
-	setValue : function(val) {
-		var input = this.$el.find("input");
-		if (input.val() && val && input.val() != val) {
-			this.$el.find("input").val(value);
-		}
+	setValue : function(value) {
+		this.options.parent.items.setRank(this.model.get('conceptId'), value - 1);
 	}
 });
 
 SubmitPageView = FormItemView.extend({
 	type : "submitpage",
+	
+	hasValue : false,
 	
 	template : _.template($("#tmpl-submitpage2").html()),
 	
@@ -497,7 +668,7 @@ window.formItemViewCodes = {text : TextView,
 		checkboxgroup : CheckGroupView,
 		checkbox : CheckView,
 		date : DateView,
-		ranking : DateView,
-		rankingitem : DateView,
+		ranking : RankingView,
+		rankingitem : RankingItemView,
 		submitpage : SubmitPageView};
 });

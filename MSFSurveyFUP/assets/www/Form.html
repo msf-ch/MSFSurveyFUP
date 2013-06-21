@@ -51,9 +51,9 @@
 			<div class="ui-bar ui-shadow ui-overlay-d ui-corner-all" id="loader"
 				style="margin-top: 100px; width: 340px; margin-left: auto; margin-right: auto; padding-bottom: 40px;">
 				<img alt="Lading image" src="img/msf_running_man.png"
-					style="display: block; width: 285px; height: 245px; margin-left: auto; margin-right: auto;">
+					style="display: block; width: 285px; height: 245px; margin-left: auto; margin-right: auto;"/>
 				<img alt="Loading" src="img/ajax-loader.gif"
-					style="display: block; margin-left: auto; margin-right: auto; margin-bottom: 1em;">
+					style="display: block; margin-left: auto; margin-right: auto; margin-bottom: 1em;"/>
 				<h2 style="width: 100%; text-align: center;">Préparation du
 					formulaire...</h2>
 			</div>
@@ -66,7 +66,7 @@
 	</div>
 	<div data-role="content">
 	</div>
-	<div data-role="footer"">
+	<div data-role="footer">
 	</div>
 </script>
 
@@ -83,11 +83,11 @@
 		</div>
 	</div>
 
-	<script id='tmpl-header' type='text/template'>
+<script id='tmpl-header' type='text/template'>
 	<%= data.title %>
 </script>
 
-	<script id='tmpl-footer' type='text/template'>
+<script id='tmpl-footer' type='text/template'>
 <div data-role="navbar" data-iconpos="<%= data.footerIconPosition %>">
 	<ul>
 		<li><a action="<%= data.footerButton1Action %>" data-icon="<%= data.footerButton1Icon %>" data-theme="<%= data.footerButton1Theme %>">
@@ -113,7 +113,7 @@ var inputId = view.id + '_input';
 </div>
 </script>
 
-	<script id='tmpl-numberview' type='text/template'>
+<script id='tmpl-numberview' type='text/template'>
 <%
 var inputId = view.id + '_input';
 %>
@@ -123,7 +123,7 @@ var inputId = view.id + '_input';
 </div>
 </script>
 
-	<script id='tmpl-radioview' type='text/template'>
+<script id='tmpl-radioview' type='text/template'>
 <%
 var inputId = view.id + '-input';
 %>
@@ -141,7 +141,7 @@ var inputId = view.id + '-input';
 </div>
 </script>
 
-	<script id='tmpl-selectview' type='text/template'>
+<script id='tmpl-selectview' type='text/template'>
 <%
 var inputId = view.id + '-input';
 %>
@@ -158,7 +158,7 @@ var inputId = view.id + '-input';
 </script>
 
 
-	<script id='tmpl-checkgroupview' type='text/template'>
+<script id='tmpl-checkgroupview' type='text/template'>
 <%
 var inputId = view.id + '-input';
 %>
@@ -169,12 +169,12 @@ var inputId = view.id + '-input';
 </div>
 </script>
 
-	<script id='tmpl-checkview' type='text/template'>
+<script id='tmpl-checkview' type='text/template'>
 	<input type="checkbox" id="<%= view.id %>" conceptId="<%= model.conceptId %>" />
 	<label for="<%= view.id %>"><%= model.get('label') %></label>
 </script>
 
-	<script id='tmpl-dateview' type='text/template'>
+<script id='tmpl-dateview' type='text/template'>
 <%
 var inputId = view.id + '_input';
 %>
@@ -184,47 +184,67 @@ var inputId = view.id + '_input';
 </div>
 </script>
 
-	<script id='tmpl-rankingview' type='text/template'>
+<script id='tmpl-rankingview' type='text/template'>
 <%
 var inputId = view.id + '_input';
-var items = view.items;
 %>
 <div class="rankingview" data-role="fieldcontain">
-	<table data-role="table" id="movie-table" data-mode="reflow" class="ui-responsive table-stroke">
+	<label><%= model.get('label') %></label>
+	<div class="rankingviewtablecontainer">
+	<div ranked>
+	<table data-role="table" data-mode="reflow" class="rankingtable">
             <thead>
                 <tr>
-                    <th data-priority="1" colspan="3">Rank</th>
-                    <th data-priority="persist" style="width:100%">Item</th>
-                    <th data-priority="2" class="smallColumn">Remove</th>
+                    <th colspan="3">Rank</th>
+                    <th style="width:100%">Item</th>
+                    <th>Remove</th>
                 </tr>
             </thead>
             <tbody>
-				<% for (var i = 0; i < items.length; i++) { %>
-					<tr conceptId="<%= items[i].get('conceptId') %> >">
-						<th data-key="rank"><%= i + 1 %></th>
-    					<td><a href="#" action="moveup" data-role="button" data-icon="arrow-u" data-iconpos="notext" data-theme="b" data-inline="true">Arrow up</a></td>
-	    				<td><a href="#" action="movedown" data-role="button" data-icon="arrow-d" data-iconpos="notext" data-theme="b" data-inline="true">Arrow down</a></td>	
-
-						<td data-key="label"><%= items[i].get('label') %></td>
-		
-    					<td><a href="#" action="delete" data-role="button" data-icon="delete" data-iconpos="notext" data-theme="a" data-inline="true">Delete</a></td>
-					</tr>
-				<% } %>
+			</tbody>
+			<tfoot>
+				<tr>
+					<th class="ui-body ui-body-e" style="text-align: center;" colspan="5">No items ranked</th>
+				</tr>
+			</tfoot>
+	</table>
+	</div>
+	<div unranked>
+	<table data-role="table" data-mode="reflow" class="rankingtable">
+            <thead>
+                <tr>
+                    <th colspan="2" style="width:100%">Unranked items</th>
+                </tr>
+            </thead>
+            <tbody>
 			</tbody>
 	</table>
-	<div data-role="controlgroup">
-		<% for(var i = 0; i < items.length; i++) { %>
-			<a href="#" data-role="button" conceptId="<%= items[i].get('conceptId') %>"><%= items[i].get('label') %></a>
-		<% } %>
+	<div>
 	</div>
 </div>
 </script>
 
-	<script id='tmpl-rankingitemview' type='text/template'> 
+<script id='tmpl-rankedrow' type='text/template'> 
+<th><span class="ranknumber"></span></th>
+<td><a href="#" action="moveup" data-icon="arrow-u" class="ui-icon-nodisc" data-iconshadow="false" data-role="button" data-iconpos="notext" data-theme="b" data-inline="true">Arrow up</a></td>
+<td><a href="#" action="movedown" data-icon="arrow-d" class="ui-icon-nodisc" data-iconshadow="false" data-role="button" data-iconpos="notext" data-theme="b" data-inline="true">Arrow down</a></td>	
+
+<td data-key="label"><%= item.get('label') %></td>
+		
+<td><a href="#" action="delete" data-role="button" data-icon="delete" data-iconpos="notext" data-theme="a" data-inline="true">Delete</a></td>
+</script>
+
+<script id='tmpl-unrankedrow' type='text/template'>
+<td><a href="#" action="add" data-role="button" data-icon="plus" data-iconpos="notext" data-theme="b" data-inline="true">Add</a></td>	
+
+<td data-key="label"><%= item.get('label') %></td>
+</script>
+
+<script id='tmpl-rankingitemview' type='text/template'> 
 <input type="number" />
 </script>
 
-	<script id='tmpl-submitpage' type='text/template'>
+<script id='tmpl-submitpage' type='text/template'>
 	<div class="ui-body ui-body-e" style="text-align:center;">
 		<h2>Veuillez vérifier votre saisie</h2>
 	</div>

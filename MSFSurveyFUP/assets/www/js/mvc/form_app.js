@@ -22,6 +22,7 @@ window.positionFooter = function(event) {
 	}
 }
 
+
 function loadjscssfile(filename, filetype) {
 	if (filetype == "js") { // if filename is a external JavaScript file
 		var fileref = document.createElement('script')
@@ -44,6 +45,12 @@ function getParameterByName(name) {
 	return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g,
 			" "));
 }
+
+function backButtonPressed() {
+	
+}
+
+document.addEventListener("backbutton", backButtonPressed, false);
 
 loadFromJSONForm = function(formFilePath) {
 	$.get(formFilePath, undefined, undefined, "json")
@@ -103,15 +110,25 @@ init = function() {
 };
 
 initialized = false;
+deviceReady = false;
+pageShown = false;
+
 $(document).on('deviceready', function() {
-	$(document).ready(function() {
-		if (!initialized) {
-			initialized = true;
-			init();
-		}
-	});
+	deviceReady = true;
+	$(document).trigger('checkformready');
 });
 
+$(document).one('pageshow', function() {
+	pageShown = true;
+	$(document).trigger('checkformready');
+});
+
+$(document).on("checkformready", function() {
+	if (deviceReady && pageShown && !initialized) {
+		initialized = true;
+		init();
+	}
+});
 
 //show loader
 //$(document).one('pageshow', function() {

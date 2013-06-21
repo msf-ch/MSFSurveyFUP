@@ -2,7 +2,16 @@
    "name":"Child_Inclusion",
    "nameReadable":"Inclusion des enfants",
    "description":"",
-   "descriptors" : [{"label" : "Date du suivi", "conceptId" : "datenq"}, {"label" : "Identification de l'enfant", "conceptId" : "enfid"}],
+   "descriptors":[
+      {
+         "label":"Date du suivi",
+         "conceptId":"datenq"
+      },
+      {
+         "label":"Identification de l'enfant",
+         "conceptId":"enfid"
+      }
+   ],
    "global":{
 
    },
@@ -1137,6 +1146,21 @@
                   ]
                },
                {
+                  "viewType":"text",
+                  "conceptId":"vitavecprecise",
+                  "label":"Préciser:",
+                  "bounds":{
+                     "maxLength":25
+                  },
+                  "showIf":{
+                     "conceptIds":[
+                        "vitavec"
+                     ],
+                     "condition":"vitavec == '4'"
+                  },
+                  "required":false
+               },
+               {
                   "viewType":"radio",
                   "conceptId":"orphan",
                   "label":"Est-ce que l'enfant est orphelin?",
@@ -1273,9 +1297,9 @@
                   ],
                   "showIf":{
                      "conceptIds":[
-                        "accomp"
+                        "vacinat"
                      ],
-                     "condition":"accomp == '1'"
+                     "condition":"vacinat == '1'"
                   }
                },
                {
@@ -1321,9 +1345,48 @@
                   ],
                   "showIf":{
                      "conceptIds":[
-                        "accomp"
+                        "adminut"
                      ],
-                     "condition":"accomp == '1'"
+                     "condition":"adminut == '1'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"decision",
+                  "label":"Si oui quelle décision a été prise?",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"rien"
+                     },
+                     {
+                        "value":"2",
+                        "label":"referé à l'AC"
+                     },
+                     {
+                        "value":"3",
+                        "label":"referé au CDS"
+                     },
+                     {
+                        "value":"4",
+                        "label":"autre"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "malad",
+                        "eprest"
+                     ],
+                     "condition":"malad == '1' && eprest =='1'"
+                  }
+               },
+               {
+                  "viewType":"number",
+                  "conceptId":"enfidre",
+                  "label":"Identification de l'enfant",
+                  "bounds":{
+                     "minValue":1,
+                     "maxValue":99999
                   }
                }
             ]
@@ -1475,14 +1538,6 @@
                      {
                         "label":"Non specifié",
                         "conceptId":"nonspec"
-                     },
-                     {
-                        "label":"Autre n°1",
-                        "conceptId":"autre1"
-                     },
-                     {
-                        "label":"Autre n°2",
-                        "conceptId":"autre2"
                      }
                   ],
                   "showIf":{
@@ -1491,6 +1546,36 @@
                      ],
                      "condition":"malad == '1'"
                   }
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"autre1precise",
+                  "label":"Autre symptome n°1",
+                  "bounds":{
+                     "maxLength":25
+                  },
+                  "showIf":{
+                     "conceptIds":[
+                        "malad"
+                     ],
+                     "condition":"malad == '1'"
+                  },
+                  "required":false
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"autre2precise",
+                  "label":"Autre symptome n°2",
+                  "bounds":{
+                     "maxLength":25
+                  },
+                  "showIf":{
+                     "conceptIds":[
+                        "malad"
+                     ],
+                     "condition":"malad == '1'"
+                  },
+                  "required":false
                },
                {
                   "viewType":"radio",
@@ -1574,10 +1659,6 @@
                      {
                         "label":"Maladie pas trop grave",
                         "conceptId":"nomgve"
-                     },
-                     {
-                        "label":"Autre raison",
-                        "conceptId":"noautre"
                      }
                   ],
                   "showIf":{
@@ -1587,6 +1668,22 @@
                      ],
                      "condition":"malad == '1' && epsoin =='2'"
                   }
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"noautreprecise",
+                  "label":"Autre raison",
+                  "bounds":{
+                     "maxLength":25
+                  },
+                  "showIf":{
+                     "conceptIds":[
+                        "malad",
+                        "epsoin"
+                     ],
+                     "condition":"malad == '1' && epsoin =='2'"
+                  },
+                  "required":false
                },
                {
                   "viewType":"checkboxgroup",
@@ -1636,10 +1733,6 @@
                      {
                         "label":"Consulté Dr Choco",
                         "conceptId":"rechoco"
-                     },
-                     {
-                        "label":"Autre",
-                        "conceptId":"recautre"
                      }
                   ],
                   "showIf":{
@@ -1649,6 +1742,22 @@
                      ],
                      "condition":"malad == '1' && epsoin =='1'"
                   }
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"recautreprecise",
+                  "label":"Autre",
+                  "bounds":{
+                     "maxLength":25
+                  },
+                  "showIf":{
+                     "conceptIds":[
+                        "malad",
+                        "epsoin"
+                     ],
+                     "condition":"malad == '1' && epsoin =='1'"
+                  },
+                  "required":false
                },
                {
                   "viewType":"radio",
@@ -1700,10 +1809,27 @@
                   "showIf":{
                      "conceptIds":[
                         "malad",
-                        "admiss"
+                        "admiss",
+                        "progadm"
                      ],
-                     "condition":"malad == '1' && admiss =='1'"
+                     "condition":"malad == '1' && admiss =='1' && progadm == '4'"
                   }
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"progadmprecise",
+                  "label":"Préciser:",
+                  "bounds":{
+                     "maxLength":25
+                  },
+                  "showIf":{
+                     "conceptIds":[
+                        "malad",
+                        "epsoin"
+                     ],
+                     "condition":"malad == '1' && epsoin =='1'"
+                  },
+                  "required":false
                },
                {
                   "viewType":"radio",
@@ -1792,11 +1918,38 @@
                      ],
                      "condition":"malad == '1' && eprest =='1'"
                   }
-               },
+               }
+            ]
+         }
+      },
+      {
+         "header":{
+            "title":"Page 4 : VÉRIFICATION DE L'IDENTITÉ",
+            "theme":"b"
+         },
+         "footer":{
+            "theme":"c"
+         },
+         "content":{
+            "theme":"c",
+            "views":[
                {
                   "viewType":"number",
-                  "conceptId":"enfidre",
-                  "label":"Identification de l'enfant"
+                  "conceptId":"enfidrep",
+                  "label":"Numero d'identification de l'enfant, répétition",
+                  "bounds":{
+                     "minValue":0,
+                     "maxValue":99999
+                  },
+                  "validators":[
+                     {
+                        "condition":"value == enfid",
+                        "conceptIds":[
+                           "enfid"
+                        ],
+                        "errorMessage":"Le numéro d'identification ne correspond pas à celui saisi au début du formulaire: <strong id=\"enfiderrorlabel\"></strong>. <br><br>PleaseVeuillez contrôler le numéro. Pour corriger le numéro saisi précédemment, veuillez revenir au début du formulaire.<a id=\"linktofirstpage\" href=\"#\" data-role=\"button\" onclick=\"PageService.setActivePageIndex(0)\">Cliquez ici pour revenir à la première page.</a><script type=\"text/javascript\">$('#linktofirstpage').button();$('#enfiderrorlabel').text(ObsService.getObs('enfid'));</script>"
+                     }
+                  ]
                }
             ]
          }

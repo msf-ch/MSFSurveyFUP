@@ -1416,7 +1416,8 @@
                         "malad"
                      ],
                      "condition":"malad == '1'"
-                  }
+                  },
+                  "required":false
                },
                {
                   "viewType":"text",
@@ -1430,7 +1431,8 @@
                         "malad"
                      ],
                      "condition":"malad == '1'"
-                  }
+                  },
+                  "required":false
                },
                {
                   "viewType":"radio",
@@ -1540,7 +1542,8 @@
                         "noautre"
                      ],
                      "condition":"noautre == true"
-                  }
+                  },
+                  "required":false
                },
                {
                   "viewType":"checkboxgroup",
@@ -1988,6 +1991,293 @@
                      "condition":"ratvente == '1'"
                   }
                },
+               {
+                  "viewType":"radio",
+                  "conceptId":"enqrefer",
+                  "label":"Quest1: L'enquêteur a-t-il référé l'enfant?",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"oui"
+                     },
+                     {
+                        "value":"2",
+                        "label":"non"
+                     },
+                     {
+                        "value":"9",
+                        "label":"ne sait pas ou non spécifié"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "malad"
+                     ],
+                     "condition":"malad == '1'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"decision",
+                  "label":"Quest2: Si oui, à quel centre l'enfant a-t-il été référé?",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Centre de santé"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Agent communautaire"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Hôpital"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "malad",
+                        "enqrefer"
+                     ],
+                     "condition":"malad == '1' && enqrefer == '1'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"progadm",
+                  "label":"L'enfant a-t-il été admis dans le programme nutritionnel depuis notre dernière visite?",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"oui"
+                     },
+                     {
+                        "value":"2",
+                        "label":"non"
+                     },
+                     {
+                        "value":"9",
+                        "label":"ne sait pas ou non spécifié"
+                     }
+                  ]
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"ratgfd",
+                  "label":"Le ménage a-t-il bénéficié de rations générales de nourriture dans les derniers 3 mois?",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"oui"
+                     },
+                     {
+                        "value":"2",
+                        "label":"non"
+                     },
+                     {
+                        "value":"9",
+                        "label":"ne sait pas ou non spécifié"
+                     }
+                  ]
+               },
+               {
+                  "viewType":"checkboxgroup",
+                  "label":"Qu'avez-vous reçu?",
+                  "conceptId":"recuCheckbox",
+                  "children":[
+                     {
+                        "label":"Céreales",
+                        "conceptId":"ratcompcere"
+                     },
+                     {
+                        "label":"Pois-Lentilles",
+                        "conceptId":"ratcomplent"
+                     },
+                     {
+                        "label":"CSB",
+                        "conceptId":"ratcompcsb"
+                     },
+                     {
+                        "label":"Huile",
+                        "conceptId":"ratcomphuile"
+                     },
+                     {
+                        "label":"Sucre",
+                        "conceptId":"ratcompsucre"
+                     },
+                     {
+                        "label":"Sel",
+                        "conceptId":"ratcompsel"
+                     },
+                     {
+                        "label":"Ne sait pas",
+                        "conceptId":"ratcompnesait"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "ratgfd"
+                     ],
+                     "condition":"ratgfd == '1'"
+                  }
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"ratcompautre",
+                  "label":"Autre",
+                  "showIf":{
+                     "conceptIds":[
+                        "ratgfd"
+                     ],
+                     "condition":"ratgfd == '1'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"supnut",
+                  "label":"Des membres de votre famille ont-ils bénéficé de suppléments nutritionnels?",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"oui"
+                     },
+                     {
+                        "value":"2",
+                        "label":"non"
+                     },
+                     {
+                        "value":"9",
+                        "label":"ne sait pas ou non spécifié"
+                     }
+                  ]
+               },
+               {
+                  "viewType":"checkboxgroup",
+                  "label":"Quel type de supplément ont-ils reçu?",
+                  "conceptId":"suppCheckbox",
+                  "children":[
+                     {
+                        "label":"Céréales",
+                        "conceptId":"supnutyp"
+                     },
+                     {
+                        "label":"CSB",
+                        "conceptId":"supCSB"
+                     },
+                     {
+                        "label":"PPDOZ",
+                        "conceptId":"supPPDOZ"
+                     },
+                     {
+                        "label":"Sucre",
+                        "conceptId":"supSucre"
+                     },
+                     {
+                        "label":"SupPlumpy (SPP)",
+                        "conceptId":"supSPP"
+                     },
+                     {
+                        "label":"Huile",
+                        "conceptId":"supHuile"
+                     }
+                  ]
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"supAutre",
+                  "label":"Autre",
+                  "showIf":{
+                     "conceptIds":[
+                        "supnut"
+                     ],
+                     "condition":"supnut == '1'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"ratvente",
+                  "label":"Avez-vous dû vendre une partie des rations reçues?",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"oui"
+                     },
+                     {
+                        "value":"2",
+                        "label":"non"
+                     },
+                     {
+                        "value":"9",
+                        "label":"ne sait pas ou non spécifié"
+                     }
+                  ]
+               },
+               {
+                  "viewType":"checkboxgroup",
+                  "label":"Quels aliments?",
+                  "conceptId":"alimCheckbox",
+                  "children":[
+                     {
+                        "label":"Céreales",
+                        "conceptId":"ratipartcere"
+                     },
+                     {
+                        "label":"Pois-Lentilles",
+                        "conceptId":"ratipartlent"
+                     },
+                     {
+                        "label":"CSB",
+                        "conceptId":"ratipartcsb"
+                     },
+                     {
+                        "label":"Huile",
+                        "conceptId":"ratiparthuile"
+                     },
+                     {
+                        "label":"Sucre",
+                        "conceptId":"ratipartsucre"
+                     },
+                     {
+                        "label":"Sel",
+                        "conceptId":"ratipartsel"
+                     },
+                     {
+                        "label":"Ne sait pas",
+                        "conceptId":"ratipartnesait"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "ratvente"
+                     ],
+                     "condition":"ratvente == '1'"
+                  }
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"ratipartautre",
+                  "label":"Autre",
+                  "showIf":{
+                     "conceptIds":[
+                        "ratvente"
+                     ],
+                     "condition":"ratvente == '1'"
+                  }
+               }
+            ]
+         }
+      },
+      {
+         "header":{
+            "title":"Page 5 : VÉRIFICATION DE L'IDENTITÉ",
+            "theme":"b"
+         },
+         "footer":{
+            "theme":"c"
+         },
+         "content":{
+            "theme":"c",
+            "views":[
                {
                   "viewType":"number",
                   "conceptId":"enfidrep",
