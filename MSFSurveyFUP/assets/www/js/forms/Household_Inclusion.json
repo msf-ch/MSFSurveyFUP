@@ -2520,7 +2520,7 @@
                      "conceptIds":[
                         "rveaut"
                      ],
-                     "condition":"rveaut == 'true'"
+                     "condition":"rveaut == true"
                   }
                }
             ]
