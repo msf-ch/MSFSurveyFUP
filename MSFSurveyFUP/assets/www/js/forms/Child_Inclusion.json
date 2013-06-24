@@ -1286,7 +1286,6 @@
                {
                   "viewType":"checkboxgroup",
                   "label":"Si oui, quel(s) vaccin(s) a-t-il reçu?",
-                  "conceptId":"vaccin2Checkbox",
                   "children":[
                      {
                         "label":"Polio",
@@ -1472,7 +1471,6 @@
                {
                   "viewType":"checkboxgroup",
                   "label":"Symptomes:",
-                  "conceptId":"symptomesCheckbox",
                   "children":[
                      {
                         "label":"Fièvre",
@@ -1641,7 +1639,6 @@
                {
                   "viewType":"checkboxgroup",
                   "label":"Quelles sont les raisons de n'avoir rien entrepris?",
-                  "conceptId":"raisonsCheckbox",
                   "children":[
                      {
                         "label":"Raison financière",
@@ -1699,7 +1696,6 @@
                {
                   "viewType":"checkboxgroup",
                   "label":"Si oui, quelle a été la démarche entreprise?",
-                  "conceptId":"demarcheCheckbox",
                   "children":[
                      {
                         "label":"Consultation au CDS",

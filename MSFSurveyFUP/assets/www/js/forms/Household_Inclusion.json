@@ -2027,7 +2027,6 @@
                {
                   "viewType":"checkboxgroup",
                   "label":"Pouvez vous nous dire ce que vous cultivez sur vos terres?",
-                  "conceptId":"cultivation2Checkbox",
                   "children":[
                      {
                         "label":"Mil",
@@ -2119,7 +2118,6 @@
                {
                   "viewType":"checkboxgroup",
                   "label":"Si oui, quels aliments avez vous recoltés?",
-                  "conceptId":"recolte2Checkbox",
                   "children":[
                      {
                         "label":"Mil",
@@ -2266,7 +2264,6 @@
                {
                   "viewType":"checkboxgroup",
                   "label":"Pouvez-vous nous dire ce que la famille a consommé dans les dernières 24 heures?",
-                  "conceptId":"consommation2Checkbox",
                   "children":[
                      {
                         "label":"Céréales",
@@ -2395,7 +2392,6 @@
                {
                   "viewType":"checkboxgroup",
                   "label":"Qu'avez-vous reçu?",
-                  "conceptId":"recu2Checkbox",
                   "children":[
                      {
                         "label":"Ne sait pas",
@@ -2466,7 +2462,6 @@
                {
                   "viewType":"checkboxgroup",
                   "label":"Quels aliments ont-ils été vendu?",
-                  "conceptId":"venduCheckbox",
                   "children":[
                      {
                         "label":"Ne sait pas",

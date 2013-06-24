@@ -1149,7 +1149,6 @@
                {
                   "viewType":"checkboxgroup",
                   "label":"Si oui quel vaccin a-t-il reçu?",
-                  "conceptId":"vaccinesCheckbox",
                   "children":[
                      {
                         "label":"vaccination polio",
@@ -1192,18 +1191,11 @@
                         "value":"9",
                         "label":"ne sait pas ou non spécifié"
                      }
-                  ],
-                  "showIf":{
-                     "conceptIds":[
-                        "vacautre"
-                     ],
-                     "condition":"vacautre == true"
-                  }
+                  ]
                },
                {
                   "viewType":"checkboxgroup",
                   "label":"Si oui qu'avez-vous remarqué?",
-                  "conceptId":"reactionsCheckbox",
                   "children":[
                      {
                         "label":"Diarrhée",
@@ -1324,7 +1316,6 @@
                {
                   "viewType":"checkboxgroup",
                   "label":"Symptômes",
-                  "conceptId":"symptomesCheckbox",
                   "children":[
                      {
                         "label":"Fièvre",
@@ -1493,7 +1484,6 @@
                {
                   "viewType":"checkboxgroup",
                   "label":"Quelles sont les raisons de n'avoir rien entrepris",
-                  "conceptId":"reasonCheckbox",
                   "children":[
                      {
                         "label":"Raison financière",
@@ -1548,13 +1538,11 @@
                         "noautre"
                      ],
                      "condition":"noautre == true"
-                  },
-                  "required":false
+                  }
                },
                {
                   "viewType":"checkboxgroup",
                   "label":"Si oui, qu'est-ce qui a été fait?",
-                  "conceptId":"whatdoneCheckbox",
                   "children":[
                      {
                         "label":"Consultation au CDS",
@@ -1816,7 +1804,6 @@
                {
                   "viewType":"checkboxgroup",
                   "label":"Qu'avez-vous reçu?",
-                  "conceptId":"recuCheckbox",
                   "children":[
                      {
                         "label":"Céreales",
@@ -1888,7 +1875,6 @@
                {
                   "viewType":"checkboxgroup",
                   "label":"Quel type de supplément ont-ils reçu?",
-                  "conceptId":"suppCheckbox",
                   "children":[
                      {
                         "label":"Céréales",
@@ -1914,7 +1900,13 @@
                         "label":"Huile",
                         "conceptId":"supHuile"
                      }
-                  ]
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "supnut"
+                     ],
+                     "condition":"supnut == '1'"
+                  }
                },
                {
                   "viewType":"text",
@@ -1950,7 +1942,6 @@
                {
                   "viewType":"checkboxgroup",
                   "label":"Quels aliments?",
-                  "conceptId":"alimCheckbox",
                   "children":[
                      {
                         "label":"Céreales",
@@ -2092,7 +2083,6 @@
                {
                   "viewType":"checkboxgroup",
                   "label":"Qu'avez-vous reçu?",
-                  "conceptId":"recuCheckbox",
                   "children":[
                      {
                         "label":"Céreales",
@@ -2164,7 +2154,6 @@
                {
                   "viewType":"checkboxgroup",
                   "label":"Quel type de supplément ont-ils reçu?",
-                  "conceptId":"suppCheckbox",
                   "children":[
                      {
                         "label":"Céréales",
@@ -2201,7 +2190,8 @@
                         "supnut"
                      ],
                      "condition":"supnut == '1'"
-                  }
+                  },
+                  "required":false
                },
                {
                   "viewType":"radio",
@@ -2225,7 +2215,6 @@
                {
                   "viewType":"checkboxgroup",
                   "label":"Quels aliments?",
-                  "conceptId":"alimCheckbox",
                   "children":[
                      {
                         "label":"Céreales",
@@ -2272,7 +2261,8 @@
                         "ratvente"
                      ],
                      "condition":"ratvente == '1'"
-                  }
+                  },
+                  "required":false
                }
             ]
          }

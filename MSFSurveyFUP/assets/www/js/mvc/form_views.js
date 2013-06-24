@@ -576,7 +576,7 @@ RankingView = FormItemView.extend({
 	
 	rearranged : function(options) {
 		var startIndex = 0;
-		var endIndex = this.items.length;
+		var endIndex = this.items.length - 1;
 		
 		if (options) {
 			endIndex = options[1];
