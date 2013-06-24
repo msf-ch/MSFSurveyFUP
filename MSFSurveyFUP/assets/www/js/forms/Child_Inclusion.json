@@ -37,7 +37,7 @@
                   "conceptId":"nomenq",
                   "label":"Numéro de l'enquêteur",
                   "bounds":{
-                     "maxLength":3
+                     "maxLength":2
                   }
                },
                {
@@ -1389,15 +1389,6 @@
                      ],
                      "condition":"malad == '1' && eprest =='1'"
                   }
-               },
-               {
-                  "viewType":"number",
-                  "conceptId":"enfidre",
-                  "label":"Identification de l'enfant",
-                  "bounds":{
-                     "minValue":1,
-                     "maxValue":99999
-                  }
                }
             ]
          }
@@ -1480,7 +1471,7 @@
                },
                {
                   "viewType":"checkboxgroup",
-                  "label":"",
+                  "label":"Symptomes:",
                   "conceptId":"symptomesCheckbox",
                   "children":[
                      {
@@ -1964,7 +1955,7 @@
                         "conceptIds":[
                            "enfid"
                         ],
-                        "errorMessage":"Le numéro d'identification ne correspond pas à celui saisi au début du formulaire: <strong id=\"enfiderrorlabel\"></strong>. <br><br>PleaseVeuillez contrôler le numéro. Pour corriger le numéro saisi précédemment, veuillez revenir au début du formulaire.<a id=\"linktofirstpage\" href=\"#\" data-role=\"button\" onclick=\"PageService.setActivePageIndex(0)\">Cliquez ici pour revenir à la première page.</a><script type=\"text/javascript\">$('#linktofirstpage').button();$('#enfiderrorlabel').text(ObsService.getObs('enfid'));</script>"
+                        "errorMessage":"Le numéro d'identification ne correspond pas à celui saisi au début du formulaire: <strong id=\"enfiderrorlabel\"></strong>. <br><br>Veuillez contrôler le numéro. Pour corriger le numéro saisi précédemment, veuillez revenir au début du formulaire.<a id=\"linktofirstpage\" href=\"#\" data-role=\"button\" onclick=\"PageService.setActivePageIndex(0)\">Cliquez ici pour revenir à la première page.</a><script type=\"text/javascript\">$('#linktofirstpage').button();$('#enfiderrorlabel').text(ObsService.getObs('enfid'));</script>"
                      }
                   ]
                }

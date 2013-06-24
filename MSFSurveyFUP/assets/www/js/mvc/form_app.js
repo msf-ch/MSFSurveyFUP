@@ -46,12 +46,6 @@ function getParameterByName(name) {
 			" "));
 }
 
-function backButtonPressed() {
-	
-}
-
-document.addEventListener("backbutton", backButtonPressed, false);
-
 loadFromJSONForm = function(formFilePath) {
 	$.get(formFilePath, undefined, undefined, "json")
 		.done(function(data, textStatus, jqXHR) {

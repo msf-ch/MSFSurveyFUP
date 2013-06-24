@@ -651,6 +651,60 @@ RankingItemView = FormItemView.extend({
 	}
 });
 
+GPSAcquireView = FormItemView.extend({
+	type : "gps",
+	
+	template : _.template($("#tmpl-gpsacquireview").html()),
+	
+	events : {
+		"click a[action='gpsacquire']" : "acquireGPS"
+	},
+	
+	initialize2 : function() {
+		this.acquireGPS();
+	},
+	
+	render : function() {
+		this.renderDefault();
+	},
+	
+	acquireGPS : function() {
+		var _this = this;
+		navigator.geolocation.getCurrentPosition(function(position) {
+			_this.acquireSuccess(position);
+			}, function() {
+				_this.acquireFail(error);
+			},
+			{ maximumAge: (5 * 60 * 1000), //OK within 5 minutes
+			timeout: (5 * 60 * 1000), //Give it 5 minutes
+			enableHighAccuracy: true });
+	},
+	
+	acquireSuccess : function(position) {
+		this.value = position;
+		this.defaultValueChanged();
+	},
+	
+	acquireFail : function(error) {
+		this.value = error;
+		this.defaultValueChanged();
+	},
+	
+	getValue : function() {
+		return JSON.stringify(this.value);
+	},
+	
+	setValue : function(val) {
+		try {
+			this.value = JSON.parse(val);
+		} catch (err) {
+			this.value = undefined;
+		}
+		
+		this.render();
+	}
+});
+
 SubmitPageView = FormItemView.extend({
 	type : "submitpage",
 	
@@ -689,5 +743,6 @@ window.formItemViewCodes = {text : TextView,
 		date : DateView,
 		ranking : RankingView,
 		rankingitem : RankingItemView,
-		submitpage : SubmitPageView};
+		submitpage : SubmitPageView,
+		gps : GPSAcquireView};
 });

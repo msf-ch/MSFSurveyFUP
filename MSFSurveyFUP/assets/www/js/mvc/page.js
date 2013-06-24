@@ -264,6 +264,7 @@ Footer = Backbone.View.extend({
 	save : function(e) {
 		console.log('save button pressed');
 		if(this.isEnabled()) {
+			FormService.saveIncomplete();
 		}
 	},
 	
@@ -277,7 +278,7 @@ Footer = Backbone.View.extend({
 	submit : function(e) {
 		console.log('submit button pressed');
 		if(this.isEnabled()) {
-			FormService.submit();
+			FormService.submit(true);
 		}
 	}
 });

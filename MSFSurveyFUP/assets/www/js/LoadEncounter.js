@@ -12,12 +12,36 @@ EncounterModel = Backbone.Model.extend({
 		firstSaved : 0,
 		formName : "",
 		formNameReadable : "",
-		formPath : ""
+		formPath : "",
+		complete : false
 	}
 });
 
 EncounterCollection = Backbone.Collection.extend({
-	model : EncounterModel
+	model : EncounterModel,
+	
+	comparator : function(encounter1, encounter2) {
+		var complete1 = encounter1.get('complete');
+		var complete2 = encounter2.get('complete');
+		
+		//Put incomplete encounters at the top of the list
+		if (complete1 && !complete2) {
+			return 1;
+		} else if (!complete1 && complete2) {
+			return -1;
+		}
+		
+		//sort with most recently saved encounters at the top of the list
+		var lastSaved1 = encounter1.get('lastSaved');
+		var lastSaved2 = encounter2.get('lastSaved');
+		if (lastSaved1 > lastSaved2) {
+			return -1;
+		} else if (lastSaved1 < lastSaved2) {
+			return 1;
+		}
+		
+		return 0;
+	}
 });
 
 EncounterList = Backbone.View.extend({
@@ -60,7 +84,7 @@ FormSelect = Backbone.View.extend({
 	
 	change : function() {
 		cordova.exec(function(encounters) {
-			encounterList.render(encounters);
+			encounterList.render(new EncounterCollection(encounters));
 		}, function(message) {alert('ERROR: ' + message)}, "MSF", "getEncounters", [{formName : this.$el.find(":checked").attr('value')}]);
 	}
 });

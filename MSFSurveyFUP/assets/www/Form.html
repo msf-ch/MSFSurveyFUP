@@ -5,8 +5,7 @@
 	charset="utf-8"></script>
 
 <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <title>MSF Form</title>
 <link href="css/jquery.mobile-1.3.1.min.css" rel="stylesheet" type="text/css" />
@@ -61,27 +60,17 @@
 	</div>
 
 
-	<script id='tmpl-page' type='text/template'>
+<script id='tmpl-page' type='text/template'>
 	<div pageheader="true">
 	</div>
 	<div data-role="content">
 	</div>
 	<div data-role="footer">
 	</div>
-</script>
 
-	<div class="viewhidden" id="submitdialog" data-role="dialog">
-		<div data-role="header" data-theme="e">
-			<h1>Submit form?</h1>
-		</div>
-
-		<div data-role="content">
-			<h1>Are you sure you want to submit this form?</h1>
-			<a id="cancel" href="#" data-role="button" data-rel="back"
-				data-theme="a">Cancel</a> <a id="submit" href="#" data-role="button"
-				data-rel="back">Submit</a>
-		</div>
+	<div data-role="popup" data-overlay-theme="a" class="ui-corner-all">
 	</div>
+</script>
 
 <script id='tmpl-header' type='text/template'>
 	<%= data.title %>
@@ -108,7 +97,7 @@
 var inputId = view.id + '_input';
 %>
 <div class="textview" data-role="fieldcontain">
-	<label for="<%= inputId %>"><%= model.get('label') %></label>
+	<label class="question-label" for="<%= inputId %>"><%= model.get('label') %></label>
 	<input type="text" id="<%= inputId %>" value="" />
 </div>
 </script>
@@ -118,7 +107,7 @@ var inputId = view.id + '_input';
 var inputId = view.id + '_input';
 %>
 <div class="numberview" data-role="fieldcontain">
-	<label for="<%= inputId %>"><%= model.get('label') %></label>
+	<label class="question-label" for="<%= inputId %>"><%= model.get('label') %></label>
 	<input type="number" id="<%= inputId %>" value="" step="any" />
 </div>
 </script>
@@ -129,7 +118,7 @@ var inputId = view.id + '-input';
 %>
 <div class="radioview" data-role="fieldcontain">
 	<fieldset data-role="controlgroup" <% if(model.get('horizontalMode')) {%> data-type="horizontal"<% } %>>
-		<legend><%= model.get('label') %></legend>
+		<legend class="question-label"><%= model.get('label') %></legend>
 		<div>
 		<% _.each(model.get('options'), function(option, index) {
 			var currentId = inputId + '-' + index; %>
@@ -146,7 +135,7 @@ var inputId = view.id + '-input';
 var inputId = view.id + '-input';
 %>
 <div class="selectview" data-role="fieldcontain">
-	<label for="<%= inputId %>"><%= model.get('label') %></label>
+	<label class="question-label" for="<%= inputId %>"><%= model.get('label') %></label>
 	<select name="<%= inputId %>" id="<%= inputId %>">
 		<option value="" id="<%= inputId %>-blank" ></option>
 		<% _.each(model.get('options'), function(option, index) {
@@ -164,14 +153,14 @@ var inputId = view.id + '-input';
 %>
 <div class="checkgroupview" data-role="fieldcontain">
 	<fieldset data-role="controlgroup">
-		<legend><%= model.get('label') %></legend>
+		<legend class="question-label"><%= model.get('label') %></legend>
 	</fieldset>
 </div>
 </script>
 
 <script id='tmpl-checkview' type='text/template'>
 	<input type="checkbox" id="<%= view.id %>" conceptId="<%= model.conceptId %>" />
-	<label for="<%= view.id %>"><%= model.get('label') %></label>
+	<label class="question-label" for="<%= view.id %>"><%= model.get('label') %></label>
 </script>
 
 <script id='tmpl-dateview' type='text/template'>
@@ -179,7 +168,7 @@ var inputId = view.id + '-input';
 var inputId = view.id + '_input';
 %>
 <div class="dateview" data-role="fieldcontain">
-	<label for="<%= inputId %>"><%= model.get('label') %></label>
+	<label class="question-label" for="<%= inputId %>"><%= model.get('label') %></label>
 	<input type="text" id="<%= inputId %>" value=""/>
 </div>
 </script>
@@ -189,7 +178,7 @@ var inputId = view.id + '_input';
 var inputId = view.id + '_input';
 %>
 <div class="rankingview" data-role="fieldcontain">
-	<label><%= model.get('label') %></label>
+	<label class="question-label"><%= model.get('label') %></label>
 	<div class="rankingviewtablecontainer">
 	<div ranked>
 	<table data-role="table" data-mode="reflow" class="rankingtable">
@@ -244,6 +233,22 @@ var inputId = view.id + '_input';
 <input type="number" />
 </script>
 
+
+
+<script id='tmpl-gpsacquireview' type='text/template'> 
+<%
+var contentId = view.id + '_content';
+%>
+<div class="gpsacquireview" data-role="fieldcontain">
+</div>
+</script>
+
+
+<!-- <label class="question-label" for="<%= contentId %>"><%= model.get('label') %></label>
+<div id="<%= contentId %>">
+	<a href="#" data-role="button" action="gpsacquire">Acquire GPS coordinates</a>
+</div -->
+
 <script id='tmpl-submitpage' type='text/template'>
 	<div class="ui-body ui-body-e" style="text-align:center;">
 		<h2>Veuillez vérifier votre saisie</h2>
@@ -281,14 +286,14 @@ var inputId = view.id + '_input';
 	</ul>
 </script>
 
-	<script id='tmpl-submitpage2' type='text/template'>
+<script id='tmpl-submitpage2' type='text/template'>
 	<div class="ui-body ui-body-e" style="text-align:center;">
 		<h2>Avez-vous terminé le questionnaire?</h2>
 		<h3>Si vous avez fini la saisie, presser "Sauvegarder" au bas de la page.</h3>
 	</div>
 </script>
 
-	<script id='tmpl-errormsg' type='text/template'>
+<script id='tmpl-errormsg' type='text/template'>
 	<div class="errorfield ui-body ui-body-e">
 		<ul>
 			<% for (var i = 0; i < errors.length; i++) { %>
@@ -298,18 +303,30 @@ var inputId = view.id + '_input';
 	</div>
 </script>
 
-	<script id='tmpl-errorheader' type='text/template'>
+<script id='tmpl-errorheader' type='text/template'>
 	<div class="errorheader ui-body ui-body-e">
 		<h2>Veuillez corriger les erreurs avant de continuer</h2>
 		<h3>Il y a <strong style="color : red"><%= errors.length %></strong> question à contrôler.</h3>
 	</div>
 </script>
 
-	<div data-role="page" data-theme="c">
-		<div data-role="header"></div>
-		<div data-role="content"></div>
-		<div data-role="footer"></div>
+
+<script id='tmpl-genericpopup' type='text/template'>
+	<% if (data.headerText) { %>
+		<div class="ui-corner-top ui-header ui-bar-b">
+			<h1 class="ui-title"><%= data.headerText %></h1>
+		</div>
+	<% } %>
+	<div class="ui-corner-bottom ui-content ui-body-c <% if(!data.headerText) { %>ui-corner-top<% } %>">
+		<% if(data.titleText) { %>
+			<h3 class="ui-title"><%= data.titleText %></h3>
+		<% } %>
+		
+		<% if(data.bodyHTML) { %>
+			<%= data.bodyHTML %>
+		<% } %>
 	</div>
+</script>
 
 </body>
 

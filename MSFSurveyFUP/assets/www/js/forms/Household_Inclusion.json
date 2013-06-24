@@ -31,7 +31,7 @@
                   "conceptId":"nomenq",
                   "label":"Numéro de l'enquêteur",
                   "bounds":{
-                     "maxLength":3
+                     "maxLength":2
                   }
                },
                {

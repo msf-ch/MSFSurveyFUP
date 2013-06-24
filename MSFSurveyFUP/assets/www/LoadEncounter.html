@@ -62,9 +62,12 @@
 <script id='tmpl-encounterList' type='text/template'>
 <ul id="formSelect" data-role="listview" data-filter="true" data-filter-placeholder="Rechercher...">
 	<% for (var i = 0; i < encounterFiles.length; i++) { %>
-		<li><a href="Form.html?formFilePath=js/forms/<%=encounterFiles[i].formName %>.json&encounter=<%= encounterFiles[i].fileName %>" data-ajax="false">
-			<h2><%= encounterFiles[i].formNameReadable %></h2>
-			<% 	var descriptors = encounterFiles[i].descriptors;
+		<li><a href="Form.html?formFilePath=js/forms/<%=encounterFiles.at(i).get('formName') %>.json&encounter=<%= encounterFiles.at(i).get('fileName') %>" data-ajax="false">
+			<h2><%= encounterFiles.at(i).get('formNameReadable') %></h2>
+			<% if(!encounterFiles.at(i).get('complete')) { %>
+				<h3 style="color:red;font-weight:bold">INCOMPLETE</h3>
+			<% } %>
+			<% 	var descriptors = encounterFiles.at(i).get('descriptors');
 				if (descriptors) {
 					for (var j = 0; j < descriptors.length; j++) { %>
 						<p><strong><%= descriptors[j].label %>: </strong><%= descriptors[j].value %></p>

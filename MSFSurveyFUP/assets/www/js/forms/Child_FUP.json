@@ -28,6 +28,11 @@
             "theme":"c",
             "views":[
                {
+                  "viewType":"gps",
+                  "conceptId":"location",
+                  "label":"Location by GPS"
+               },
+               {
                   "viewType":"date",
                   "conceptId":"datenq",
                   "label":"Date du suivi",
@@ -40,7 +45,7 @@
                   "conceptId":"nomenq",
                   "label":"Numéro de l'enquêteur",
                   "bounds":{
-                     "maxLength":3
+                     "maxLength":2
                   }
                },
                {
@@ -1236,7 +1241,8 @@
                         "ppdautre"
                      ],
                      "condition":"ppdautre == true"
-                  }
+                  },
+                  "required":false
                },
                {
                   "viewType":"number",
@@ -1857,7 +1863,8 @@
                         "ratgfd"
                      ],
                      "condition":"ratgfd == '1'"
-                  }
+                  },
+                  "required":false
                },
                {
                   "viewType":"radio",
@@ -1918,7 +1925,8 @@
                         "supnut"
                      ],
                      "condition":"supnut == '1'"
-                  }
+                  },
+                  "required":false
                },
                {
                   "viewType":"radio",
@@ -1989,7 +1997,8 @@
                         "ratvente"
                      ],
                      "condition":"ratvente == '1'"
-                  }
+                  },
+                  "required":false
                },
                {
                   "viewType":"radio",
@@ -2130,7 +2139,8 @@
                         "ratgfd"
                      ],
                      "condition":"ratgfd == '1'"
-                  }
+                  },
+                  "required":false
                },
                {
                   "viewType":"radio",

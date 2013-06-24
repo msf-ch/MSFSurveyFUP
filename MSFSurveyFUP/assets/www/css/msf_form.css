@@ -114,3 +114,35 @@
 .dateview div.ui-input-text {
 	max-width: 10em;
 }
+
+/* Enlarge text, make the question column bigger */
+[data-role='fieldcontain'] fieldset > div:nth-child(1) {
+	font-size: larger !important;
+	width: 33% !important;
+	margin-right: 3% !important;
+}
+
+[data-role='fieldcontain'] fieldset > div:nth-child(2) {
+	font-size: larger !important;
+	width: 63% !important;
+}
+
+[data-role='fieldcontain'] fieldset > div:nth-child(1) legend {
+	width: 100% !important;
+}
+
+[formview] [data-role='fieldcontain'] > :nth-child(1):not(fieldset) {
+	font-size: larger !important;
+	width: 33% !important;
+	margin-right: 3% !important;
+}
+
+[formview] [data-role='fieldcontain'] > :nth-child(2):not(fieldset) {
+	font-size: larger !important;
+	width: 63% !important;
+}
+
+/* Widen the space between the questions */
+.ui-field-contain {
+	margin-bottom: 1.8em !important;
+}

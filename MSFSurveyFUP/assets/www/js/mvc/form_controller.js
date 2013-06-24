@@ -76,7 +76,23 @@ FormService = {
 			}
 		}
 		
+		encounterToSave.complete = complete;
+		
 		cordova.exec(this.submitSuccessCallback, this.submitFailCallback, "MSF", "submit", [encounterToSave]);
+	},
+	
+	saveIncomplete : function() {
+		var popupvars = {headerText : "Save form",
+		titleText : "Do you want to save this form and exit?",
+		bodyHTML : "<p>Forms can be resumed later.</p>" +
+				"<a href='#' data-role='button' data-inline='true' data-rel='back' data-theme='c'>Cancel</a>" +
+				"<a id='saveButton' href='#' data-role='button' data-inline='true' data-theme='e'>Save</a>"};
+
+		var popup = $(_.template($("#tmpl-genericpopup").html(), popupvars, {variable : "data"}));
+		popup.find("#saveButton").on("click", function() {
+			FormService.submit(false);
+		});
+		PageService.showPopup(popup);
 	},
 	
 	submitSuccessCallback : function(args) {
@@ -87,8 +103,31 @@ FormService = {
 	},
 	
 	ready : function() {
+		$(document).on("backbutton", this.backButtonPressed);
+		$(window).on("beforeunload", function() {
+			$(document).off("backbutton");
+		});
+		
 		obsList.trigger('initialize');
 		Form.trigger('ready');
+	},
+	
+	backButtonPressed : function() {
+		if (PageService.isFirstPageActive()) {
+			var popupvars = {headerText : "Confirm form exit",
+							titleText : "Are you sure you want to leave this form?",
+							bodyHTML : "<p>All answers will be discarded.</p>" +
+									"<a href='#' data-role='button' data-inline='true' data-rel='back' data-theme='c'>Cancel</a>" +
+									"<a id='exitButton' href='#' data-role='button' data-inline='true' data-theme='e'>Exit</a>"};
+			
+			var popup = $(_.template($("#tmpl-genericpopup").html(), popupvars, {variable : "data"}));
+			popup.find("#exitButton").on("click", function() {
+				document.location.href = "home.html";
+			});
+			PageService.showPopup(popup);
+		} else {
+			PageService.prevPage();
+		}
 	}
 };
 
@@ -125,6 +164,10 @@ PageService = _.extend({
 		});
 	},
 	
+	getActivePageIndex : function() {
+		return this.activeIndex;
+	},
+	
 	setActivePageIndex : function(pageIndex) {
 		if (pageIndex >= this.pageModels.length) {
 			alert('PageIndex exceeds number of pages!');
@@ -144,17 +187,19 @@ PageService = _.extend({
 		$.mobile.changePage(pageView.$el);
 	},
 	
-	prevPage : function(force) {
-		if (!force) {
-			//check that all requirements are met
-		}
+	getActivePageModel : function() {
+		return this.pageModels.at(this.getActivePageIndex());
+	},
+	
+	getActivePageView : function() {
+		return this.pageModels.at(this.getActivePageIndex()).pageView;
+	},
+	
+	prevPage : function() {
 		this.setActivePageIndex(this.activeIndex - 1);
 	},
 	
 	nextPage : function(force) {
-		if (!force) {
-			//check that all requirements are met
-		}
 		var pageModel = this.pageModels.at(this.activeIndex);
 				
 		if (this.activeIndex == 0) {
@@ -163,7 +208,7 @@ PageService = _.extend({
 			}
 		}
 		
-		if (Form.getGlobalVariable('validation', 'validateOnNextPage')) {
+		if (Form.getGlobalVariable('validation', 'validateOnNextPage') && !force) {
 			var errors = pageModel.pageView.validate();
 			if (errors && errors.length > 0) {
 				return;
@@ -171,10 +216,6 @@ PageService = _.extend({
 		}
 		
 		this.setActivePageIndex(this.activeIndex + 1);
-	},
-	
-	getActivePageIndex : function() {
-		return this.activeIndex;
 	},
 	
 	getPageFromElement : function(element) {
@@ -185,6 +226,29 @@ PageService = _.extend({
 				return model.pageView;
 			}
 		}
+	},
+	
+	isFirstPageActive : function() {
+		return this.getActivePageIndex() == 0;
+	},
+	
+	isLastPageActive : function() {
+		return this.getActivePageIndex() == pageModels.length - 1;
+	},
+	
+	showPopup : function(element, options) {
+		var popup = this.getActivePageView().$el.children(".ui-popup-container").children(":jqmData(role='popup')");
+		popup.html('').append(element);
+		
+		popup.trigger('create').popup('open', options);
+		return popup;
+	},
+	
+	hidePopup : function() {
+		var popup = this.getActivePageView().$el.children(".ui-popup-container").children(":jqmData(role='popup')");
+		
+		popup.popup('close');
+		return popup;
 	}
 }, Backbone.Events);
 
