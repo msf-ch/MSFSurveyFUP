@@ -64,15 +64,15 @@
                   "options":[
                      {
                         "value":"1",
-                        "label":"1"
+                        "label":"1 - Kamerom"
                      },
                      {
                         "value":"2",
-                        "label":"2"
+                        "label":"2 - Tourba"
                      },
                      {
                         "value":"3",
-                        "label":"3"
+                        "label":"3 - Karal"
                      }
                   ]
                },
@@ -83,351 +83,351 @@
                   "options":[
                      {
                         "value":"1",
-                        "label":"Kamerom Centre / Manairi"
+                        "label":"1 - Kamerom Centre / Manairi"
                      },
                      {
                         "value":"2",
-                        "label":"Kamerom Kangoumri"
+                        "label":"2 - Kamerom Kangoumri"
                      },
                      {
                         "value":"3",
-                        "label":"Kamerom Chomarom"
+                        "label":"3 - Kamerom Chomarom"
                      },
                      {
                         "value":"4",
-                        "label":"Kamerom Adoumacheri"
+                        "label":"4 - Kamerom Adoumacheri"
                      },
                      {
                         "value":"5",
-                        "label":"Kamerom Konliaki /Kouiati"
+                        "label":"5 - Kamerom Konliaki /Kouiati"
                      },
                      {
                         "value":"6",
-                        "label":"Andila Boteri /Badery"
+                        "label":"6 - Andila Boteri /Badery"
                      },
                      {
                         "value":"7",
-                        "label":"Keiri Nguilia"
+                        "label":"7 - Keiri Nguilia"
                      },
                      {
                         "value":"8",
-                        "label":"Assangaïri"
+                        "label":"8 - Assangaïri"
                      },
                      {
                         "value":"9",
-                        "label":"Wanderi"
+                        "label":"9 - Wanderi"
                      },
                      {
                         "value":"10",
-                        "label":"Kamerom Maïnari"
+                        "label":"10 - Kamerom Maïnari"
                      },
                      {
                         "value":"11",
-                        "label":"Lordo Alimaïa"
+                        "label":"11 - Lordo Alimaïa"
                      },
                      {
                         "value":"12",
-                        "label":"Lordo Kalleri"
+                        "label":"12 - Lordo Kalleri"
                      },
                      {
                         "value":"13",
-                        "label":"Lordo Tireri"
+                        "label":"13 - Lordo Tireri"
                      },
                      {
                         "value":"14",
-                        "label":"Lordo Madari"
+                        "label":"14 - Lordo Madari"
                      },
                      {
                         "value":"15",
-                        "label":"Loukyari 1 I"
+                        "label":"15 - Loukyari 1 I"
                      },
                      {
                         "value":"16",
-                        "label":"Loukyari 2 II"
+                        "label":"16 - Loukyari 2 II"
                      },
                      {
                         "value":"17",
-                        "label":"Koreli - Koriti"
+                        "label":"17 - Koreli - Koriti"
                      },
                      {
                         "value":"18",
-                        "label":"Tchotcho 1 I"
+                        "label":"18 - Tchotcho 1 I"
                      },
                      {
                         "value":"19",
-                        "label":"Tchotcho 2 II"
+                        "label":"19 - Tchotcho 2 II"
                      },
                      {
                         "value":"20",
-                        "label":"Lordo Adalary"
+                        "label":"20 - Lordo Adalary"
                      },
                      {
                         "value":"21",
-                        "label":"Andila Malassati"
+                        "label":"21 - Andila Malassati"
                      },
                      {
                         "value":"22",
-                        "label":"Andila Ndyoliki /Ndajelty"
+                        "label":"22 - Andila Ndyoliki /Ndajelty"
                      },
                      {
                         "value":"23",
-                        "label":"Andila Blati"
+                        "label":"23 - Andila Blati"
                      },
                      {
                         "value":"24",
-                        "label":"Lordo Blati"
+                        "label":"24 - Lordo Blati"
                      },
                      {
                         "value":"25",
-                        "label":"Lordo Ali Boltri"
+                        "label":"25 - Lordo Ali Boltri"
                      },
                      {
                         "value":"26",
-                        "label":"Lordo Choiry"
+                        "label":"26 - Lordo Choiry"
                      },
                      {
                         "value":"27",
-                        "label":"Gueleri"
+                        "label":"27 - Gueleri"
                      },
                      {
                         "value":"28",
-                        "label":"Kourari"
+                        "label":"28 - Kourari"
                      },
                      {
                         "value":"29",
-                        "label":"Mbodou Seitchiri"
+                        "label":"29 - Mbodou Seitchiri"
                      },
                      {
                         "value":"30",
-                        "label":"Djourous Moussa yindim"
+                        "label":"30 - Djourous Moussa yindim"
                      },
                      {
                         "value":"31",
-                        "label":"Balladja Bilim"
+                        "label":"31 - Balladja Bilim"
                      },
                      {
                         "value":"32",
-                        "label":"Taka Douari 1 I"
+                        "label":"32 - Taka Douari 1 I"
                      },
                      {
                         "value":"33",
-                        "label":"Taka Douary 2 II"
+                        "label":"33 - Taka Douary 2 II"
                      },
                      {
                         "value":"34",
-                        "label":"Taka Douary souta"
+                        "label":"34 - Taka Douary souta"
                      },
                      {
                         "value":"35",
-                        "label":"Taka Touarty"
+                        "label":"35 - Taka Touarty"
                      },
                      {
                         "value":"36",
-                        "label":"Taka Douary Amachoukoui"
+                        "label":"36 - Taka Douary Amachoukoui"
                      },
                      {
                         "value":"37",
-                        "label":"Taka Douary Maratarty"
+                        "label":"37 - Taka Douary Maratarty"
                      },
                      {
                         "value":"38",
-                        "label":"Taka Aliry"
+                        "label":"38 - Taka Aliry"
                      },
                      {
                         "value":"39",
-                        "label":"Taka Tirery"
+                        "label":"39 - Taka Tirery"
                      },
                      {
                         "value":"40",
-                        "label":"Larkola 1 I"
+                        "label":"40 - Larkola 1 I"
                      },
                      {
                         "value":"41",
-                        "label":"Larkola 2 II"
+                        "label":"41 - Larkola 2 II"
                      },
                      {
                         "value":"42",
-                        "label":"Dalla Mbodri"
+                        "label":"42 - Dalla Mbodri"
                      },
                      {
                         "value":"43",
-                        "label":"Afenga 1 I"
+                        "label":"43 - Afenga 1 I"
                      },
                      {
                         "value":"44",
-                        "label":"Taka Ngourtrom"
+                        "label":"44 - Taka Ngourtrom"
                      },
                      {
                         "value":"45",
-                        "label":"Albout Galaoti"
+                        "label":"45 - Albout Galaoti"
                      },
                      {
                         "value":"46",
-                        "label":"Adety Koura"
+                        "label":"46 - Adety Koura"
                      },
                      {
                         "value":"47",
-                        "label":"Adety Ouri"
+                        "label":"47 - Adety Ouri"
                      },
                      {
                         "value":"48",
-                        "label":"Kafari"
+                        "label":"48 - Kafari"
                      },
                      {
                         "value":"49",
-                        "label":"Issa Doumbary"
+                        "label":"49 - Issa Doumbary"
                      },
                      {
                         "value":"50",
-                        "label":"Afenga 2 II"
+                        "label":"50 - Afenga 2 II"
                      },
                      {
                         "value":"51",
-                        "label":"Brawti"
+                        "label":"51 - Brawti"
                      },
                      {
                         "value":"52",
-                        "label":"Darkafia 3 III"
+                        "label":"52 - Darkafia 3 III"
                      },
                      {
                         "value":"53",
-                        "label":"Moussa Foderi /Fatri"
+                        "label":"53 - Moussa Foderi /Fatri"
                      },
                      {
                         "value":"54",
-                        "label":"Koukouri /kangouri Alfou"
+                        "label":"54 - Koukouri /kangouri Alfou"
                      },
                      {
                         "value":"55",
-                        "label":"Boltrom Mals 2 II"
+                        "label":"55 - Boltrom Mals 2 II"
                      },
                      {
                         "value":"56",
-                        "label":"Djourous Kanoumbri"
+                        "label":"56 - Djourous Kanoumbri"
                      },
                      {
                         "value":"57",
-                        "label":"Djourous Kouka"
+                        "label":"57 - Djourous Kouka"
                      },
                      {
                         "value":"58",
-                        "label":"Djourous Mbodouyakomri"
+                        "label":"58 - Djourous Mbodouyakomri"
                      },
                      {
                         "value":"59",
-                        "label":"Djourous Kalkota 1 I"
+                        "label":"59 - Djourous Kalkota 1 I"
                      },
                      {
                         "value":"60",
-                        "label":"Djourous Kalkota 2 II"
+                        "label":"60 - Djourous Kalkota 2 II"
                      },
                      {
                         "value":"61",
-                        "label":"Djourous Nguidati"
+                        "label":"61 - Djourous Nguidati"
                      },
                      {
                         "value":"62",
-                        "label":"Djourous Flatri"
+                        "label":"62 - Djourous Flatri"
                      },
                      {
                         "value":"63",
-                        "label":"Djourous Moussa Kaleri 1 I"
+                        "label":"63 - Djourous Moussa Kaleri 1 I"
                      },
                      {
                         "value":"64",
-                        "label":"Djourous Moussa Kaleri 2 II"
+                        "label":"64 - Djourous Moussa Kaleri 2 II"
                      },
                      {
                         "value":"65",
-                        "label":"Djourous Moussa Kaleri 3 III"
+                        "label":"65 - Djourous Moussa Kaleri 3 III"
                      },
                      {
                         "value":"66",
-                        "label":"Djourous Baderi"
+                        "label":"66 - Djourous Baderi"
                      },
                      {
                         "value":"67",
-                        "label":"Djourous Katechari"
+                        "label":"67 - Djourous Katechari"
                      },
                      {
                         "value":"68",
-                        "label":"Djourous Komyari"
+                        "label":"68 - Djourous Komyari"
                      },
                      {
                         "value":"69",
-                        "label":"Boltrom Adoumakekri"
+                        "label":"69 - Boltrom Adoumakekri"
                      },
                      {
                         "value":"70",
-                        "label":"Boltrom Choukaray"
+                        "label":"70 - Boltrom Choukaray"
                      },
                      {
                         "value":"71",
-                        "label":"Boltrom Mals 1 I"
+                        "label":"71 - Boltrom Mals 1 I"
                      },
                      {
                         "value":"72",
-                        "label":"Boltrom Mals 3 III"
+                        "label":"72 - Boltrom Mals 3 III"
                      },
                      {
                         "value":"73",
-                        "label":"Boltrom Kaniari"
+                        "label":"73 - Boltrom Kaniari"
                      },
                      {
                         "value":"74",
-                        "label":"Boltron Hansan ndri"
+                        "label":"74 - Boltron Hansan ndri"
                      },
                      {
                         "value":"75",
-                        "label":"Boltrom Kaleri"
+                        "label":"75 - Boltrom Kaleri"
                      },
                      {
                         "value":"76",
-                        "label":"Boltrom Warti"
+                        "label":"76 - Boltrom Warti"
                      },
                      {
                         "value":"77",
-                        "label":"Boltrom Aïri"
+                        "label":"77 - Boltrom Aïri"
                      },
                      {
                         "value":"78",
-                        "label":"Kokoul Aborti"
+                        "label":"78 - Kokoul Aborti"
                      },
                      {
                         "value":"79",
-                        "label":"Kitchimarom"
+                        "label":"79 - Kitchimarom"
                      },
                      {
                         "value":"80",
-                        "label":"Blakalya"
+                        "label":"80 - Blakalya"
                      },
                      {
                         "value":"81",
-                        "label":"Michitiré"
+                        "label":"81 - Michitiré"
                      },
                      {
                         "value":"82",
-                        "label":"Darkafia 1 I"
+                        "label":"82 - Darkafia 1 I"
                      },
                      {
                         "value":"83",
-                        "label":"Darkafia 2 II"
+                        "label":"83 - Darkafia 2 II"
                      },
                      {
                         "value":"84",
-                        "label":"kara Brouroura"
+                        "label":"84 - kara Brouroura"
                      },
                      {
                         "value":"85",
-                        "label":"Boltrom Maity"
+                        "label":"85 - Boltrom Maity"
                      },
                      {
                         "value":"86",
-                        "label":"Issangari"
+                        "label":"86 - Issangari"
                      },
                      {
                         "value":"99",
-                        "label":"Inconnu"
+                        "label":"99 - Inconnu"
                      }
                   ],
                   "showIf":{
@@ -444,355 +444,355 @@
                   "options":[
                      {
                         "value":"1",
-                        "label":"Wandalla"
+                        "label":"1 - Wandalla"
                      },
                      {
                         "value":"2",
-                        "label":"Mahara albakas"
+                        "label":"2 - Mahara albakas"
                      },
                      {
                         "value":"3",
-                        "label":"Mahara 1 I"
+                        "label":"3 - Mahara 1 I"
                      },
                      {
                         "value":"4",
-                        "label":"Tobiyo 1 I"
+                        "label":"4 - Tobiyo 1 I"
                      },
                      {
                         "value":"5",
-                        "label":"Tobiyo 2 II"
+                        "label":"5 - Tobiyo 2 II"
                      },
                      {
                         "value":"6",
-                        "label":"Tobiyo 3 III"
+                        "label":"6 - Tobiyo 3 III"
                      },
                      {
                         "value":"7",
-                        "label":"Mahara iné"
+                        "label":"7 - Mahara iné"
                      },
                      {
                         "value":"8",
-                        "label":"Djimesse 4 IV"
+                        "label":"8 - Djimesse 4 IV"
                      },
                      {
                         "value":"9",
-                        "label":"Mahara alhamie"
+                        "label":"9 - Mahara alhamie"
                      },
                      {
                         "value":"10",
-                        "label":"Mahara albarbet"
+                        "label":"10 - Mahara albarbet"
                      },
                      {
                         "value":"11",
-                        "label":"Mahara 2 II"
+                        "label":"11 - Mahara 2 II"
                      },
                      {
                         "value":"12",
-                        "label":"Djimesse 2 II"
+                        "label":"12 - Djimesse 2 II"
                      },
                      {
                         "value":"13",
-                        "label":"Djimesse 3 III"
+                        "label":"13 - Djimesse 3 III"
                      },
                      {
                         "value":"14",
-                        "label":"Djimesse 1 I"
+                        "label":"14 - Djimesse 1 I"
                      },
                      {
                         "value":"15",
-                        "label":"Odja 2 II"
+                        "label":"15 - Odja 2 II"
                      },
                      {
                         "value":"16",
-                        "label":"Odja 1 I"
+                        "label":"16 - Odja 1 I"
                      },
                      {
                         "value":"17",
-                        "label":"Mandoulla"
+                        "label":"17 - Mandoulla"
                      },
                      {
                         "value":"18",
-                        "label":"Dal dredir"
+                        "label":"18 - Dal dredir"
                      },
                      {
                         "value":"19",
-                        "label":"Hayaba"
+                        "label":"19 - Hayaba"
                      },
                      {
                         "value":"20",
-                        "label":"Tororo 1 I"
+                        "label":"20 - Tororo 1 I"
                      },
                      {
                         "value":"21",
-                        "label":"Tororo 2 II"
+                        "label":"21 - Tororo 2 II"
                      },
                      {
                         "value":"22",
-                        "label":"Hamara 2 II"
+                        "label":"22 - Hamara 2 II"
                      },
                      {
                         "value":"23",
-                        "label":"Hamara 1 I"
+                        "label":"23 - Hamara 1 I"
                      },
                      {
                         "value":"24",
-                        "label":"Tileha 1 I"
+                        "label":"24 - Tileha 1 I"
                      },
                      {
                         "value":"25",
-                        "label":"Tileha 2 II"
+                        "label":"25 - Tileha 2 II"
                      },
                      {
                         "value":"26",
-                        "label":"Goumboya 1 I"
+                        "label":"26 - Goumboya 1 I"
                      },
                      {
                         "value":"27",
-                        "label":"Goumboya 2 II"
+                        "label":"27 - Goumboya 2 II"
                      },
                      {
                         "value":"28",
-                        "label":"Maguadat 2 II"
+                        "label":"28 - Maguadat 2 II"
                      },
                      {
                         "value":"29",
-                        "label":"Maguadat 1 I"
+                        "label":"29 - Maguadat 1 I"
                      },
                      {
                         "value":"30",
-                        "label":"Kitire"
+                        "label":"30 - Kitire"
                      },
                      {
                         "value":"31",
-                        "label":"Am-Achacha"
+                        "label":"31 - Am-Achacha"
                      },
                      {
                         "value":"32",
-                        "label":"Tomate 1 I"
+                        "label":"32 - Tomate 1 I"
                      },
                      {
                         "value":"33",
-                        "label":"Tomate 2 II"
+                        "label":"33 - Tomate 2 II"
                      },
                      {
                         "value":"34",
-                        "label":"Tomate 3 III"
+                        "label":"34 - Tomate 3 III"
                      },
                      {
                         "value":"35",
-                        "label":"Wal-Damballa (Waldamla)"
+                        "label":"35 - Wal-Damballa (Waldamla)"
                      },
                      {
                         "value":"36",
-                        "label":"Seibaya"
+                        "label":"36 - Seibaya"
                      },
                      {
                         "value":"37",
-                        "label":"Iterine Riad"
+                        "label":"37 - Iterine Riad"
                      },
                      {
                         "value":"38",
-                        "label":"Iterine 1 I"
+                        "label":"38 - Iterine 1 I"
                      },
                      {
                         "value":"39",
-                        "label":"Ganatir Noir"
+                        "label":"39 - Ganatir Noir"
                      },
                      {
                         "value":"40",
-                        "label":"Macksour"
+                        "label":"40 - Macksour"
                      },
                      {
                         "value":"41",
-                        "label":"Gamar-Baga"
+                        "label":"41 - Gamar-Baga"
                      },
                      {
                         "value":"42",
-                        "label":"Gounara"
+                        "label":"42 - Gounara"
                      },
                      {
                         "value":"43",
-                        "label":"Grette 2 II"
+                        "label":"43 - Grette 2 II"
                      },
                      {
                         "value":"44",
-                        "label":"Grette 1 I"
+                        "label":"44 - Grette 1 I"
                      },
                      {
                         "value":"45",
-                        "label":"Djanabara"
+                        "label":"45 - Djanabara"
                      },
                      {
                         "value":"46",
-                        "label":"Dilema 1 I"
+                        "label":"46 - Dilema 1 I"
                      },
                      {
                         "value":"47",
-                        "label":"Delema 2 II"
+                        "label":"47 - Delema 2 II"
                      },
                      {
                         "value":"48",
-                        "label":"Tamadaï"
+                        "label":"48 - Tamadaï"
                      },
                      {
                         "value":"49",
-                        "label":"Walla 2 II"
+                        "label":"49 - Walla 2 II"
                      },
                      {
                         "value":"50",
-                        "label":"Walla 1 I"
+                        "label":"50 - Walla 1 I"
                      },
                      {
                         "value":"51",
-                        "label":"Mbireme (Bremi) III"
+                        "label":"51 - Mbireme (Bremi) III"
                      },
                      {
                         "value":"52",
-                        "label":"MBirime (Bremi) 4 IV"
+                        "label":"52 - MBirime (Bremi) 4 IV"
                      },
                      {
                         "value":"53",
-                        "label":"Mbireme (Bremi) 1 I"
+                        "label":"53 - Mbireme (Bremi) 1 I"
                      },
                      {
                         "value":"54",
-                        "label":"Mbireme (Bremi) 2 II"
+                        "label":"54 - Mbireme (Bremi) 2 II"
                      },
                      {
                         "value":"55",
-                        "label":"Am-Dogo"
+                        "label":"55 - Am-Dogo"
                      },
                      {
                         "value":"56",
-                        "label":"Grette 3 III"
+                        "label":"56 - Grette 3 III"
                      },
                      {
                         "value":"57",
-                        "label":"Kale-Kori"
+                        "label":"57 - Kale-Kori"
                      },
                      {
                         "value":"58",
-                        "label":"Hassabalari 1 I"
+                        "label":"58 - Hassabalari 1 I"
                      },
                      {
                         "value":"59",
-                        "label":"Hassabalari 2 II"
+                        "label":"59 - Hassabalari 2 II"
                      },
                      {
                         "value":"60",
-                        "label":"Nibeck Faditi"
+                        "label":"60 - Nibeck Faditi"
                      },
                      {
                         "value":"61",
-                        "label":"Fanta 1 I"
+                        "label":"61 - Fanta 1 I"
                      },
                      {
                         "value":"62",
-                        "label":"Fanta 2 II"
+                        "label":"62 - Fanta 2 II"
                      },
                      {
                         "value":"63",
-                        "label":"Nabagai"
+                        "label":"63 - Nabagai"
                      },
                      {
                         "value":"64",
-                        "label":"Motary"
+                        "label":"64 - Motary"
                      },
                      {
                         "value":"65",
-                        "label":"Yamani"
+                        "label":"65 - Yamani"
                      },
                      {
                         "value":"66",
-                        "label":"Aliri (Ali Weleri)"
+                        "label":"66 - Aliri (Ali Weleri)"
                      },
                      {
                         "value":"67",
-                        "label":"Kaltouri"
+                        "label":"67 - Kaltouri"
                      },
                      {
                         "value":"68",
-                        "label":"Ali-Gourti"
+                        "label":"68 - Ali-Gourti"
                      },
                      {
                         "value":"69",
-                        "label":"Galdjari"
+                        "label":"69 - Galdjari"
                      },
                      {
                         "value":"70",
-                        "label":"Kaliari"
+                        "label":"70 - Kaliari"
                      },
                      {
                         "value":"71",
-                        "label":"Maity"
+                        "label":"71 - Maity"
                      },
                      {
                         "value":"72",
-                        "label":"Maïti Kadikadi"
+                        "label":"72 - Maïti Kadikadi"
                      },
                      {
                         "value":"73",
-                        "label":"Attichene 2 II"
+                        "label":"73 - Attichene 2 II"
                      },
                      {
                         "value":"74",
-                        "label":"Attichene 1 I"
+                        "label":"74 - Attichene 1 I"
                      },
                      {
                         "value":"75",
-                        "label":"Attichene 3 III"
+                        "label":"75 - Attichene 3 III"
                      },
                      {
                         "value":"76",
-                        "label":"Malari Indji Hadji"
+                        "label":"76 - Malari Indji Hadji"
                      },
                      {
                         "value":"77",
-                        "label":"Bir Haralah 2 II"
+                        "label":"77 - Bir Haralah 2 II"
                      },
                      {
                         "value":"78",
-                        "label":"Bir Haralah 1 I"
+                        "label":"78 - Bir Haralah 1 I"
                      },
                      {
                         "value":"79",
-                        "label":"Bir Haralah 3 III"
+                        "label":"79 - Bir Haralah 3 III"
                      },
                      {
                         "value":"80",
-                        "label":"Bir Haralah 4 IV"
+                        "label":"80 - Bir Haralah 4 IV"
                      },
                      {
                         "value":"81",
-                        "label":"Kir Kitchi"
+                        "label":"81 - Kir Kitchi"
                      },
                      {
                         "value":"82",
-                        "label":"Anga shira"
+                        "label":"82 - Anga shira"
                      },
                      {
                         "value":"83",
-                        "label":"Tourba Tori"
+                        "label":"83 - Tourba Tori"
                      },
                      {
                         "value":"84",
-                        "label":"Tourba"
+                        "label":"84 - Tourba"
                      },
                      {
                         "value":"85",
-                        "label":"Ataif"
+                        "label":"85 - Ataif"
                      },
                      {
                         "value":"86",
-                        "label":"Arera -Arere"
+                        "label":"86 - Arera -Arere"
                      },
                      {
                         "value":"87",
-                        "label":"Mbireme Haraaza"
+                        "label":"87 - Mbireme Haraaza"
                      },
                      {
                         "value":"99",
-                        "label":"Inconnu"
+                        "label":"99 - Inconnu"
                      }
                   ],
                   "showIf":{
@@ -809,107 +809,107 @@
                   "options":[
                      {
                         "value":"1",
-                        "label":"Karal"
+                        "label":"1 - Karal"
                      },
                      {
                         "value":"2",
-                        "label":"Nabagaya"
+                        "label":"2 - Nabagaya"
                      },
                      {
                         "value":"3",
-                        "label":"Nabagaya B"
+                        "label":"3 - Nabagaya B"
                      },
                      {
                         "value":"4",
-                        "label":"Domaya"
+                        "label":"4 - Domaya"
                      },
                      {
                         "value":"5",
-                        "label":"Habado"
+                        "label":"5 - Habado"
                      },
                      {
                         "value":"6",
-                        "label":"N'Djamena Falata"
+                        "label":"6 - N'Djamena Falata"
                      },
                      {
                         "value":"7",
-                        "label":"Guirbe"
+                        "label":"7 - Guirbe"
                      },
                      {
                         "value":"8",
-                        "label":"MaloumRi"
+                        "label":"8 - MaloumRi"
                      },
                      {
                         "value":"9",
-                        "label":"Maloum-Ri B"
+                        "label":"9 - Maloum-Ri B"
                      },
                      {
                         "value":"10",
-                        "label":"Toumraya"
+                        "label":"10 - Toumraya"
                      },
                      {
                         "value":"11",
-                        "label":"Roumaya"
+                        "label":"11 - Roumaya"
                      },
                      {
                         "value":"12",
-                        "label":"Hile Falata"
+                        "label":"12 - Hile Falata"
                      },
                      {
                         "value":"13",
-                        "label":"Israye"
+                        "label":"13 - Israye"
                      },
                      {
                         "value":"14",
-                        "label":"Garadaya"
+                        "label":"14 - Garadaya"
                      },
                      {
                         "value":"15",
-                        "label":"Garmana"
+                        "label":"15 - Garmana"
                      },
                      {
                         "value":"16",
-                        "label":"Riad"
+                        "label":"16 - Riad"
                      },
                      {
                         "value":"17",
-                        "label":"Boussaya"
+                        "label":"17 - Boussaya"
                      },
                      {
                         "value":"18",
-                        "label":"N'Djamena Michetiré"
+                        "label":"18 - N'Djamena Michetiré"
                      },
                      {
                         "value":"19",
-                        "label":"Am-Maloudou"
+                        "label":"19 - Am-Maloudou"
                      },
                      {
                         "value":"20",
-                        "label":"Salaya"
+                        "label":"20 - Salaya"
                      },
                      {
                         "value":"21",
-                        "label":"Ardebe"
+                        "label":"21 - Ardebe"
                      },
                      {
                         "value":"22",
-                        "label":"Drick 1 I"
+                        "label":"22 - Drick 1 I"
                      },
                      {
                         "value":"23",
-                        "label":"Drick 2 II"
+                        "label":"23 - Drick 2 II"
                      },
                      {
                         "value":"24",
-                        "label":"Angouroutou"
+                        "label":"24 - Angouroutou"
                      },
                      {
                         "value":"25",
-                        "label":"Hile Falata 2"
+                        "label":"25 - Hile Falata 2"
                      },
                      {
                         "value":"99",
-                        "label":"Inconnu"
+                        "label":"99 - Inconnu"
                      }
                   ],
                   "showIf":{
@@ -924,8 +924,7 @@
                   "conceptId":"nummen",
                   "label":"Numéro du ménage",
                   "bounds":{
-                     "minValue":1,
-                     "maxValue":9999
+                     "exactLength":4
                   }
                },
                {
@@ -933,17 +932,31 @@
                   "conceptId":"enfid",
                   "label":"Identification de l'enfant",
                   "bounds":{
-                     "minValue":1,
-                     "maxValue":99999
-                  }
+                     "exactLength":5
+                  },
+                  "validators":[
+                     {
+                        "condition":"value && value.substring(0,4) == nummen",
+                        "conceptIds":[
+                           "nummen"
+                        ],
+                        "errorMessage":"First four digits of infant identifier must match household number"
+                     },
+                     {
+                        "condition":"value && value.charAt(4) >= 0 && value.charAt(4) <= 3",
+                        "conceptIds":[
+
+                        ],
+                        "errorMessage":"Final digit of infant ID must be 0, 1, 2 or 3"
+                     }
+                  ]
                },
                {
                   "viewType":"number",
                   "conceptId":"numcoup",
                   "label":"Numéro du coupon",
                   "bounds":{
-                     "minValue":1,
-                     "maxValue":99999
+                     "exactLength":5
                   }
                },
                {
@@ -968,7 +981,8 @@
                   "label":"Date de naissance de l'enfant",
                   "dateBounds":{
                      "maxDate":"today"
-                  }
+                  },
+                  "required":false
                },
                {
                   "viewType":"number",
@@ -1009,11 +1023,11 @@
                   "options":[
                      {
                         "value":"1",
-                        "label":"male"
+                        "label":"garçon"
                      },
                      {
                         "value":"2",
-                        "label":"female"
+                        "label":"fille"
                      }
                   ]
                },
@@ -1055,7 +1069,8 @@
                   "label":"Numéro de téléphone",
                   "bounds":{
                      "maxLength":25
-                  }
+                  },
+                  "required":false
                },
                {
                   "viewType":"radio",
@@ -1233,8 +1248,7 @@
                         "ppdautre"
                      ],
                      "condition":"ppdautre == true"
-                  },
-                  "required":false
+                  }
                },
                {
                   "viewType":"number",
@@ -1266,7 +1280,8 @@
                   "label":"Poids de l'enfant (kg)",
                   "bounds":{
                      "minValue":2.5,
-                     "maxValue":25
+                     "maxValue":25.0,
+                     "precisionExact":1
                   },
                   "required":false
                },
@@ -1275,8 +1290,9 @@
                   "conceptId":"taille",
                   "label":"Taille de l'enfant (cm)",
                   "bounds":{
-                     "minValue":60,
-                     "maxValue":90
+                     "minValue":60.0,
+                     "maxValue":90.0,
+                     "precisionExact":1
                   },
                   "required":false
                }
@@ -1732,9 +1748,10 @@
                   ],
                   "showIf":{
                      "conceptIds":[
-                        "malad"
+                        "malad",
+                        "eprest"
                      ],
-                     "condition":"malad == '1'"
+                     "condition":"malad == '1' && eprest != '2'"
                   }
                },
                {
@@ -1870,7 +1887,13 @@
                         "value":"9",
                         "label":"ne sait pas ou non spécifié"
                      }
-                  ]
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "supnut"
+                     ],
+                     "condition":"supnut == '1'"
+                  }
                },
                {
                   "viewType":"checkboxgroup",
@@ -1878,27 +1901,27 @@
                   "children":[
                      {
                         "label":"Céréales",
-                        "conceptId":"supnutyp"
+                        "conceptId":"supnutcere"
                      },
                      {
                         "label":"CSB",
-                        "conceptId":"supCSB"
+                        "conceptId":"supnutcsb"
                      },
                      {
                         "label":"PPDOZ",
-                        "conceptId":"supPPDOZ"
+                        "conceptId":"supnutppdoz"
                      },
                      {
                         "label":"Sucre",
-                        "conceptId":"supSucre"
+                        "conceptId":"supnutsucre"
                      },
                      {
                         "label":"SupPlumpy (SPP)",
-                        "conceptId":"supSPP"
+                        "conceptId":"supnutspp"
                      },
                      {
                         "label":"Huile",
-                        "conceptId":"supHuile"
+                        "conceptId":"supnuthuile"
                      }
                   ],
                   "showIf":{
@@ -1937,280 +1960,14 @@
                         "value":"9",
                         "label":"ne sait pas ou non spécifié"
                      }
-                  ]
-               },
-               {
-                  "viewType":"checkboxgroup",
-                  "label":"Quels aliments?",
-                  "children":[
-                     {
-                        "label":"Céreales",
-                        "conceptId":"ratipartcere"
-                     },
-                     {
-                        "label":"Pois-Lentilles",
-                        "conceptId":"ratipartlent"
-                     },
-                     {
-                        "label":"CSB",
-                        "conceptId":"ratipartcsb"
-                     },
-                     {
-                        "label":"Huile",
-                        "conceptId":"ratiparthuile"
-                     },
-                     {
-                        "label":"Sucre",
-                        "conceptId":"ratipartsucre"
-                     },
-                     {
-                        "label":"Sel",
-                        "conceptId":"ratipartsel"
-                     },
-                     {
-                        "label":"Ne sait pas",
-                        "conceptId":"ratipartnesait"
-                     }
                   ],
                   "showIf":{
                      "conceptIds":[
-                        "ratvente"
-                     ],
-                     "condition":"ratvente == '1'"
-                  }
-               },
-               {
-                  "viewType":"text",
-                  "conceptId":"ratipartautre",
-                  "label":"Autre",
-                  "showIf":{
-                     "conceptIds":[
-                        "ratvente"
-                     ],
-                     "condition":"ratvente == '1'"
-                  },
-                  "required":false
-               },
-               {
-                  "viewType":"radio",
-                  "conceptId":"enqrefer",
-                  "label":"Quest1: L'enquêteur a-t-il référé l'enfant?",
-                  "options":[
-                     {
-                        "value":"1",
-                        "label":"oui"
-                     },
-                     {
-                        "value":"2",
-                        "label":"non"
-                     },
-                     {
-                        "value":"9",
-                        "label":"ne sait pas ou non spécifié"
-                     }
-                  ],
-                  "showIf":{
-                     "conceptIds":[
-                        "malad"
-                     ],
-                     "condition":"malad == '1'"
-                  }
-               },
-               {
-                  "viewType":"radio",
-                  "conceptId":"decision",
-                  "label":"Quest2: Si oui, à quel centre l'enfant a-t-il été référé?",
-                  "options":[
-                     {
-                        "value":"1",
-                        "label":"Centre de santé"
-                     },
-                     {
-                        "value":"2",
-                        "label":"Agent communautaire"
-                     },
-                     {
-                        "value":"3",
-                        "label":"Hôpital"
-                     }
-                  ],
-                  "showIf":{
-                     "conceptIds":[
-                        "malad",
-                        "enqrefer"
-                     ],
-                     "condition":"malad == '1' && enqrefer == '1'"
-                  }
-               },
-               {
-                  "viewType":"radio",
-                  "conceptId":"progadm",
-                  "label":"L'enfant a-t-il été admis dans le programme nutritionnel depuis notre dernière visite?",
-                  "options":[
-                     {
-                        "value":"1",
-                        "label":"oui"
-                     },
-                     {
-                        "value":"2",
-                        "label":"non"
-                     },
-                     {
-                        "value":"9",
-                        "label":"ne sait pas ou non spécifié"
-                     }
-                  ]
-               },
-               {
-                  "viewType":"radio",
-                  "conceptId":"ratgfd",
-                  "label":"Le ménage a-t-il bénéficié de rations générales de nourriture dans les derniers 3 mois?",
-                  "options":[
-                     {
-                        "value":"1",
-                        "label":"oui"
-                     },
-                     {
-                        "value":"2",
-                        "label":"non"
-                     },
-                     {
-                        "value":"9",
-                        "label":"ne sait pas ou non spécifié"
-                     }
-                  ]
-               },
-               {
-                  "viewType":"checkboxgroup",
-                  "label":"Qu'avez-vous reçu?",
-                  "children":[
-                     {
-                        "label":"Céreales",
-                        "conceptId":"ratcompcere"
-                     },
-                     {
-                        "label":"Pois-Lentilles",
-                        "conceptId":"ratcomplent"
-                     },
-                     {
-                        "label":"CSB",
-                        "conceptId":"ratcompcsb"
-                     },
-                     {
-                        "label":"Huile",
-                        "conceptId":"ratcomphuile"
-                     },
-                     {
-                        "label":"Sucre",
-                        "conceptId":"ratcompsucre"
-                     },
-                     {
-                        "label":"Sel",
-                        "conceptId":"ratcompsel"
-                     },
-                     {
-                        "label":"Ne sait pas",
-                        "conceptId":"ratcompnesait"
-                     }
-                  ],
-                  "showIf":{
-                     "conceptIds":[
-                        "ratgfd"
-                     ],
-                     "condition":"ratgfd == '1'"
-                  }
-               },
-               {
-                  "viewType":"text",
-                  "conceptId":"ratcompautre",
-                  "label":"Autre",
-                  "showIf":{
-                     "conceptIds":[
-                        "ratgfd"
-                     ],
-                     "condition":"ratgfd == '1'"
-                  },
-                  "required":false
-               },
-               {
-                  "viewType":"radio",
-                  "conceptId":"supnut",
-                  "label":"Des membres de votre famille ont-ils bénéficé de suppléments nutritionnels?",
-                  "options":[
-                     {
-                        "value":"1",
-                        "label":"oui"
-                     },
-                     {
-                        "value":"2",
-                        "label":"non"
-                     },
-                     {
-                        "value":"9",
-                        "label":"ne sait pas ou non spécifié"
-                     }
-                  ]
-               },
-               {
-                  "viewType":"checkboxgroup",
-                  "label":"Quel type de supplément ont-ils reçu?",
-                  "children":[
-                     {
-                        "label":"Céréales",
-                        "conceptId":"supnutyp"
-                     },
-                     {
-                        "label":"CSB",
-                        "conceptId":"supCSB"
-                     },
-                     {
-                        "label":"PPDOZ",
-                        "conceptId":"supPPDOZ"
-                     },
-                     {
-                        "label":"Sucre",
-                        "conceptId":"supSucre"
-                     },
-                     {
-                        "label":"SupPlumpy (SPP)",
-                        "conceptId":"supSPP"
-                     },
-                     {
-                        "label":"Huile",
-                        "conceptId":"supHuile"
-                     }
-                  ]
-               },
-               {
-                  "viewType":"text",
-                  "conceptId":"supAutre",
-                  "label":"Autre",
-                  "showIf":{
-                     "conceptIds":[
+                        "ratgfd",
                         "supnut"
                      ],
-                     "condition":"supnut == '1'"
-                  },
-                  "required":false
-               },
-               {
-                  "viewType":"radio",
-                  "conceptId":"ratvente",
-                  "label":"Avez-vous dû vendre une partie des rations reçues?",
-                  "options":[
-                     {
-                        "value":"1",
-                        "label":"oui"
-                     },
-                     {
-                        "value":"2",
-                        "label":"non"
-                     },
-                     {
-                        "value":"9",
-                        "label":"ne sait pas ou non spécifié"
-                     }
-                  ]
+                     "condition":"ratgfd == '1' || supnut == '1'"
+                  }
                },
                {
                   "viewType":"checkboxgroup",
@@ -2283,8 +2040,7 @@
                   "conceptId":"enfidrep",
                   "label":"Numero d'identification de l'enfant, répétition",
                   "bounds":{
-                     "minValue":0,
-                     "maxValue":99999
+                     "exactLength":5
                   },
                   "validators":[
                      {
@@ -2292,7 +2048,7 @@
                         "conceptIds":[
                            "enfid"
                         ],
-                        "errorMessage":"Le numéro d'identification ne correspond pas à celui saisi au début du formulaire: <strong id=\"enfiderrorlabel\"></strong>. <br><br>PleaseVeuillez contrôler le numéro. Pour corriger le numéro saisi précédemment, veuillez revenir au début du formulaire.<a id=\"linktofirstpage\" href=\"#\" data-role=\"button\" onclick=\"PageService.setActivePageIndex(0)\">Cliquez ici pour revenir à la première page.</a><script type=\"text/javascript\">$('#linktofirstpage').button();$('#enfiderrorlabel').text(ObsService.getObs('enfid'));</script>"
+                        "errorMessage":"Le numéro d'identification ne correspond pas à celui saisi au début du formulaire: <strong id=\"enfiderrorlabel\"></strong>. <br><br>Veuillez contrôler le numéro. Pour corriger le numéro saisi précédemment, veuillez revenir au début du formulaire.<a id=\"linktofirstpage\" href=\"#\" data-role=\"button\" onclick=\"PageService.setActivePageIndex(0)\">Cliquez ici pour revenir à la première page.</a><script type=\"text/javascript\">$('#linktofirstpage').button();$('#enfiderrorlabel').text(ObsService.getObs('enfid'));</script>"
                      }
                   ]
                }

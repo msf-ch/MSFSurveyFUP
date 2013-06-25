@@ -87,25 +87,40 @@ FormItemViewModel = Backbone.Model.extend({
 		}
 		
 		var bounds = this.get('bounds');
-		if (bounds && value) {
-			var stringValue = value.toString();
-			 if (bounds.maxValue && value > bounds.maxValue) {
+		if (bounds) {
+			var stringValue;
+			if (value == undefined) {
+				stringValue == '';
+			} else {
+				stringValue = value.toString();
+			}
+			 if (bounds.maxValue != undefined && value > bounds.maxValue) {
 				 errors.push("La VALEUR ne doit pas dépasse " + bounds.maxValue); //Answer VALUE must be less than or equal to 
 			 }
-			 if (bounds.minValue && value < bounds.minValue) {
+			 if (bounds.minValue != undefined && value < bounds.minValue) {
 				 errors.push("La VALEUR doit être d'au moins " + bounds.minValue); //Answer VALUE must be more than or equal to
 			 }
 
-			var stringValue = value.toString();
-			 if (bounds.maxLength && stringValue.length > bounds.maxLength) {
+			 if (bounds.maxLength != undefined && stringValue.length > bounds.maxLength) {
 				 errors.push("La LONGUEUR de la réponse ne doit pas dépasser " + bounds.maxLength + " caractères."); //Answer LENGTH must be less than or equal to x characters
 			 }
-			 if (bounds.minLength && stringValue.length > bounds.minLength) {
+			 if (bounds.minLength != undefined && stringValue.length < bounds.minLength) {
 				 errors.push("La LONGUEUR de la réponse doit être d'au moins " + bounds.minLength + " caractères."); //Answer LENGTH must be more than or equal to x characters
 			 }
 
-			 if (bounds.exactLength && stringValue.length > bounds.exactLength) {
+			 if (bounds.exactLength != undefined && stringValue.length != bounds.exactLength) {
 				 errors.push("La LONGUEUR de la réponse doit être exactement " + bounds.exactLength + " characters."); //Answer LENGTH must be exactly x characters.
+			 }
+			 
+			 if (bounds.precisionExact != undefined) {
+				 if (isNaN(parseFloat(stringValue)) || !isFinite(stringValue)) {
+					 errors.push("Answer must be a number");
+				 } else if (bounds.precisionExact == 0 && Math.floor(stringValue) != value) {
+					 //Nothing past the decimal place
+					 errors.push("Answer must be an integer (a round number)");
+				 } else if (bounds.precisionExact > 0 && ((stringValue.indexOf(".") != stringValue.length - bounds.precisionExact) || (stringValue.indexOf(".") < 0))) {
+					 errors.push("Answer must have exactly " + bounds.precisionExact + " digit(s) past the decimal.");
+				 }
 			 }
 		}
 		

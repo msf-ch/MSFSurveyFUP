@@ -223,16 +223,17 @@ var inputId = view.id + '_input';
 <td><a href="#" action="delete" data-role="button" data-icon="delete" data-iconpos="notext" data-theme="a" data-inline="true">Delete</a></td>
 </script>
 
+
 <script id='tmpl-unrankedrow' type='text/template'>
 <td><a href="#" action="add" data-role="button" data-icon="plus" data-iconpos="notext" data-theme="b" data-inline="true">Add</a></td>	
 
 <td data-key="label"><%= item.get('label') %></td>
 </script>
 
+
 <script id='tmpl-rankingitemview' type='text/template'> 
 <input type="number" />
 </script>
-
 
 
 <script id='tmpl-gpsacquireview' type='text/template'> 
@@ -243,11 +244,6 @@ var contentId = view.id + '_content';
 </div>
 </script>
 
-
-<!-- <label class="question-label" for="<%= contentId %>"><%= model.get('label') %></label>
-<div id="<%= contentId %>">
-	<a href="#" data-role="button" action="gpsacquire">Acquire GPS coordinates</a>
-</div -->
 
 <script id='tmpl-submitpage' type='text/template'>
 	<div class="ui-body ui-body-e" style="text-align:center;">
