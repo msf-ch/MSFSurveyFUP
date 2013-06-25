@@ -35,7 +35,7 @@
                {
                   "viewType":"date",
                   "conceptId":"datenq",
-                  "label":"Date de l'enquête / du suivi",
+                  "label":"Date de l’enquête – Inclusion ménage",
                   "dateBounds":{
                      "maxDate":"today"
                   }

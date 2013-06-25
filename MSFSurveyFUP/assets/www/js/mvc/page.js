@@ -125,34 +125,29 @@ PageView = Backbone.View.extend({
 	
 	onShow : function() {
 		$.mobile.silentScroll(0);
+		this.positionFooter();
 		
 		this.trigger('pageshow');
 		PageService.trigger('pageshow', [this]);
 	},
 	
-	validate : function() {
-		var viewsWithErrors =[];
-		var formViews = this.$el.find(".formview:not(.viewhidden, .viewhidden *)"); //don't include any hidden views!
-		
-		var view;
-		var viewErrors;
-		for (var i = 0; i < formViews.length; i++) {
-			view = $(formViews[i]).data('view');
-			viewErrors = view.validate();
-			if (viewErrors && viewErrors.length > 0) {
-				viewsWithErrors.push({'view' : view, errors : viewErrors});
-			}
+	positionFooter : function() {
+		var content = this.content.$el;
+		content.css("min-height", "0px");
+
+		// var headerHeight =
+		// $.mobile.activePage.children(":jqmData(role='header')").outerHeight();
+		var headerHeight = this.header.$el.outerHeight();
+		var contentHeight = content.outerHeight();
+		var footerHeight = this.footer.$el.outerHeight();
+
+		var pageHeight = headerHeight + contentHeight + footerHeight;
+		if (pageHeight < window.innerHeight) {
+			var contentMargin = content.outerHeight() - content.height();
+			var targetContentHeight = window.innerHeight - headerHeight
+					- footerHeight - contentMargin;
+			content.css("min-height", targetContentHeight + "px");
 		}
-		
-		if (viewsWithErrors.length > 0) {
-			this.content.$el.find('.errorheader').remove();
-			this.content.$el.prepend(_.template($("#tmpl-errorheader").html(), {'errors' : viewsWithErrors}));
-			$.mobile.silentScroll(0);
-		} else {
-			this.content.$el.find('.errorheader').remove();
-		}
-		
-		return viewsWithErrors;
 	}
 });
 
@@ -192,7 +187,7 @@ Content = Backbone.View.extend({
 	
 	registerViews : function() {
 		var content = this;
-		$("[formview]").each(function(index, element) {
+		this.$el.find("[formview]").each(function(index, element) {
 			var formView = $(element).data('formview');
 			if (formView) {
 				formView.page = content.page;

@@ -114,11 +114,11 @@ FormService = {
 	
 	backButtonPressed : function() {
 		if (PageService.isFirstPageActive()) {
-			var popupvars = {headerText : "Confirm form exit",
-							titleText : "Are you sure you want to leave this form?",
-							bodyHTML : "<p>All answers will be discarded.</p>" +
-									"<a href='#' data-role='button' data-inline='true' data-rel='back' data-theme='c'>Cancel</a>" +
-									"<a id='exitButton' href='#' data-role='button' data-inline='true' data-theme='e'>Exit</a>"};
+			var popupvars = {headerText : "Confirmation de sortie de formulaire",
+							titleText : "Etes vous sûr de vouloir quitter ce formulaire?",
+							bodyHTML : "<p>Toutes les réponses seront effacées.</p>" +
+									"<a href='#' data-role='button' data-inline='true' data-rel='back' data-theme='c'>Annuler</a>" +
+									"<a id='exitButton' href='#' data-role='button' data-inline='true' data-theme='e'>Sortie</a>"};
 			
 			var popup = $(_.template($("#tmpl-genericpopup").html(), popupvars, {variable : "data"}));
 			popup.find("#exitButton").on("click", function() {
@@ -192,7 +192,11 @@ PageService = _.extend({
 	},
 	
 	getActivePageView : function() {
-		return this.pageModels.at(this.getActivePageIndex()).pageView;
+		try {
+			return this.pageModels.at(this.getActivePageIndex()).pageView;
+		} catch(err) {
+			return undefined;
+		}
 	},
 	
 	prevPage : function() {
@@ -200,7 +204,7 @@ PageService = _.extend({
 	},
 	
 	nextPage : function(force) {
-		var pageModel = this.pageModels.at(this.activeIndex);
+		var pageView = this.pageModels.at(this.activeIndex).pageView;
 				
 		if (this.activeIndex == 0) {
 			for(var i = 0; i < obsList.length; i++) {
@@ -209,10 +213,15 @@ PageService = _.extend({
 		}
 		
 		if (Form.getGlobalVariable('validation', 'validateOnNextPage') && !force) {
-			var errors = pageModel.pageView.validate();
-			if (errors && errors.length > 0) {
-				return;
+			var errors = ValidationService.validatePage(pageView);
+			if (errors && errors.length >= 0) {
+				return
 			}
+			
+//			var errors = pageModel.pageView.validate();
+//			if (errors && errors.length > 0) {
+//				return;
+//			}
 		}
 		
 		this.setActivePageIndex(this.activeIndex + 1);
@@ -302,4 +311,145 @@ EvaluationService = {
 			
 			return viewEvalSerialized.compiledCondition.apply(viewEvalSerialized, paramValues);
 		},
+};
+
+ViewService = {
+	viewClasses : new (Backbone.Collection.extend({
+		model : Backbone.Model.extend({
+			idAttribute: "viewName",
+			defaults : {
+				"viewName" : undefined,
+				"constructor" : undefined, //this is the View object with which one makes individual views
+				"validators" : []
+			},
+			initialize : function() {
+				
+			}
+		})
+	})),
+	
+	registerViewClass : function(viewName, viewConstructor, validators) {
+		ViewService.viewClasses.add({"viewName" : viewName, "viewConstructor" : viewConstructor, "validators" : validators});
+	},
+	
+	getViewClass : function(viewName) {
+		return ViewService.viewClasses.get(viewName);
+	}
+}
+
+ValidationService = {
+	validatePage : function(pageView) {
+		var viewsWithErrors =[];
+		var formViews = pageView.$el.find(".formview:not(.viewhidden, .viewhidden *)"); //don't include any hidden views!
+		
+		var view;
+		var viewErrors;
+		for (var i = 0; i < formViews.length; i++) {
+			view = $(formViews[i]).data('view');
+			viewErrors = ValidationService.validateView(view);
+			if (viewErrors && viewErrors.length > 0) {
+				viewsWithErrors.push({'view' : view, errors : viewErrors});
+			}
+		}
+		
+		if (viewsWithErrors.length > 0) {
+			pageView.content.$el.find('.errorheader').remove();
+			pageView.content.$el.prepend(_.template($("#tmpl-errorheader").html(), {'errors' : viewsWithErrors}));
+			$.mobile.silentScroll(0);
+		} else {
+			pageView.content.$el.find('.errorheader').remove();
+		}
+		
+		return viewsWithErrors;
+	},
+
+	validateView : function(view) {
+		var validationErrors = ValidationService._standardBounds(view)
+			.concat(ValidationService._standardRequired(view))
+			.concat(ValidationService._standardValidators(view));
+		
+		if (validationErrors.length > 0) {
+			view.error(validationErrors.length > 0, validationErrors);
+		}
+		
+		return validationErrors;
+	},
+	
+	_standardBounds : function(view) {
+		var errors = [];
+		
+		var bounds = view.model.get('bounds');
+		if (bounds) {
+			var value = view.getValue();
+			var stringValue;
+			if (value == undefined) {
+				stringValue == '';
+			} else {
+				stringValue = value.toString();
+			}
+			
+			 if (bounds.maxValue != undefined && value > bounds.maxValue) {
+				 errors.push("La VALEUR ne doit pas dépasse " + bounds.maxValue); //Answer VALUE must be less than or equal to 
+			 }
+			 if (bounds.minValue != undefined && value < bounds.minValue) {
+				 errors.push("La VALEUR doit être d'au moins " + bounds.minValue); //Answer VALUE must be more than or equal to
+			 }
+
+			 if (bounds.maxLength != undefined && stringValue.length > bounds.maxLength) {
+				 errors.push("La LONGUEUR de la réponse ne doit pas dépasser " + bounds.maxLength + " caractères."); //Answer LENGTH must be less than or equal to x characters
+			 }
+			 if (bounds.minLength != undefined && stringValue.length < bounds.minLength) {
+				 errors.push("La LONGUEUR de la réponse doit être d'au moins " + bounds.minLength + " caractères."); //Answer LENGTH must be more than or equal to x characters
+			 }
+
+			 if (bounds.exactLength != undefined && stringValue.length != bounds.exactLength) {
+				 errors.push("La LONGUEUR de la réponse doit être exactement " + bounds.exactLength + " characters."); //Answer LENGTH must be exactly x characters.
+			 }
+			 
+			 if (bounds.precisionExact != undefined) {
+				 if (isNaN(parseFloat(stringValue)) || !isFinite(stringValue)) {
+					 errors.push("Answer must be a number");//NEEDSTRANSLATION
+				 } else if (bounds.precisionExact == 0 && Math.floor(value) != value) {
+					 //Nothing past the decimal place
+					 errors.push("Answer must be an integer (a round number)");//NEEDSTRANSLATION
+				 } else if (bounds.precisionExact > 0 && ((stringValue.indexOf(".") != stringValue.length - bounds.precisionExact) || (stringValue.indexOf(".") < 0))) {
+					 errors.push("Answer must have exactly " + bounds.precisionExact + " digit(s) past the decimal."); //NEEDSTRANSLATION
+				 }
+			 }
+		}
+		
+		return errors;
+	}, 
+	
+	_standardRequired : function(view) {
+		var value = view.getValue();
+		var errors = [];
+		
+		if (view.model.get('required') && view.hasValue && (value === undefined || value === '')) {
+			errors.push("La réponse à cette question est obligatoire."); //This field is required, please enter a value.
+		}
+		return errors;
+	},
+	
+	_standardValidators : function(view) {
+		var errors = [];
+		
+		var validators = view.model.get('validators');
+		if (validators) {
+			for (var i = 0; i < validators.length; i++) {
+				if (!EvaluationService.executeViewCondition(validators[i], view)) {
+					errors.push(validators[i].errorMessage);
+				}
+			}
+		}
+		return errors;
+	},
+	
+	_checkboxRequired : function() {
+		
+	},
+	
+	_rankingRequired : function() {
+		
+	}
 };

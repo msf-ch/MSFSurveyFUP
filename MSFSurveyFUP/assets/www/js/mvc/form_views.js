@@ -17,6 +17,8 @@ FormItemViewModel = Backbone.Model.extend({
 								// condition script can use variables view (the view object) and value (the value of the view object)
 		bounds : undefined, // {minValue : 0, maxValue : 1, minLength : 0, maxLength : 1, exactLength : 1}
 		dateBounds : undefined, //{maxDate : [4-digit year, month, day], minDate : [4-digit year, month, day], dateFormat : "", dateOrder : ""}
+		rankingBounds : undefined, //{minItemsRanked: 0}
+		checkboxgroupBounds : undefined, //{minSelections: 0}
 		horizontalMode : false,
 		required : true
 	},
@@ -52,8 +54,10 @@ FormItemViewModel = Backbone.Model.extend({
 			viewType = this.get('viewType');
 		}
 		
-		this.view = new formItemViewCodes[viewType]({model : this,
+		var viewClass = new ViewService.getViewClass(viewType).get('viewConstructor');
+		this.view = new viewClass({model : this,
 			el : element, "parent" : parent});
+		
 		this.view.render();
 		
 		return this.view;
@@ -67,64 +71,6 @@ FormItemViewModel = Backbone.Model.extend({
 	
 	rebuildChildren : function() {
 		this.set('children', childrenModels.toJSON());
-	},
-	
-	getValidationErrors : function() {
-		var errors = [];
-		var value = this.view.getValue();
-		
-		var validators = this.get('validators');
-		if (validators) {
-			for (var i = 0; i < validators.length; i++) {
-				if (!EvaluationService.executeViewCondition(validators[i], this.view)) {
-					errors.push(validators[i].errorMessage);
-				}
-			}
-		}
-		
-		if (this.get('required') && this.view.hasValue && (value === undefined || value === '')) {
-			errors.push("La réponse à cette question est obligatoire."); //This field is required, please enter a value.
-		}
-		
-		var bounds = this.get('bounds');
-		if (bounds) {
-			var stringValue;
-			if (value == undefined) {
-				stringValue == '';
-			} else {
-				stringValue = value.toString();
-			}
-			 if (bounds.maxValue != undefined && value > bounds.maxValue) {
-				 errors.push("La VALEUR ne doit pas dépasse " + bounds.maxValue); //Answer VALUE must be less than or equal to 
-			 }
-			 if (bounds.minValue != undefined && value < bounds.minValue) {
-				 errors.push("La VALEUR doit être d'au moins " + bounds.minValue); //Answer VALUE must be more than or equal to
-			 }
-
-			 if (bounds.maxLength != undefined && stringValue.length > bounds.maxLength) {
-				 errors.push("La LONGUEUR de la réponse ne doit pas dépasser " + bounds.maxLength + " caractères."); //Answer LENGTH must be less than or equal to x characters
-			 }
-			 if (bounds.minLength != undefined && stringValue.length < bounds.minLength) {
-				 errors.push("La LONGUEUR de la réponse doit être d'au moins " + bounds.minLength + " caractères."); //Answer LENGTH must be more than or equal to x characters
-			 }
-
-			 if (bounds.exactLength != undefined && stringValue.length != bounds.exactLength) {
-				 errors.push("La LONGUEUR de la réponse doit être exactement " + bounds.exactLength + " characters."); //Answer LENGTH must be exactly x characters.
-			 }
-			 
-			 if (bounds.precisionExact != undefined) {
-				 if (isNaN(parseFloat(stringValue)) || !isFinite(stringValue)) {
-					 errors.push("Answer must be a number");
-				 } else if (bounds.precisionExact == 0 && Math.floor(stringValue) != value) {
-					 //Nothing past the decimal place
-					 errors.push("Answer must be an integer (a round number)");
-				 } else if (bounds.precisionExact > 0 && ((stringValue.indexOf(".") != stringValue.length - bounds.precisionExact) || (stringValue.indexOf(".") < 0))) {
-					 errors.push("Answer must have exactly " + bounds.precisionExact + " digit(s) past the decimal.");
-				 }
-			 }
-		}
-		
-		return errors;
 	}
 });
 
@@ -224,13 +170,6 @@ FormItemView = Backbone.View.extend({
 					{model : this.model, view : this, errors : messages});
 			this.$el.prepend(errorHtml);
 		}
-	},
-	
-	validate : function() {
-		var validationErrors = this.model.getValidationErrors();
-		this.error(validationErrors.length > 0, validationErrors);
-		
-		return validationErrors;
 	},
 	
 	hasValue : true
@@ -746,18 +685,6 @@ SubmitPageView = FormItemView.extend({
 	}
 });
 
-/* This object sets what view types correspond with what view templates.
- *  A new view template needs to be added here to be used. */
-
-window.formItemViewCodes = {text : TextView,
-		number : NumberView,
-		radio : RadioView,
-		select : SelectView,
-		checkboxgroup : CheckGroupView,
-		checkbox : CheckView,
-		date : DateView,
-		ranking : RankingView,
-		rankingitem : RankingItemView,
-		submitpage : SubmitPageView,
-		gps : GPSAcquireView};
 });
+
+
