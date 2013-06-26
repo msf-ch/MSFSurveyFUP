@@ -33,14 +33,14 @@
  */	
 FormApp = _.extend({
 	start : function() {
-		Form = new FormModel;
-		Body = new BodyView({
-			el : $("body")
-		});
-		
 		this.detectLibraryInit();
 		
 		this.on("librariesInitialized", function() {
+			Form = new FormModel;
+			Body = new BodyView({
+				el : $("body")
+			});
+			
 			FormApp.trigger("initServices");
 			FormApp.trigger("loadData");
 		});

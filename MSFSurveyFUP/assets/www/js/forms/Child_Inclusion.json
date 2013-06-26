@@ -18,7 +18,7 @@
    "pages":[
       {
          "header":{
-            "title":"Page 1 : INFORMATION INCLUSION ENFANT",
+            "title":"Page 1 : Inclusion des enfants - INFORMATION INCLUSION ENFANT",
             "theme":"b"
          },
          "footer":{
@@ -940,14 +940,14 @@
                         "conceptIds":[
                            "nummen"
                         ],
-                        "errorMessage":"First four digits of infant identifier must match household number"
+                        "errorMessage":"Les 4 premiers chiffres du numéro d’identification doivent correspondre au numéro de ménage"
                      },
                      {
                         "condition":"value && value.charAt(4) >= 0 && value.charAt(4) <= 3",
                         "conceptIds":[
 
                         ],
-                        "errorMessage":"Final digit of infant ID must be 0, 1, 2 or 3"
+                        "errorMessage":"Le numéro d‘identification de l’enfant doit terminer par 1,2, ou 3"
                      }
                   ]
                },
@@ -1129,7 +1129,7 @@
       },
       {
          "header":{
-            "title":"Page 2 : INFORMATIONS SUR L'ENFANT ET SA FAMILLE",
+            "title":"Page 2 : Inclusion des enfants - INFORMATIONS SUR L'ENFANT ET SA FAMILLE",
             "theme":"b"
          },
          "footer":{
@@ -1386,7 +1386,7 @@
       },
       {
          "header":{
-            "title":"Page 3 : MESURES ANTHROPOMETRIQUES",
+            "title":"Page 3 : Inclusion des enfants - MESURES ANTHROPOMETRIQUES",
             "theme":"b"
          },
          "footer":{
@@ -1922,7 +1922,7 @@
       },
       {
          "header":{
-            "title":"Page 4 : VÉRIFICATION DE L'IDENTITÉ",
+            "title":"Page 4 : Inclusion des enfants - VÉRIFICATION DE L'IDENTITÉ",
             "theme":"b"
          },
          "footer":{
@@ -1953,7 +1953,7 @@
       },
       {
          "header":{
-            "title":"Sauvegarder les données du formulaire",
+            "title":"Inclusion des enfants - Sauvegarder les données du formulaire",
             "theme":"b"
          },
          "footer":{

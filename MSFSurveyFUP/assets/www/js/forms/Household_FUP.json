@@ -18,7 +18,7 @@
    "pages":[
       {
          "header":{
-            "title":"Page 1 : INFORMATION SUIVI ENFANT",
+            "title":"Page 1 : Suivi des ménages - INFORMATION SUIVI ENFANT",
             "theme":"b"
          },
          "footer":{
@@ -1030,7 +1030,7 @@
       },
       {
          "header":{
-            "title":"Page 2 : DEMOGRAPHIE DU MENAGE",
+            "title":"Page 2 : Suivi des ménages - DEMOGRAPHIE DU MENAGE",
             "theme":"b"
          },
          "footer":{
@@ -1068,7 +1068,7 @@
                   "conceptId":"agecm",
                   "label":"Age du chef de ménage",
                   "bounds":{
-                     "minValue":1,
+                     "minValue":15,
                      "maxValue":99
                   }
                },
@@ -1082,7 +1082,7 @@
                   },
                   "validators":[
                      {
-                        "condition":"value <= numenag",
+                        "condition":"parseInt(value) <= numenag",
                         "conceptIds":[
                            "numenag"
                         ],
@@ -1100,7 +1100,7 @@
                   },
                   "validators":[
                      {
-                        "condition":"value <= numenag",
+                        "condition":"parseInt(value) <= numenag",
                         "conceptIds":[
                            "numenag"
                         ],
@@ -1118,7 +1118,7 @@
                   },
                   "validators":[
                      {
-                        "condition":"value <= numenf",
+                        "condition":"parseInt(value) <= numenf",
                         "conceptIds":[
                            "numenf"
                         ],
@@ -1136,7 +1136,7 @@
                   },
                   "validators":[
                      {
-                        "condition":"value <= numenag",
+                        "condition":"parseInt(value) <= numenag",
                         "conceptIds":[
                            "numenag"
                         ],
@@ -1163,7 +1163,7 @@
                   },
                   "validators":[
                      {
-                        "condition":"value <= numenag",
+                        "condition":"parseInt(value) <= numenag",
                         "conceptIds":[
                            "numenag"
                         ],
@@ -1181,7 +1181,7 @@
                   },
                   "validators":[
                      {
-                        "condition":"value <= numenag",
+                        "condition":"parseInt(value) <= numenag",
                         "conceptIds":[
                            "numenag"
                         ],
@@ -1205,7 +1205,7 @@
                   },
                   "validators":[
                      {
-                        "condition":"value <= numenag",
+                        "condition":"parseInt(value) <= numenag",
                         "conceptIds":[
                            "numenag"
                         ],
@@ -1229,7 +1229,7 @@
                   },
                   "validators":[
                      {
-                        "condition":"value <= numenag",
+                        "condition":"parseInt(value) <= numenag",
                         "conceptIds":[
                            "numenag"
                         ],
@@ -1317,7 +1317,7 @@
       },
       {
          "header":{
-            "title":"Page 3 : PRODUCTION AGRICOLE",
+            "title":"Page 3 : Suivi des ménages - PRODUCTION AGRICOLE",
             "theme":"b"
          },
          "footer":{
@@ -1662,7 +1662,7 @@
       },
       {
          "header":{
-            "title":"Page 4 : DIFFICULTES D'APPROVISONNEMENT / DETTES",
+            "title":"Page 4 : Suivi des ménages - DIFFICULTES D'APPROVISONNEMENT / DETTES",
             "theme":"b"
          },
          "footer":{
@@ -1817,7 +1817,7 @@
                      "conceptIds":[
                         "apautmo"
                      ],
-                     "condition":"apautmo >0"
+                     "condition":"apautmo > 0"
                   }
                },
                {
@@ -1903,7 +1903,7 @@
       },
       {
          "header":{
-            "title":"Page 5 : VÉRIFICATION DE L'IDENTITÉ",
+            "title":"Page 5 : Suivi des ménages - VÉRIFICATION DE L'IDENTITÉ",
             "theme":"b"
          },
          "footer":{
@@ -1934,7 +1934,7 @@
       },
       {
          "header":{
-            "title":"Sauvegarder les données du formulaire",
+            "title":"Suivi des ménages - Sauvegarder les données du formulaire",
             "theme":"b"
          },
          "footer":{

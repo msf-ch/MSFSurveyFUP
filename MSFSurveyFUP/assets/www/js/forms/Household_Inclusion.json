@@ -18,7 +18,7 @@
    "pages":[
       {
          "header":{
-            "title":"Page 1 : INFORMATION INCLUSION ENFANT",
+            "title":"Page 1 : Inclusion des ménages - INFORMATION INCLUSION ENFANT",
             "theme":"b"
          },
          "footer":{
@@ -1053,7 +1053,7 @@
       },
       {
          "header":{
-            "title":"Page 2 : ORGANISATION DU MENAGE",
+            "title":"Page 2 : Inclusion des ménages - ORGANISATION DU MENAGE",
             "theme":"b"
          },
          "footer":{
@@ -1302,7 +1302,7 @@
       },
       {
          "header":{
-            "title":"Page 3 : DEMOGRAPHIE DU MENAGE",
+            "title":"Page 3 : Inclusion des ménages - DEMOGRAPHIE DU MENAGE",
             "theme":"b"
          },
          "footer":{
@@ -1340,7 +1340,7 @@
                   "conceptId":"agecm",
                   "label":"Age du chef de ménage",
                   "bounds":{
-                     "minValue":1,
+                     "minValue":15,
                      "maxValue":99
                   }
                },
@@ -1354,7 +1354,7 @@
                   },
                   "validators":[
                      {
-                        "condition":"value <= numenag",
+                        "condition":"parseInt(value) <= numenag",
                         "conceptIds":[
                            "numenag"
                         ],
@@ -1372,7 +1372,7 @@
                   },
                   "validators":[
                      {
-                        "condition":"value <= numenag",
+                        "condition":"parseInt(value) <= numenag",
                         "conceptIds":[
                            "numenag"
                         ],
@@ -1390,7 +1390,7 @@
                   },
                   "validators":[
                      {
-                        "condition":"value <= numenf",
+                        "condition":"parseInt(value) <= numenf",
                         "conceptIds":[
                            "numenf"
                         ],
@@ -1408,7 +1408,7 @@
                   },
                   "validators":[
                      {
-                        "condition":"value <= numenag",
+                        "condition":"parseInt(value) <= numenag",
                         "conceptIds":[
                            "numenag"
                         ],
@@ -1435,7 +1435,7 @@
                   },
                   "validators":[
                      {
-                        "condition":"value <= numenag",
+                        "condition":"parseInt(value) <= numenag",
                         "conceptIds":[
                            "numenag"
                         ],
@@ -1453,7 +1453,7 @@
                   },
                   "validators":[
                      {
-                        "condition":"value <= numenag",
+                        "condition":"parseInt(value) <= numenag",
                         "conceptIds":[
                            "numenag"
                         ],
@@ -1477,7 +1477,7 @@
                   },
                   "validators":[
                      {
-                        "condition":"value <= numenag",
+                        "condition":"parseInt(value) <= numenag",
                         "conceptIds":[
                            "numenag"
                         ],
@@ -1501,7 +1501,7 @@
                   },
                   "validators":[
                      {
-                        "condition":"value <= numenag",
+                        "condition":"parseInt(value) <= numenag",
                         "conceptIds":[
                            "numenag"
                         ],
@@ -1589,7 +1589,7 @@
       },
       {
          "header":{
-            "title":"Page 4 : BIENS, PROPRIETES, TERRES POSSEDEES",
+            "title":"Page 4 : Inclusion des ménages - BIENS, PROPRIETES, TERRES POSSEDEES",
             "theme":"b"
          },
          "footer":{
@@ -1743,10 +1743,9 @@
                   "showIf":{
                      "conceptIds":[
                         "champ",
-                        "cultsm",
                         "employ"
                      ],
-                     "condition":"champ == '1' && cultsm == '2' && employ == '1'"
+                     "condition":"champ == '1' && employ == '1'"
                   }
                },
                {
@@ -1965,7 +1964,7 @@
       },
       {
          "header":{
-            "title":"Page 5 : SOURCES DE REVENUS / REVENUS EN ARGENT",
+            "title":"Page 5 : Inclusion des ménages - SOURCES DE REVENUS / REVENUS EN ARGENT",
             "theme":"b"
          },
          "footer":{
@@ -2282,7 +2281,7 @@
       },
       {
          "header":{
-            "title":"Page 6 : PRODUCTION AGRICOLE / CONSOMMATION",
+            "title":"Page 6 : Inclusion des ménages - PRODUCTION AGRICOLE / CONSOMMATION",
             "theme":"b"
          },
          "footer":{
@@ -2616,7 +2615,7 @@
       },
       {
          "header":{
-            "title":"Page 7 : DIFFICULTES D'APPROVISONNEMENT / DETTES",
+            "title":"Page 7 : Inclusion des ménages - DIFFICULTES D'APPROVISONNEMENT / DETTES",
             "theme":"b"
          },
          "footer":{
@@ -2804,7 +2803,7 @@
       },
       {
          "header":{
-            "title":"Page 5 : VÉRIFICATION DE L'IDENTITÉ",
+            "title":"Page 8 : Inclusion des ménages - VÉRIFICATION DE L'IDENTITÉ",
             "theme":"b"
          },
          "footer":{
@@ -2835,7 +2834,7 @@
       },
       {
          "header":{
-            "title":"Sauvegarder les données du formulaire",
+            "title":"Inclusion des ménages - Sauvegarder les données du formulaire",
             "theme":"b"
          },
          "footer":{

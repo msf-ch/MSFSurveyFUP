@@ -214,14 +214,9 @@ PageService = _.extend({
 		
 		if (Form.getGlobalVariable('validation', 'validateOnNextPage') && !force) {
 			var errors = ValidationService.validatePage(pageView);
-			if (errors && errors.length >= 0) {
-				return
+			if (errors && errors.length > 0) {
+				return;
 			}
-			
-//			var errors = pageModel.pageView.validate();
-//			if (errors && errors.length > 0) {
-//				return;
-//			}
 		}
 		
 		this.setActivePageIndex(this.activeIndex + 1);
@@ -368,9 +363,7 @@ ValidationService = {
 			.concat(ValidationService._standardRequired(view))
 			.concat(ValidationService._standardValidators(view));
 		
-		if (validationErrors.length > 0) {
-			view.error(validationErrors.length > 0, validationErrors);
-		}
+		view.error(validationErrors.length > 0, validationErrors);
 		
 		return validationErrors;
 	},
@@ -412,7 +405,7 @@ ValidationService = {
 				 } else if (bounds.precisionExact == 0 && Math.floor(value) != value) {
 					 //Nothing past the decimal place
 					 errors.push("Answer must be an integer (a round number)");//NEEDSTRANSLATION
-				 } else if (bounds.precisionExact > 0 && ((stringValue.indexOf(".") != stringValue.length - bounds.precisionExact) || (stringValue.indexOf(".") < 0))) {
+				 } else if (bounds.precisionExact > 0 && ((stringValue.indexOf(".") != stringValue.length - bounds.precisionExact - 1) || (stringValue.indexOf(".") < 0))) {
 					 errors.push("Answer must have exactly " + bounds.precisionExact + " digit(s) past the decimal."); //NEEDSTRANSLATION
 				 }
 			 }

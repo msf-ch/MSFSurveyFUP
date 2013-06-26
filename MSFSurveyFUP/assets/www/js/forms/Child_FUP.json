@@ -18,7 +18,7 @@
    "pages":[
       {
          "header":{
-            "title":"Page 1 : INFORMATION SUIVI ENFANT",
+            "title":"Page 1 : Suivi des enfants - INFORMATION SUIVI ENFANT",
             "theme":"b"
          },
          "footer":{
@@ -940,14 +940,14 @@
                         "conceptIds":[
                            "nummen"
                         ],
-                        "errorMessage":"First four digits of infant identifier must match household number"
+                        "errorMessage":"Les 4 premiers chiffres du numéro d’identification doivent correspondre au numéro de ménage"
                      },
                      {
-                        "condition":"value && value.charAt(4) >= 0 && value.charAt(4) <= 3",
+                        "condition":"value && value.charAt(4) >= 1 && value.charAt(4) <= 3",
                         "conceptIds":[
 
                         ],
-                        "errorMessage":"Final digit of infant ID must be 0, 1, 2 or 3"
+                        "errorMessage":"Le numéro d‘identification de l’enfant doit terminer par 1,2, ou 3"
                      }
                   ]
                },
@@ -1114,7 +1114,7 @@
       },
       {
          "header":{
-            "title":"Page 2 : INFORMATION ALAITEMENT, VACCINATION, REACTION ASPE",
+            "title":"Page 2 : Suivi des enfants - INFORMATION ALAITEMENT, VACCINATION, REACTION ASPE",
             "theme":"b"
          },
          "footer":{
@@ -1301,7 +1301,7 @@
       },
       {
          "header":{
-            "title":"Page 3 : MORBIDITE",
+            "title":"Page 3 : Suivi des enfants - MORBIDITE",
             "theme":"b"
          },
          "footer":{
@@ -1636,7 +1636,7 @@
       },
       {
          "header":{
-            "title":"Page 4 : MORBIDITE (suite)",
+            "title":"Page 4 : Suivi des enfants - MORBIDITE (suite)",
             "theme":"b"
          },
          "footer":{
@@ -2026,7 +2026,7 @@
       },
       {
          "header":{
-            "title":"Page 5 : VÉRIFICATION DE L'IDENTITÉ",
+            "title":"Page 5 : Suivi des enfants - VÉRIFICATION DE L'IDENTITÉ",
             "theme":"b"
          },
          "footer":{
@@ -2057,7 +2057,7 @@
       },
       {
          "header":{
-            "title":"Sauvegarder les données du formulaire",
+            "title":"Suivi des enfants - Sauvegarder les données du formulaire",
             "theme":"b"
          },
          "footer":{
