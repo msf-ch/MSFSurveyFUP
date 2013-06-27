@@ -80,8 +80,6 @@ FormItemViewModelList = Backbone.Collection.extend({
 });
 
 FormItemView = Backbone.View.extend({
-	type : "",
-	
 	template : undefined,
 	
 	decorated : false,
@@ -176,8 +174,6 @@ FormItemView = Backbone.View.extend({
 });
 
 TextView = FormItemView.extend({
-	type : "text",
-	
 	template : _.template($("#tmpl-textview").html()),
 	
 	events : {
@@ -207,8 +203,6 @@ TextView = FormItemView.extend({
 });
 
 NumberView = TextView.extend({
-	type : "number",
-	
 	template : _.template($("#tmpl-numberview").html()),
 	
 	events : {
@@ -231,8 +225,6 @@ NumberView = TextView.extend({
 });
 
 RadioView = TextView.extend({
-	type : "radio",
-	
 	template : _.template($("#tmpl-radioview").html()),
 	
 	events : {
@@ -262,8 +254,6 @@ RadioView = TextView.extend({
 });
 
 SelectView = TextView.extend({
-	type : "select",
-	
 	template : _.template($("#tmpl-selectview").html()),
 	
 	events : {
@@ -287,8 +277,6 @@ SelectView = TextView.extend({
 });
 
 CheckGroupView = FormItemView.extend({
-	type : "checkboxgroup",
-	
 	hasValue : false,
 	
 	template : _.template($("#tmpl-checkgroupview").html()),
@@ -303,8 +291,6 @@ CheckGroupView = FormItemView.extend({
 });
 
 CheckView = FormItemView.extend({ 
-	type : "checkbox",
-	
 	template : _.template($("#tmpl-checkview").html()),
 	
 	events : {
@@ -329,8 +315,6 @@ CheckView = FormItemView.extend({
 });
 
 DateView = TextView.extend({
-	type : "date",
-	
 	template : _.template($("#tmpl-dateview").html()),
 	
 	events : {
@@ -368,8 +352,6 @@ DateView = TextView.extend({
 });
 
 RankingView = FormItemView.extend({
-	type : "ranking",
-	
 	hasValue : false,
 	
 	template : _.template($("#tmpl-rankingview").html()),
@@ -584,8 +566,6 @@ RankingView = FormItemView.extend({
 });
 
 RankingItemView = FormItemView.extend({ 
-	type : "rankingitem",
-	
 	template : _.template($("#tmpl-rankingitemview").html()),
 	
 	render : function() {
@@ -606,8 +586,6 @@ RankingItemView = FormItemView.extend({
 });
 
 GPSAcquireView = FormItemView.extend({
-	type : "gps",
-	
 	template : _.template($("#tmpl-gpsacquireview").html()),
 	
 	events : {
@@ -660,8 +638,6 @@ GPSAcquireView = FormItemView.extend({
 });
 
 SubmitPageView = FormItemView.extend({
-	type : "submitpage",
-	
 	hasValue : false,
 	
 	template : _.template($("#tmpl-submitpage2").html()),

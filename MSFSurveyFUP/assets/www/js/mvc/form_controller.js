@@ -311,9 +311,9 @@ EvaluationService = {
 ViewService = {
 	viewClasses : new (Backbone.Collection.extend({
 		model : Backbone.Model.extend({
-			idAttribute: "viewName",
+			idAttribute: "viewClassName",
 			defaults : {
-				"viewName" : undefined,
+				"viewClassName" : undefined,
 				"constructor" : undefined, //this is the View object with which one makes individual views
 				"validators" : []
 			},
@@ -323,12 +323,13 @@ ViewService = {
 		})
 	})),
 	
-	registerViewClass : function(viewName, viewConstructor, validators) {
-		ViewService.viewClasses.add({"viewName" : viewName, "viewConstructor" : viewConstructor, "validators" : validators});
+	registerViewClass : function(viewClassName, viewConstructor, validators) {
+		var processedViewConstructor = viewConstructor.extend({"className" : viewClassName});
+		ViewService.viewClasses.add({"viewClassName" : viewClassName, "viewConstructor" : processedViewConstructor, "validators" : validators});
 	},
 	
-	getViewClass : function(viewName) {
-		return ViewService.viewClasses.get(viewName);
+	getViewClass : function(viewClassName) {
+		return ViewService.viewClasses.get(viewClassName);
 	}
 }
 
@@ -359,9 +360,18 @@ ValidationService = {
 	},
 
 	validateView : function(view) {
-		var validationErrors = ValidationService._standardBounds(view)
-			.concat(ValidationService._standardRequired(view))
-			.concat(ValidationService._standardValidators(view));
+		var validationErrors = [];
+		
+		var validators = ViewService.getViewClass(view.className).get('validators');
+		for(var i = 0; i < validators.length; i++) {
+			try {
+				validationErrors = validationErrors.concat(validators[i](view));
+			} catch(err) {
+				if (view.model != undefined) {
+					console.error("Error executing validator on view " + view.model.get('conceptId') + ":" + JSON.stringify(err));
+				}
+			}
+		}
 		
 		view.error(validationErrors.length > 0, validationErrors);
 		
@@ -438,7 +448,7 @@ ValidationService = {
 		return errors;
 	},
 	
-	_checkboxRequired : function() {
+	_checkboxgroupRequired : function() {
 		
 	},
 	

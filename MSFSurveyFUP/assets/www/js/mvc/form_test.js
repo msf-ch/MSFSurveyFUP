@@ -15,7 +15,7 @@ $(function() {
 		if(formView == undefined) {
 			return;
 		}
-		var viewType = formView.type;
+		var viewType = formView.className;
 		if (viewType == "text") {
 			formView.setValue("text-" + ++count);
 			formView.defaultValueChanged();
