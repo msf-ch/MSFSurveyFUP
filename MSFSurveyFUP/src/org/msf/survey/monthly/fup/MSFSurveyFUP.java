@@ -21,16 +21,36 @@ package org.msf.survey.monthly.fup;
 
 import org.apache.cordova.DroidGap;
 
+import android.graphics.Point;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Display;
+import android.view.View;
 
 public class MSFSurveyFUP extends DroidGap
 {
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
+    	Display display = getWindowManager().getDefaultDisplay();
+    	Point size = new Point();
+    	display.getSize(size);
+    	int width = size.x;
+    	int height = size.y;
+    	
+    	Log.d("MSFSurveyFUP", "Width: " + width + ", height: " + height);
+    	
         super.onCreate(savedInstanceState);
         FileUtilities.ensureDirectoriesExist();
         super.loadUrl("file:///android_asset/www/home.html");
+    }
+    
+    @Override
+    protected void onResume() {
+    	super.onResume();
+    	View v = getWindow().getDecorView();
+
+    	Log.d("MSFSurveyFUP", "Width: " + v.getWidth() + ", height: " + v.getHeight());
     }
 }
 

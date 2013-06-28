@@ -86,7 +86,7 @@ FormService = {
 		titleText : "Voulez-vous sauvegarder le formulaire et quitter?",
 		bodyHTML : "<p>Les formulaires peuvent être modifiés ultérieurement.</p>" +
 				"<a href='#' data-role='button' data-inline='true' data-rel='back' data-theme='c'>Annuler</a>" +
-				"<a id='saveButton' href='#' data-role='button' data-inline='true' data-theme='e'>Sauver</a>"};
+				"<a id='saveButton' href='#' data-role='button' data-inline='true' data-theme='e' style='float:right;'>Sauver</a>"};
 
 		var popup = $(_.template($("#tmpl-genericpopup").html(), popupvars, {variable : "data"}));
 		popup.find("#saveButton").on("click", function() {
@@ -118,7 +118,7 @@ FormService = {
 							titleText : "Etes vous sûr de vouloir quitter ce formulaire?",
 							bodyHTML : "<p>Toutes les réponses seront effacées.</p>" +
 									"<a href='#' data-role='button' data-inline='true' data-rel='back' data-theme='c'>Annuler</a>" +
-									"<a id='exitButton' href='#' data-role='button' data-inline='true' data-theme='e'>Sortie</a>"};
+									"<a id='exitButton' href='#' data-role='button' data-inline='true' data-theme='e' style='float:right;'>Sortie</a>"};
 			
 			var popup = $(_.template($("#tmpl-genericpopup").html(), popupvars, {variable : "data"}));
 			popup.find("#exitButton").on("click", function() {

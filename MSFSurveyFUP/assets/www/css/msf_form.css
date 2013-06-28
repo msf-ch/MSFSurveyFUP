@@ -146,3 +146,10 @@
 .ui-field-contain {
 	margin-bottom: 1.8em !important;
 }
+
+
+/* Popup */
+.ui-popup .ui-title {
+	margin-left : 1em;
+	margin-right : 1em;
+}
