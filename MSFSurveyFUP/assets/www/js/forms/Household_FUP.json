@@ -1496,6 +1496,9 @@
                         "recolt3m"
                      ],
                      "condition":"recolt3m == '1'"
+                  },
+                  "checkboxgroupBounds":{
+                  	"minSelections":1
                   }
                },
                {
@@ -1532,6 +1535,9 @@
                         "recolt3m"
                      ],
                      "condition":"recolt3m == '1'"
+                  },
+                  "rankingBounds":{
+                  	"minSelections":1
                   }
                },
                {
@@ -1594,7 +1600,10 @@
                         "label":"Ne sait pas",
                         "conceptId":"consignor"
                      }
-                  ]
+                  ],
+                  "checkboxgroupBounds":{
+                  	"minSelections":1
+                  }
                },
                {
                   "viewType":"number",
@@ -1641,7 +1650,10 @@
                         "label":"Autre",
                         "conceptId":"proautr"
                      }
-                  ]
+                  ],
+                  "rankingBounds":{
+                  	"minSelections":1
+                  }
                },
                {
                   "viewType":"text",
@@ -1804,7 +1816,10 @@
                         "label":"Autre",
                         "conceptId":"apautmo"
                      }
-                  ]
+                  ],
+                  "rankingBounds":{
+                  	"minSelections":1
+                  }
                },
                {
                   "viewType":"text",

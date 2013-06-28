@@ -119,7 +119,7 @@ public class CSVDataExport {
 			try {
 				obs = obsList.getJSONObject(i);
 				conceptId = obs.getString("conceptId");
-				value = obs.get("value").toString();
+				value = obs.optString("value", "").toString();
 				conceptIndex = concepts.indexOf(conceptId);
 				if (conceptId.length() == 0) {
 					Log.d("CSVDataExport", "Blank conceptId! Value is: " + value);

@@ -1793,7 +1793,8 @@
                   "bounds":{
                      "minValue":0,
                      "maxValue":999
-                  }
+                  },
+                  "required":false
                },
                {
                   "viewType":"number",
@@ -2009,7 +2010,10 @@
                         "label":"Autre",
                         "conceptId":"revautr"
                      }
-                  ]
+                  ],
+                  "rankingBounds":{
+                  	"minSelections":1
+                  }
                },
                {
                   "viewType":"radio",
@@ -2101,7 +2105,10 @@
                         "label":"Autre",
                         "conceptId":"depautr"
                      }
-                  ]
+                  ],
+                  "rankingBounds":{
+                  	"minSelections":1
+                  }
                },
                {
                   "viewType":"text",
@@ -2343,6 +2350,9 @@
                         "recolt3m"
                      ],
                      "condition":"recolt3m == '1'"
+                  },
+                  "rankingBounds":{
+                  	"minSelections":1
                   }
                },
                {
@@ -2461,7 +2471,10 @@
                         "label":"Autre",
                         "conceptId":"proautr"
                      }
-                  ]
+                  ],
+                  "rankingBounds":{
+                  	"minSelections":1
+                  }
                },
                {
                   "viewType":"radio",
@@ -2591,9 +2604,9 @@
                   ],
                   "showIf":{
                      "conceptIds":[
-                        "ratgfd"
+                        "ratvent"
                      ],
-                     "condition":"ratgfd == '1'"
+                     "condition":"ratvent == '1'"
                   }
                },
                {
@@ -2701,6 +2714,9 @@
                         "aprodif"
                      ],
                      "condition":"aprodif == '1'"
+                  },
+                  "rankingBounds":{
+                  	"minSelections":1
                   }
                },
                {
@@ -2763,6 +2779,9 @@
                         "aprodif"
                      ],
                      "condition":"aprodif == '1'"
+                  },
+                  "rankingBounds":{
+                  	"minSelections":1
                   }
                },
                {

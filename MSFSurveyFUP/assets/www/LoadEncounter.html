@@ -65,7 +65,7 @@
 		<li><a href="Form.html?formFilePath=js/forms/<%=encounterFiles.at(i).get('formName') %>.json&encounter=<%= encounterFiles.at(i).get('fileName') %>" data-ajax="false">
 			<h2><%= encounterFiles.at(i).get('formNameReadable') %></h2>
 			<% if(!encounterFiles.at(i).get('complete')) { %>
-				<h3 style="color:red;font-weight:bold">INCOMPLETE</h3>
+				<h3 style="color:red;font-weight:bold">FORMULAIRE INCOMPLET</h3>
 			<% } %>
 			<% 	var descriptors = encounterFiles.at(i).get('descriptors');
 				if (descriptors) {

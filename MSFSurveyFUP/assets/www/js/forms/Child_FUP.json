@@ -1751,7 +1751,7 @@
                         "malad",
                         "eprest"
                      ],
-                     "condition":"malad == '1' && eprest != '2'"
+                     "condition":"malad == '1' && eprest == '1'"
                   }
                },
                {
@@ -1778,7 +1778,8 @@
                         "enqrefer"
                      ],
                      "condition":"malad == '1' && enqrefer == '1'"
-                  }
+                  },
+                  "required":false
                },
                {
                   "viewType":"radio",
@@ -1933,7 +1934,7 @@
                },
                {
                   "viewType":"text",
-                  "conceptId":"supAutre",
+                  "conceptId":"supautre",
                   "label":"Autre",
                   "showIf":{
                      "conceptIds":[

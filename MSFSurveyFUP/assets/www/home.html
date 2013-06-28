@@ -54,9 +54,9 @@
 	        <hr>
 	        <div data-role="collapsible-set">
 		        <div data-role="collapsible">
-		        	<h3>Data management</h3>
+		        	<h3>Gestion des données</h3>
 		        	<div data-role="controlgroup">
-		        		<a id="exportReport" data-role="button" href="#" data-icon="check" data-iconpos="left" data-ajax="false" >Export report</a>
+		        		<a id="exportReport" data-role="button" href="#" data-icon="check" data-iconpos="left" data-ajax="false" >Exporter un rapport</a>
 	        		</div>
 		        </div>
 		        <div data-role="collapsible">
@@ -83,9 +83,9 @@
 	    		
 	    		$("#exportReport").click(function() {
 	    			cordova.exec(function() {
-	    				alert('Successfully generated report');
+	    				alert('Le rapport a été généré avec succès');
 	    			}, function() {
-	    				alert('Errror generating report');
+	    				alert('Une erreur est survenue pendant la création du rapport');
 	    			}, "ReportService", "exportReport", []);
 	    		});
 	    		

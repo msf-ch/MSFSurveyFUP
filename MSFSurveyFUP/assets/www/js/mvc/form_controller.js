@@ -82,11 +82,11 @@ FormService = {
 	},
 	
 	saveIncomplete : function() {
-		var popupvars = {headerText : "Save form",
-		titleText : "Do you want to save this form and exit?",
-		bodyHTML : "<p>Forms can be resumed later.</p>" +
-				"<a href='#' data-role='button' data-inline='true' data-rel='back' data-theme='c'>Cancel</a>" +
-				"<a id='saveButton' href='#' data-role='button' data-inline='true' data-theme='e'>Save</a>"};
+		var popupvars = {headerText : "Confirmation de sauvegarde de formulaire",
+		titleText : "Voulez-vous sauvegarder le formulaire et quitter?",
+		bodyHTML : "<p>Les formulaires peuvent être modifiés ultérieurement.</p>" +
+				"<a href='#' data-role='button' data-inline='true' data-rel='back' data-theme='c'>Annuler</a>" +
+				"<a id='saveButton' href='#' data-role='button' data-inline='true' data-theme='e'>Sauver</a>"};
 
 		var popup = $(_.template($("#tmpl-genericpopup").html(), popupvars, {variable : "data"}));
 		popup.find("#saveButton").on("click", function() {
@@ -411,12 +411,12 @@ ValidationService = {
 			 
 			 if (bounds.precisionExact != undefined) {
 				 if (isNaN(parseFloat(stringValue)) || !isFinite(stringValue)) {
-					 errors.push("Answer must be a number");//NEEDSTRANSLATION
+					 errors.push("La réponse doit être un nombre");//NEEDSTRANSLATION
 				 } else if (bounds.precisionExact == 0 && Math.floor(value) != value) {
 					 //Nothing past the decimal place
-					 errors.push("Answer must be an integer (a round number)");//NEEDSTRANSLATION
+					 errors.push("La réponse doit être un nombre entier");//NEEDSTRANSLATION
 				 } else if (bounds.precisionExact > 0 && ((stringValue.indexOf(".") != stringValue.length - bounds.precisionExact - 1) || (stringValue.indexOf(".") < 0))) {
-					 errors.push("Answer must have exactly " + bounds.precisionExact + " digit(s) past the decimal."); //NEEDSTRANSLATION
+					 errors.push("La valeur doit avoir avoir " + bounds.precisionExact + " chiffres après la virgule."); //NEEDSTRANSLATION
 				 }
 			 }
 		}
@@ -448,11 +448,51 @@ ValidationService = {
 		return errors;
 	},
 	
-	_checkboxgroupRequired : function() {
+	_checkboxgroupRequired : function(view) {
+		var errors = [];
 		
+		if (view.model.get('checkboxgroupBounds')) {
+			var checkboxgroupBounds = view.model.get('checkboxgroupBounds');
+			var checkBoxes = view.$el.find("input");
+			var checked = checkBoxes.filter(":checked");
+			var unchecked = checkBoxes.not(":checked");
+			
+			if (checkboxgroupBounds.minSelections && checked.length < checkboxgroupBounds.minSelections) {
+				errors.push("S'il vous plaît assurez un minimum de " + checkboxgroupBounds.minSelections + " sélections.");
+			}
+			
+			if (checkboxgroupBounds.maxSelections && checked.length > checkboxgroupBounds.maxSelections) {
+				errors.push("S'il vous plaît assurez un maximum de " + checkboxgroupBounds.maxSelections + " sélections.");
+			}
+		}
+		
+		
+		return errors;
 	},
 	
-	_rankingRequired : function() {
+	_rankingRequired : function(view) {
+		var errors = [];
+
+		if (view.model.get('rankingBounds')) {
+			var rankingBounds = view.model.get('rankingBounds');
+			var childrenModels = view.model.childrenModels;
+			var numberOfValuesSet = 0;
+			
+			for (var i = 0; i < childrenModels.length; i++) {
+				if (ObsService.getObs(childrenModels.at(i).get('conceptId'))) {
+					numberOfValuesSet++;
+				}
+			}
+			
+			if (rankingBounds.minSelections && numberOfValuesSet < rankingBounds.minSelections) {
+				errors.push("S'il vous plaît rang d'un minimum de " + rankingBounds.minSelections + " sélections.");
+			}
+			
+			if (rankingBounds.maxSelections && numberOfValuesSet > rankingBounds.maxSelections) {
+				errors.push("S'il vous plaît rang d'un maximum de " + rankingBounds.maxSelections + " sélections.");
+			}
+		}
 		
+		return errors;
 	}
 };

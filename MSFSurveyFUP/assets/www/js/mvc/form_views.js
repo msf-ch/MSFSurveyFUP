@@ -17,7 +17,7 @@ FormItemViewModel = Backbone.Model.extend({
 								// condition script can use variables view (the view object) and value (the value of the view object)
 		bounds : undefined, // {minValue : 0, maxValue : 1, minLength : 0, maxLength : 1, exactLength : 1}
 		dateBounds : undefined, //{maxDate : [4-digit year, month, day], minDate : [4-digit year, month, day], dateFormat : "", dateOrder : ""}
-		rankingBounds : undefined, //{minItemsRanked: 0}
+		rankingBounds : undefined, //{minSelections: 0}
 		checkboxgroupBounds : undefined, //{minSelections: 0}
 		horizontalMode : false,
 		required : true
@@ -392,6 +392,7 @@ RankingView = FormItemView.extend({
 				itemToMove.set('isValueSet', true);
 			}
 			
+			//move the item
 			this.remove(itemToMove);
 			this.add(itemToMove, {at : newIndex});
 			
@@ -424,6 +425,7 @@ RankingView = FormItemView.extend({
 					break;
 				}
 			}
+			//returns -1 if no values set
 			return i;
 		}
 	}),
@@ -574,11 +576,16 @@ RankingItemView = FormItemView.extend({
 	},
 	
 	getValue : function() {
-		return this.options.parent.items.getRank(this.model.get('conceptId')) + 1;
+		var value = this.options.parent.items.getRank(this.model.get('conceptId'));
+		if (value == undefined || value < 0) {
+			return undefined;
+		} else {
+			return value + 1;
+		}
 	}, 
 	
 	setValue : function(value) {
-		if (value == undefined) {
+		if (value == undefined || value == "") {
 			value = 0;
 		}
 		this.options.parent.items.setRank(this.model.get('conceptId'), value - 1);
