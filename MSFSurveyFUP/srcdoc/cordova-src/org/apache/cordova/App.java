@@ -30,7 +30,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 
 /**
- * This class exposes methods in DroidGap that can be called from JavaScript.
+ * This class exposes methods in Cordova that can be called from JavaScript.
  */
 public class App extends CordovaPlugin {
 
@@ -104,7 +104,7 @@ public class App extends CordovaPlugin {
      * Load the url into the webview.
      *
      * @param url
-     * @param props			Properties that can be passed in to the DroidGap activity (i.e. loadingDialog, wait, ...)
+     * @param props			Properties that can be passed in to the Cordova activity (i.e. loadingDialog, wait, ...)
      * @throws JSONException
      */
     public void loadUrl(String url, JSONObject props) throws JSONException {
@@ -198,7 +198,7 @@ public class App extends CordovaPlugin {
      * @param override      T=override, F=cancel override
      */
     public void overrideButton(String button, boolean override) {
-        LOG.i("DroidGap", "WARNING: Volume Button Default Behaviour will be overridden.  The volume event will be fired!");
+        LOG.i("App", "WARNING: Volume Button Default Behaviour will be overridden.  The volume event will be fired!");
         webView.bindButton(button, override);
     }
 

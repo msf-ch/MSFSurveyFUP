@@ -485,7 +485,7 @@ public class CordovaWebView extends WebView {
         // If first page, then show splashscreen
         else {
 
-            LOG.d(TAG, "DroidGap.loadUrl(%s, %d)", url, time);
+            LOG.d(TAG, "loadUrlIntoView(%s, %d)", url, time);
 
             // Send message to show splashscreen now if desired
             this.postMessage("splashscreen", "show");
@@ -555,7 +555,7 @@ public class CordovaWebView extends WebView {
      * @param url           The url to load.
      * @param openExternal  Load url in browser instead of Cordova webview.
      * @param clearHistory  Clear the history stack, so new page becomes top of history
-     * @param params        DroidGap parameters for new app
+     * @param params        Parameters for new app
      */
     public void showWebPage(String url, boolean openExternal, boolean clearHistory, HashMap<String, Object> params) {
         LOG.d(TAG, "showWebPage(%s, %b, %b, HashMap", url, openExternal, clearHistory);
@@ -601,7 +601,7 @@ public class CordovaWebView extends WebView {
 
     /**
      * Check configuration parameters from Config.
-     * Approved list of URLs that can be loaded into DroidGap
+     * Approved list of URLs that can be loaded into Cordova
      *      <access origin="http://server regexp" subdomains="true" />
      * Log level: ERROR, WARN, INFO, DEBUG, VERBOSE (default=ERROR)
      *      <log level="DEBUG" />
@@ -806,7 +806,7 @@ public class CordovaWebView extends WebView {
     {
         // Send destroy event to JavaScript
     	// Since baseUrl is set in loadUrlIntoView, if user hit Back button before loadUrl was called, we'll get an NPE on baseUrl (CB-2458)
-        this.loadUrlIntoView("javascript:try{cordova.require('cordova/channel').onDestroy.fire();}catch(e){console.log('exception firing destroy event from native');};");
+        this.loadUrl("javascript:try{cordova.require('cordova/channel').onDestroy.fire();}catch(e){console.log('exception firing destroy event from native');};");
 
         // Load blank page so that JavaScript onunload is called
         this.loadUrl("about:blank");

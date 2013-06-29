@@ -38,7 +38,7 @@ import android.telephony.TelephonyManager;
 public class Device extends CordovaPlugin {
     public static final String TAG = "Device";
 
-    public static String cordovaVersion = "2.8.1";              // Cordova version
+    public static String cordovaVersion = "2.9.0";              // Cordova version
     public static String platform = "Android";                  // Device OS
     public static String uuid;                                  // Device UUID
 
@@ -101,7 +101,7 @@ public class Device extends CordovaPlugin {
     /**
      * Listen for telephony events: RINGING, OFFHOOK and IDLE
      * Send these events to all plugins using
-     *      DroidGap.onMessage("telephone", "ringing" | "offhook" | "idle")
+     *      CordovaActivity.onMessage("telephone", "ringing" | "offhook" | "idle")
      */
     private void initTelephonyReceiver() {
         IntentFilter intentFilter = new IntentFilter();
