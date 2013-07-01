@@ -6583,7 +6583,7 @@ $.mobile.document.bind( "pagecreate create", function( e ) {
 		},
 		enable: function( unlock ) {
 			if ( !disabledInitially && ( !$.mobile.zoom.locked || unlock === true ) ) {
-				meta.attr( "content", enabledZoom );
+//				meta.attr( "content", enabledZoom );
 				$.mobile.zoom.enabled = true;
 				$.mobile.zoom.locked = false;
 			}
