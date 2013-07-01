@@ -956,13 +956,14 @@
                   "conceptId":"numcoup",
                   "label":"Numéro du coupon",
                   "bounds":{
-                     "exactLength":5
+                     "minValue":1,
+                     "maxValue":999999
                   }
                },
                {
                   "viewType":"text",
                   "conceptId":"enfnom",
-                  "label":"Nom de famille de l'enfant",
+                  "label":"Nom de l'enfant",
                   "bounds":{
                      "maxLength":25
                   }
@@ -989,8 +990,8 @@
                   "conceptId":"enfage",
                   "label":"Age de l'enfant (en mois)",
                   "bounds":{
-                     "minValue":0,
-                     "maxValue":30
+                     "minValue":6,
+                     "maxValue":24
                   }
                },
                {
@@ -1143,7 +1144,7 @@
                   "conceptId":"localis",
                   "label":"Localisation de la maison dans le village",
                   "bounds":{
-                     "maxLength":36
+                     "maxLength":50
                   }
                },
                {

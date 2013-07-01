@@ -288,6 +288,15 @@ var contentId = view.id + '_content';
 	</div>
 </script>
 
+<script id='tmpl-html' type='text/template'>
+<%
+var contentId = view.id + '_content';
+%>
+<div class="htmlview" id="<%= contentId %>">
+<%= model.get('htmlContent') %>
+</div>
+</script>
+
 <script id='tmpl-errormsg' type='text/template'>
 	<div class="errorfield ui-body ui-body-e">
 		<ul>

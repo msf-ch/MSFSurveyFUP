@@ -145,15 +145,17 @@ FormItemView = Backbone.View.extend({
 	
 	hide : function() {
 		this.setValue(undefined);
+		this.error(false);
 		this.defaultValueChanged();
 		
 		this.$el.find("[formview]").each(function(index, element) {
 			var formView = $(element).data('formview');
+			
 			formView.setValue(undefined);
+			formView.error(false);
 			formView.defaultValueChanged();
 		});
 		
-		this.$el.find('')
 		this.$el.addClass('viewhidden');
 	},
 	
@@ -641,6 +643,26 @@ GPSAcquireView = FormItemView.extend({
 		}
 		
 		this.render();
+	}
+});
+
+HTMLView = FormItemView.extend({
+	hasValue : false,
+	
+	template : _.template($("#tmpl-html").html()),
+	
+	events : {
+	},
+	
+	render : function() {
+		this.renderDefault();
+	},
+	
+	getValue : function() {
+		return undefined;
+	},
+	
+	setValue : function(val) {
 	}
 });
 

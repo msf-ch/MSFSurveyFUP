@@ -39,6 +39,7 @@ FormApp.on("initServices", function() {
 	ViewService.registerViewClass("rankingitem", RankingItemView, []);
 	ViewService.registerViewClass("submitpage", SubmitPageView, []);
 	ViewService.registerViewClass("gps", GPSAcquireView, []);
+	ViewService.registerViewClass("html", HTMLView, []);
 	
 	FormApp.trigger("defaultViewClassesRegistered");
 });

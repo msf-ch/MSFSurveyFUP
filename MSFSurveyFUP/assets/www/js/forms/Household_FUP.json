@@ -1425,7 +1425,13 @@
                         "value":"9",
                         "label":"ne sait pas"
                      }
-                  ]
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "surfcul"
+                     ],
+                     "condition":"surfcul > 0"
+                  }
                },
                {
                   "viewType":"radio",
@@ -1444,7 +1450,13 @@
                         "value":"9",
                         "label":"ne sait pas"
                      }
-                  ]
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "surfcul"
+                     ],
+                     "condition":"surfcul > 0"
+                  }
                },
                {
                   "viewType":"checkboxgroup",
@@ -1493,9 +1505,10 @@
                   ],
                   "showIf":{
                      "conceptIds":[
-                        "recolt3m"
+                        "recolt3m",
+                        "surfcul"
                      ],
-                     "condition":"recolt3m == '1'"
+                     "condition":"surfcul > 0 && recolt3m == '1'"
                   },
                   "checkboxgroupBounds":{
                   	"minSelections":1
@@ -1532,9 +1545,10 @@
                   ],
                   "showIf":{
                      "conceptIds":[
-                        "recolt3m"
+                        "recolt3m",
+                        "surfcul"
                      ],
-                     "condition":"recolt3m == '1'"
+                     "condition":"surfcul > 0 && recolt3m == '1'"
                   },
                   "rankingBounds":{
                   	"minSelections":1
@@ -1819,6 +1833,12 @@
                   ],
                   "rankingBounds":{
                   	"minSelections":1
+                  },
+                  "showIf":{
+                     "conceptIds":[
+                        "aprodif"
+                     ],
+                     "condition":"aprodif == '1'"
                   }
                },
                {

@@ -956,13 +956,14 @@
                   "conceptId":"numcoup",
                   "label":"Numéro du coupon",
                   "bounds":{
-                     "exactLength":5
+                     "minValue":1,
+                     "maxValue":999999
                   }
                },
                {
                   "viewType":"text",
                   "conceptId":"enfnom",
-                  "label":"Nom de famille de l'enfant",
+                  "label":"Nom de l'enfant",
                   "bounds":{
                      "maxLength":25
                   }
@@ -1888,13 +1889,7 @@
                         "value":"9",
                         "label":"ne sait pas ou non spécifié"
                      }
-                  ],
-                  "showIf":{
-                     "conceptIds":[
-                        "supnut"
-                     ],
-                     "condition":"supnut == '1'"
-                  }
+                  ]
                },
                {
                   "viewType":"checkboxgroup",

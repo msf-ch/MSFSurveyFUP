@@ -1628,7 +1628,7 @@
                      "condition":"champ == '1'"
                   },
                   "bounds":{
-                     "minValue":1,
+                     "minValue":0,
                      "maxValue":99
                   }
                },
@@ -1652,9 +1652,9 @@
                   ],
                   "showIf":{
                      "conceptIds":[
-                        "champ"
+                        "surfcul"
                      ],
-                     "condition":"champ == '1'"
+                     "condition":"surfcul > 0"
                   }
                },
                {
@@ -1677,9 +1677,9 @@
                   ],
                   "showIf":{
                      "conceptIds":[
-                        "champ"
+                        "surfcul"
                      ],
-                     "condition":"champ == '1'"
+                     "condition":"surfcul > 0"
                   }
                },
                {
@@ -1691,10 +1691,10 @@
                   },
                   "showIf":{
                      "conceptIds":[
-                        "champ",
+                        "surfcul",
                         "cultsm"
                      ],
-                     "condition":"champ == '1' && cultsm == '2'"
+                     "condition":"surfcul > 0 && cultsm == '2'"
                   }
                },
                {
@@ -1713,9 +1713,9 @@
                   ],
                   "showIf":{
                      "conceptIds":[
-                        "champ"
+                        "surfcul"
                      ],
-                     "condition":"champ == '1'"
+                     "condition":"surfcul > 0"
                   }
                },
                {
@@ -1742,10 +1742,10 @@
                   ],
                   "showIf":{
                      "conceptIds":[
-                        "champ",
+                        "surfcul",
                         "employ"
                      ],
-                     "condition":"champ == '1' && employ == '1'"
+                     "condition":"surfcul > 0 && employ == '1'"
                   }
                },
                {
@@ -1785,6 +1785,10 @@
                         "label":"ne sait pas"
                      }
                   ]
+               },
+               {
+                  "viewType":"html",
+                  "htmlContent":"<h3>Pouvez-vous nous dire à peu près le nombre de cheptel que vous avez?</h3>"
                },
                {
                   "viewType":"number",

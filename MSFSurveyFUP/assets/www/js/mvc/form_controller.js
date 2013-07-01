@@ -6,7 +6,6 @@ FormService = {
 		var value = sourceView.getValue();
 		//console.log('FormService registered viewValueChange: ' + conceptId + ' - Value = ' + value);
 		ObsService.setObs(conceptId, value);
-		this.model.defaultValue = value;
 	},
 
 	
@@ -17,10 +16,12 @@ FormService = {
 		this.addListeners(view);
 		
 		var conceptId = view.model.get('conceptId');
-		var value = ObsService.getObs(conceptId);
-		
-		if (value) {
-			view.setValue(value);
+		if (conceptId && view.hasValue) {
+			var value = ObsService.getObs(conceptId);
+			
+			if (value) {
+				view.setValue(value);
+			}
 		}
 	},
 	
@@ -32,7 +33,9 @@ FormService = {
 	},
 	
 	addListeners : function(view) {
-		view.on('viewValueChange', FormService.viewValueChange);
+		if(view.hasValue) {
+			view.on('viewValueChange', FormService.viewValueChange);
+		}
 
 		var hideIf = view.model.get('hideIf');
 		if (hideIf && hideIf.condition) {
@@ -168,7 +171,7 @@ PageService = _.extend({
 		return this.activeIndex;
 	},
 	
-	setActivePageIndex : function(pageIndex) {
+	setActivePageIndex : function(pageIndex, options) {
 		if (pageIndex >= this.pageModels.length) {
 			alert('PageIndex exceeds number of pages!');
 			return;
@@ -184,7 +187,7 @@ PageService = _.extend({
 		var pageModel = this.pageModels.at(pageIndex);
 		var pageView = pageModel.pageView;
 		
-		$.mobile.changePage(pageView.$el);
+		$.mobile.changePage(pageView.$el, options);
 	},
 	
 	getActivePageModel : function() {
@@ -200,7 +203,7 @@ PageService = _.extend({
 	},
 	
 	prevPage : function() {
-		this.setActivePageIndex(this.activeIndex - 1);
+		this.setActivePageIndex(this.activeIndex - 1, {transition:"slide",reverse:true});
 	},
 	
 	nextPage : function(force) {
@@ -219,7 +222,7 @@ PageService = _.extend({
 			}
 		}
 		
-		this.setActivePageIndex(this.activeIndex + 1);
+		this.setActivePageIndex(this.activeIndex + 1, {transition:"slide",reverse:false});
 	},
 	
 	getPageFromElement : function(element) {
@@ -382,14 +385,9 @@ ValidationService = {
 		var errors = [];
 		
 		var bounds = view.model.get('bounds');
-		if (bounds) {
-			var value = view.getValue();
-			var stringValue;
-			if (value == undefined) {
-				stringValue == '';
-			} else {
-				stringValue = value.toString();
-			}
+		var value = view.getValue();
+		if (bounds && value !== undefined && value !== '') {
+			var stringValue = value.toString();
 			
 			 if (bounds.maxValue != undefined && value > bounds.maxValue) {
 				 errors.push("La VALEUR ne doit pas dépasse " + bounds.maxValue); //Answer VALUE must be less than or equal to 
