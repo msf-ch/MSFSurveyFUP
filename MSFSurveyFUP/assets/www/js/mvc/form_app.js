@@ -9,6 +9,9 @@
  * 	
  * Initialize services
  * 	initServices
+ * 	initServicesComplete
+ * 	initViewClasses
+ * 	initViewClassesComplete
  * 	
  * Load data
  * 	loadData
@@ -33,66 +36,57 @@
  */	
 FormApp = _.extend({
 	start : function() {
-		this.detectLibraryInit();
-		
 		this.on("librariesInitialized", function() {
-			Form = new FormModel;
-			Body = new BodyView({
-				el : $("body")
+			$(document).on("backbutton", function() {
+				FormApp.trigger("backbutton");
+			});
+			$(window).on("beforeunload", function() {
+				$(document).off("backbutton");
 			});
 			
+			FormApp.trigger("initPageClasses");
+			FormApp.trigger("initPageClassesComplete");
+			
+			FormApp.trigger("registerServices");
+			FormApp.trigger("registerServicesComplete");
+			
 			FormApp.trigger("initServices");
+			FormApp.trigger("initServicesComplete");
+			
+			FormApp.trigger("initViewClasses");
+			FormApp.trigger("initViewClassesComplete");
+			
 			FormApp.trigger("loadData");
-		});
-		
-		this.on("loadData", function() {
-			FormApp.trigger("loadDataStart");
 			FormApp.loadData();
 		});
 		
 		this.on("loadDataComplete", function(data) {
 			FormApp.trigger("setFormModelStart")
-			Form.set(data);
+			Form = new FormModel(data);
 			FormApp.trigger("setFormModelComplete", Form);
-		});
-		
-		this.on("setFormModelComplete", function(form) {
+			
 			FormApp.trigger("setPageModels");
-		});
-		
-		this.on("setPageModels", function(data) {
-			FormApp.trigger("setPageModelsStart");
 			PageService.setPageModels(Form.get('pages'));
 			FormApp.trigger("setPageModelsComplete");
+			
 			FormApp.trigger("renderPages");
-		});
-		
-		this.on("renderPages", function(data) {
-			FormApp.trigger("renderPagesStart");
 			PageService.renderPages();
 			FormApp.trigger("renderPagesComplete");
+			
+			FormApp.trigger("initializeObs");
+			ObsService.initializeValues();
+			FormApp.trigger("initializeObsComplete");
+			
 			FormApp.trigger("enterForm");
-		});
-		
-		this.on("enterForm", function() {
-			FormApp.trigger("enterFormStart");
 			PageService.setActivePageIndex(0);
 			FormApp.trigger("enterFormComplete");
 		});
 		
-		this.on("enterFormComplete", function() {
-			FormService.ready();
-			$(window).on('resize', function() {
-				var pageView = PageService.getActivePageView();
-				if (pageView) {
-					pageView.positionFooter();
-				}
-			});
-		});
+		this.detectLibraryInit();
 	},
 	
 	detectLibraryInit : function() {
-		this.on("checkLibrariesInitialized", function() {
+		this.on("checkLibrariesInitialized", function() { //This gets fired when all initialization parameters are met
 			if (FormApp.deviceReady && FormApp.pageShown && !FormApp.initialized) {
 				FormApp.initialized = true;
 				FormApp.trigger("librariesInitialized");
@@ -113,8 +107,6 @@ FormApp = _.extend({
 	
 	loadData : function() {
 		var initStart = new Date().getTime();
-//		$(document).on('pageshow', positionFooter);
-//		$(window).on('resize', positionFooter);
 
 		encounter = getParameterByName('encounter') || sessionStorage.encounter;
 		sessionStorage.encounter = "";
@@ -138,6 +130,21 @@ FormApp = _.extend({
 		console.log("Time for init: " + initStart);
 	},
 	
+	registerService : function(serviceName, service) {
+		FormApp.listenTo(service, 'all', function(eventName) {
+			var args = [serviceName + ":" + eventName]; //ie ViewService:registered
+			args = args.concat(Array.prototype.splice.call(arguments, 1));
+			
+			FormApp.trigger.apply(FormApp, args);
+		});
+		
+		if(_.isFunction(service.initialize)) {
+			service.listenToOnce(FormApp, 'initServices', service.initialize);
+		}
+		
+		service.trigger('registered');
+	},
+	
 	loadFromJSONForm : function(formFilePath) {
 		return $.get(formFilePath, undefined, undefined, "json")
 			.done(function(data, textStatus, jqXHR) {
@@ -159,7 +166,37 @@ FormApp = _.extend({
 	}
 }, Backbone.Events);
 
-FormApp.start();
+
+/*
+ * JQuery plugins
+ */
+(function($) {
+	//Allow custom CSS selectors ie $(":form-item") to find all form views
+	var pseudos = {
+		"form-item": function(elm, arg2, arg3) {
+			return jQuery.data(elm, 'form-item-view') != undefined;
+		},
+
+		"form-page": function(elm, arg2, arg3) {
+			return jQuery.data(elm, 'form-page-view') != undefined;
+		}
+	}
+	$.extend($.expr[':'], pseudos);
+	
+	
+	$.fn.itemView = function() {
+		return this.data('form-item-view');
+	};
+	
+	$.fn.pageView = function() {
+		return this.data('form-page-view');
+	};
+	
+	$.fn.parentPageView = function() {
+		return this.parents(":form-page").pageView();
+	};
+}(jQuery));
+
 
 /*
  * Utility methods

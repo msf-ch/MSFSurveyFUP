@@ -27,7 +27,7 @@
 //		gps : GPSAcquireView};
 //});
 
-FormApp.on("initServices", function() {
+FormApp.once("initViewClassesComplete", function() {
 	ViewService.registerViewClass("text", TextView, [ValidationService._standardBounds, ValidationService._standardRequired, ValidationService._standardValidators]);
 	ViewService.registerViewClass("number", NumberView, [ValidationService._standardBounds, ValidationService._standardRequired, ValidationService._standardValidators]);
 	ViewService.registerViewClass("radio", RadioView, [ValidationService._standardBounds, ValidationService._standardRequired, ValidationService._standardValidators]);

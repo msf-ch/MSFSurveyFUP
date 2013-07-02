@@ -1,24 +1,4 @@
-BodyView = Backbone.View.extend({
-	events : {
-		'pagebeforeshow' : 'pagebeforeshow',
-		'pageshow' : 'pageshow'
-	},
-	
-	pagebeforeshow : function(event) {
-		var page = PageService.getPageFromElement(event.target);
-		if (page) {
-			page.beforeShow();
-		}
-	},
-	
-	pageshow : function(event) {
-		var page = PageService.getPageFromElement(event.target);
-		if (page) {
-			page.onShow();
-		}
-	}
-});
-
+FormApp.once('initPageClasses', function() {
 HeaderModel = Backbone.Model.extend({
 	defaults : {
 		theme : "b"
@@ -84,6 +64,11 @@ PageModel = Backbone.Model.extend({
 });
 
 PageView = Backbone.View.extend({
+	events: {
+		"pageshow" : "onShow",
+		"pagebeforeshow" : "beforeShow"
+	},
+	
 	tagName: "div",
 	
 	initialize : function() {
@@ -96,10 +81,12 @@ PageView = Backbone.View.extend({
 	},
 	
 	render : function() {
-		this.$el.data('pageView', this);
+		console.log('page rendering');
+		
+		this.$el.data('form-page-view', this);
 		
 		this.$el.html(_.template(this.template, {}, {variable : "data"}));
-		this.$el.attr('data-role', 'page').attr('data-theme', this.model.get('theme'));
+		this.$el.attr('data-role', 'page').attr('data-theme', this.model.get('theme')).attr('formpage', 'true');
 		
 		//this.header = new Header({el : this.$el.children(":jqmData(role='header')"), page : this, model : this.model.get('header')});
 		this.header = new Header({el : this.$el.children("[pageheader]"), page : this, model : this.model.get('header')});
@@ -116,8 +103,7 @@ PageView = Backbone.View.extend({
 	},
 	
 	beforeShow : function() {
-		this.footer.render();
-		this.footer.$el.trigger('create');
+		this.footer.refresh();
 		
 		this.trigger('pagebeforeshow');
 		PageService.trigger('pagebeforeshow', [this]);
@@ -125,29 +111,9 @@ PageView = Backbone.View.extend({
 	
 	onShow : function() {
 		$.mobile.silentScroll(0);
-		this.positionFooter();
 		
 		this.trigger('pageshow');
 		PageService.trigger('pageshow', [this]);
-	},
-	
-	positionFooter : function() {
-		var content = this.content.$el;
-		content.css("min-height", "0px");
-
-		// var headerHeight =
-		// $.mobile.activePage.children(":jqmData(role='header')").outerHeight();
-		var headerHeight = this.header.$el.outerHeight();
-		var contentHeight = content.outerHeight();
-		var footerHeight = this.footer.$el.outerHeight();
-
-		var pageHeight = headerHeight + contentHeight + footerHeight;
-		if (pageHeight < window.innerHeight) {
-			var contentMargin = content.outerHeight() - content.height();
-			var targetContentHeight = window.innerHeight - headerHeight
-					- footerHeight - contentMargin;
-			content.css("min-height", targetContentHeight + "px");
-		}
 	}
 });
 
@@ -158,7 +124,6 @@ var Header = Backbone.View.extend({
 	},
 	
 	render : function() {
-//		this.$el.attr('data-theme', this.model.get('theme'));
 		this.$el.addClass('ui-bar ui-bar-' + this.model.get('theme'));
 		this.$el.html(_.template($("#tmpl-header").html(), this.model.toJSON(), {variable : "data"}));
 	}
@@ -174,6 +139,7 @@ Content = Backbone.View.extend({
 	
 	render : function() {
 		this.$el.attr('data-theme', this.model.get('theme'));
+		this.$el.css("min-height", "0px");
 		this.renderModels(this.$el, this.model.get('views'));
 	},
 	
@@ -187,8 +153,8 @@ Content = Backbone.View.extend({
 	
 	registerViews : function() {
 		var content = this;
-		this.$el.find("[formview]").each(function(index, element) {
-			var formView = $(element).data('formview');
+		this.$el.find(":form-item").each(function(index, element) {
+			var formView = $(element).itemView();
 			if (formView) {
 				formView.page = content.page;
 				FormService.registerView(formView);
@@ -231,8 +197,12 @@ Footer = Backbone.View.extend({
 			this.disableButton($(this.$el.find("li > a")[2]));
 		}
 		
+		this.refresh();
+	},
+	
+	refresh : function() {
 		//Disable prev if first page
-		if (PageService.getActivePageIndex() == 0) {
+		if (PageService.getIndexOfPage(this.$el.parents(":form-page")) == 0) {
 			this.disableButton($(this.$el.find("li > a[action='prev']")));
 		}
 	},
@@ -277,4 +247,4 @@ Footer = Backbone.View.extend({
 		}
 	}
 });
-
+});

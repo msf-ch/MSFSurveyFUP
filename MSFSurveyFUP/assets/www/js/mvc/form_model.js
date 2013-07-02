@@ -10,19 +10,19 @@ FormModel = Backbone.Model.extend({
 	
 	initialize : function() {
 		this.defaultGlobal();
-		this.on("change:global", function() {
-			this.defaultGlobal();
-		}, this);
 	},
 	
 	defaultGlobal : function() {
 		var currentGlobal = this.get('global');
-		for (var prop in this.defaults.global) {
-			if(!currentGlobal[prop]) {
-				currentGlobal[prop] = {};
-			}
-			_.defaults(currentGlobal[prop], this.defaults.global[prop]);
-		}
+		var newGlobal = $.extend(true, {}, this.defaults.global, this.currentGlobal);
+		this.set('global', newGlobal);
+		
+//		for (var prop in this.defaults.global) {
+//			if(!currentGlobal[prop]) {
+//				currentGlobal[prop] = {};
+//			}
+//			_.defaults(currentGlobal[prop], this.defaults.global[prop]);
+//		}
 	},
 	
 	getGlobalVariable : function(category, variable) {

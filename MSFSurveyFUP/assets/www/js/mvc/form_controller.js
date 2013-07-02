@@ -1,5 +1,10 @@
-FormService = {
-	views : [],	
+FormApp.once('registerServices', function() {
+FormService = _.extend({
+	views : [],
+	
+	initialize : function() {
+		FormService.listenTo(FormApp, 'backbutton', FormService.backButtonPressed);
+	},
 	
 	viewValueChange : function(sourceView) {
 		var conceptId = sourceView.model.get('conceptId');
@@ -71,6 +76,8 @@ FormService = {
 		encounterToSave.formName = Form.get('name');
 		encounterToSave.formNameReadable = Form.get('nameReadable');
 		encounterToSave.descriptors = [];
+		encounterToSave.pageIndex = PageService.getActivePageIndex();
+		
 		var descriptors = Form.get('descriptors');
 		if (descriptors && descriptors.length > 0) {
 			for (var i = 0; i < descriptors.length; i++) {
@@ -106,13 +113,6 @@ FormService = {
 	},
 	
 	ready : function() {
-		$(document).on("backbutton", this.backButtonPressed);
-		$(window).on("beforeunload", function() {
-			$(document).off("backbutton");
-		});
-		
-		obsList.trigger('initialize');
-		Form.trigger('ready');
 	},
 	
 	backButtonPressed : function() {
@@ -132,9 +132,10 @@ FormService = {
 			PageService.prevPage();
 		}
 	}
-};
+}, Backbone.Events);
+FormApp.registerService('FormService', FormService);
 
-ObsService = {
+ObsService = _.extend({
 	setObs : function(conceptId, value) {
 		console.log('set obs ' + conceptId + ' to ' + value);
 		ret = obsList.setValue(conceptId, value);
@@ -144,12 +145,21 @@ ObsService = {
 	getObs : function(conceptId) {
 		//console.log('get obs ' + conceptId);
 		return obsList.getValue(conceptId);
+	},
+	
+	initializeValues : function() {
+		obsList.trigger('initialize');
 	}
-};
+}, Backbone.Events);
+FormApp.registerService('ObsService', ObsService);
 
 PageService = _.extend({
 	pageModels : undefined,
 	activeIndex : -1,
+	
+	initialize : function() {
+		this.on('pageshow', this.updatePageIndex);
+	},
 	
 	setPageModels : function(pages) {
 		if (!this.pageModels) {
@@ -181,8 +191,6 @@ PageService = _.extend({
 			alert('PageIndex cannot be less than 0!');
 			return;
 		}
-
-		this.activeIndex = pageIndex;
 		
 		var pageModel = this.pageModels.at(pageIndex);
 		var pageView = pageModel.pageView;
@@ -191,7 +199,11 @@ PageService = _.extend({
 	},
 	
 	getActivePageModel : function() {
-		return this.pageModels.at(this.getActivePageIndex());
+		try {
+			return this.pageModels.at(this.getActivePageIndex());
+		} catch(err) {
+			return undefined;
+		}
 	},
 	
 	getActivePageView : function() {
@@ -208,12 +220,6 @@ PageService = _.extend({
 	
 	nextPage : function(force) {
 		var pageView = this.pageModels.at(this.activeIndex).pageView;
-				
-		if (this.activeIndex == 0) {
-			for(var i = 0; i < obsList.length; i++) {
-				var model = obsList.at(i).attributes;
-			}
-		}
 		
 		if (Form.getGlobalVariable('validation', 'validateOnNextPage') && !force) {
 			var errors = ValidationService.validatePage(pageView);
@@ -256,10 +262,28 @@ PageService = _.extend({
 		
 		popup.popup('close');
 		return popup;
+	},
+	
+	getIndexOfPage : function(page) {		
+		var pageModel;
+		for (var i = 0; i < PageService.pageModels.length; i++) {
+			pageModel = PageService.pageModels.at(i);
+			if (pageModel && page == pageModel || (pageModel.pageView && (page == pageModel || pageModel.pageView.$el[0] == page[0]))) {
+				return i;
+			}
+		}
+		
+		return -1;
+	},
+	
+	updatePageIndex : function() {
+		PageService.activeIndex = PageService.getIndexOfPage($.mobile.activePage);
 	}
+	
 }, Backbone.Events);
+FormApp.registerService('PageService', PageService);
 
-EvaluationService = {
+EvaluationService = _.extend({
 		compileObsCondition : function(obsEvalSerialized) {
 			var func = new Function(obsEvalSerialized.conceptIds, 'return ' + obsEvalSerialized.condition + ';');
 			obsEvalSerialized.compiledCondition = func;
@@ -309,9 +333,10 @@ EvaluationService = {
 			
 			return viewEvalSerialized.compiledCondition.apply(viewEvalSerialized, paramValues);
 		},
-};
+}, Backbone.Events);
+FormApp.registerService('EvaluationService', EvaluationService);
 
-ViewService = {
+ViewService = _.extend({
 	viewClasses : new (Backbone.Collection.extend({
 		model : Backbone.Model.extend({
 			idAttribute: "viewClassName",
@@ -334,9 +359,10 @@ ViewService = {
 	getViewClass : function(viewClassName) {
 		return ViewService.viewClasses.get(viewClassName);
 	}
-}
+}, Backbone.Events);
+FormApp.registerService('ViewService', ViewService);
 
-ValidationService = {
+ValidationService = _.extend({
 	validatePage : function(pageView) {
 		var viewsWithErrors =[];
 		var formViews = pageView.$el.find(".formview:not(.viewhidden, .viewhidden *)"); //don't include any hidden views!
@@ -344,7 +370,7 @@ ValidationService = {
 		var view;
 		var viewErrors;
 		for (var i = 0; i < formViews.length; i++) {
-			view = $(formViews[i]).data('view');
+			view = $(formViews[i]).itemView();
 			viewErrors = ValidationService.validateView(view);
 			if (viewErrors && viewErrors.length > 0) {
 				viewsWithErrors.push({'view' : view, errors : viewErrors});
@@ -493,4 +519,37 @@ ValidationService = {
 		
 		return errors;
 	}
-};
+}, Backbone.Events);
+FormApp.registerService('ValidationService', ValidationService);
+
+UiService = _.extend({
+	initialize : function() {
+		$(window).on('resize', UiService.positionFooter);
+		this.listenToOnce(PageService, 'pageshow', UiService.positionFooter);
+	},
+	
+	positionFooter : function() {
+		var page = PageService.getActivePageView();
+		
+		if (!page) {
+			return;
+		}
+		
+		var content = page.content.$el;
+		
+		var headerHeight = page.header.$el.outerHeight();
+		var contentHeight = content.outerHeight();
+		var footerHeight = page.footer.$el.outerHeight();
+
+		var pageHeight = headerHeight + contentHeight + footerHeight;
+
+		var contentMargin = content.outerHeight() - content.height();
+		var targetContentHeight = window.innerHeight - headerHeight
+				- footerHeight - contentMargin;
+		
+		$("[formpage=true] :jqmData(role='content')").css("min-height", targetContentHeight + "px");
+	}
+}, Backbone.Events);
+FormApp.registerService('UiService', UiService);
+
+});

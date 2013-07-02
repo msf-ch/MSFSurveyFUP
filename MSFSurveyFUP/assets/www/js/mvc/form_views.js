@@ -1,4 +1,4 @@
-$(function() {
+FormApp.once('initViewClasses', function() {
 FormItemViewModel = Backbone.Model.extend({
 	defaults : {
 		viewType : "",
@@ -94,7 +94,7 @@ FormItemView = Backbone.View.extend({
 	//set model by passing {model : modelObject} to constructor
 	initialize : function(options) {
 		this.model = options.model;
-		this.$el.data('formview', this);
+		this.$el.data('form-item-view', this);
 		
 		//generate a unique ID if not specified already
 		var id = options.id;
@@ -112,7 +112,7 @@ FormItemView = Backbone.View.extend({
 	},
 	
 	renderDefault : function(processBeforeCreateFunction) {
-		this.$el.attr('id', this.id).attr('formview', this.model.get('viewType')).data('view', this).addClass('formview');
+		this.$el.attr('id', this.id).attr('formview', this.model.get('viewType')).data('form-item-view', this).addClass('formview');
 		
 		this.$el.html(this.template({model : this.model, view : this}));
 		if (this.registered) {
@@ -148,8 +148,8 @@ FormItemView = Backbone.View.extend({
 		this.error(false);
 		this.defaultValueChanged();
 		
-		this.$el.find("[formview]").each(function(index, element) {
-			var formView = $(element).data('formview');
+		this.$el.find(":form-item").each(function(index, element) {
+			var formView = $(element).itemView();
 			
 			formView.setValue(undefined);
 			formView.error(false);

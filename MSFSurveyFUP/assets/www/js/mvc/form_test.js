@@ -50,7 +50,7 @@ $(function() {
 		var formViews = $page.find("[formView]").each(function() {
 			var $this = $(this);
 			if ($this.is(":visible")) {
-				setValueToFormView($this.data('view'));
+				setValueToFormView($this.itemView());
 			}
 		}).promise().done(function() {
 			if (PageService.pageModels.length > PageService.getActivePageIndex() + 1) {
