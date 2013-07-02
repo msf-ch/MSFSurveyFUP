@@ -922,7 +922,10 @@
                {
                   "viewType":"number",
                   "conceptId":"nummen",
-                  "label":"Numéro du ménage"
+                  "label":"Numéro du ménage",
+                  "bounds":{
+                     "exactLength":4
+                  }
                },
                {
                   "viewType":"number",
@@ -1677,9 +1680,9 @@
                   ],
                   "showIf":{
                      "conceptIds":[
-                        "surfcul"
+                        "champ"
                      ],
-                     "condition":"surfcul > 0"
+                     "condition":"champ == '1'"
                   }
                },
                {
@@ -1691,10 +1694,10 @@
                   },
                   "showIf":{
                      "conceptIds":[
-                        "surfcul",
+                        "champ",
                         "cultsm"
                      ],
-                     "condition":"surfcul > 0 && cultsm == '2'"
+                     "condition":"champ == '1' && cultsm == '2'"
                   }
                },
                {
@@ -1713,9 +1716,9 @@
                   ],
                   "showIf":{
                      "conceptIds":[
-                        "surfcul"
+                        "champ"
                      ],
-                     "condition":"surfcul > 0"
+                     "condition":"champ == '1'"
                   }
                },
                {
@@ -1742,10 +1745,9 @@
                   ],
                   "showIf":{
                      "conceptIds":[
-                        "surfcul",
                         "employ"
                      ],
-                     "condition":"surfcul > 0 && employ == '1'"
+                     "condition":"employ == '1'"
                   }
                },
                {
@@ -1765,7 +1767,13 @@
                         "value":"9",
                         "label":"ne sait pas"
                      }
-                  ]
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "champ"
+                     ],
+                     "condition":"champ == '1'"
+                  }
                },
                {
                   "viewType":"radio",
@@ -1784,7 +1792,13 @@
                         "value":"9",
                         "label":"ne sait pas"
                      }
-                  ]
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "champ"
+                     ],
+                     "condition":"champ == '1'"
+                  }
                },
                {
                   "viewType":"html",
@@ -2351,9 +2365,10 @@
                   ],
                   "showIf":{
                      "conceptIds":[
-                        "recolt3m"
+                        "recolt3m",
+                        "champ"
                      ],
-                     "condition":"recolt3m == '1'"
+                     "condition":"recolt3m == '1' && champ == '1'"
                   },
                   "rankingBounds":{
                   	"minSelections":1
@@ -2366,7 +2381,15 @@
                   "bounds":{
                      "minValue":1,
                      "maxValue":12
-                  }
+                  },
+                  "showIf":{
+                     "conceptIds":[
+                        "recolt3m",
+                        "champ"
+                     ],
+                     "condition":"recolt3m == '1' && champ == '1'"
+                  },
+                  "required":false
                },
                {
                   "viewType":"checkboxgroup",

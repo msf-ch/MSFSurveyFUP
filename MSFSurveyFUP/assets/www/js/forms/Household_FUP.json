@@ -919,7 +919,10 @@
                {
                   "viewType":"number",
                   "conceptId":"nummen",
-                  "label":"Numéro du ménage"
+                  "label":"Numéro du ménage",
+                  "bounds":{
+                     "exactLength":4
+                  }
                },
                {
                   "viewType":"text",
