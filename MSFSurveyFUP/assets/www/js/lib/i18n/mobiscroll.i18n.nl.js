@@ -1,5 +1,5 @@
 (function ($) {
-    $.mobiscroll.i18n['nl-NL'] = $.extend($.mobiscroll.i18n['nl-NL'], {
+    $.mobiscroll.i18n.nl = $.extend($.mobiscroll.i18n.nl, {
         // Core
         setText: 'Instellen',
         cancelText: 'Annuleer',
@@ -19,6 +19,10 @@
         timeWheels: 'hhiiA',
         yearText: 'Jaar',
         nowText: 'Nu',
+        // Calendar component
+        dateText: 'Datum',
+        timeText: 'Tijd',
+        calendarText: 'Kalender',
         // Measurement components
         wholeText: 'geheel',
         fractionText: 'fractie',
