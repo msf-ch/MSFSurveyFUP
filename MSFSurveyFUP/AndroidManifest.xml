@@ -20,8 +20,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.msf.survey.monthly.fup"
     android:hardwareAccelerated="true"
-    android:versionCode="5"
-    android:versionName="1.1"
+    android:versionCode="6"
+    android:versionName="1.0.0"
     android:windowSoftInputMode="adjustPan" >
 
     <supports-screens
@@ -50,7 +50,6 @@
     <uses-permission android:name="android.permission.BROADCAST_STICKY" />
 
     <application
-        android:debuggable="true"
         android:hardwareAccelerated="true"
         android:icon="@drawable/icon"
         android:label="@string/app_name" >

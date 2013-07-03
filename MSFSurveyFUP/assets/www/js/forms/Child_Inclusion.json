@@ -1440,7 +1440,7 @@
                   "label":"Taille de l'enfant (cm)",
                   "bounds":{
                      "minValue":60.0,
-                     "maxValue":90.0,
+                     "maxValue":80.0,
                      "precisionExact":1
                   }
                },
