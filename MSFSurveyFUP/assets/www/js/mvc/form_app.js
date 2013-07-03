@@ -70,8 +70,13 @@ FormApp = _.extend({
 			FormApp.trigger("setPageModelsComplete");
 			
 			FormApp.trigger("renderPages");
-			PageService.renderPages();
 			FormApp.trigger("renderPagesComplete");
+			
+			FormApp.trigger("decoratePages");
+			FormApp.trigger("decoratePagesComplete");
+			
+			FormApp.trigger("registerViews");
+			FormApp.trigger("registerViewsComplete");
 			
 			FormApp.trigger("initializeObs");
 			ObsService.initializeValues();

@@ -4,6 +4,7 @@ FormService = _.extend({
 	
 	initialize : function() {
 		FormService.listenTo(FormApp, 'backbutton', FormService.backButtonPressed);
+		FormService.listenTo(FormApp, 'registerViews', FormService.registerViews);
 	},
 	
 	viewValueChange : function(sourceView) {
@@ -13,6 +14,11 @@ FormService = _.extend({
 		ObsService.setObs(conceptId, value);
 	},
 
+	registerViews : function() {
+		for (var i = 0; i < PageService.pageModels.length; i++) {
+			PageService.pageModels.at(i).pageView.content.registerViews();
+		}
+	},
 	
 	registerView : function(view) {
 		//console.log('register view ' + view.id);
@@ -158,7 +164,10 @@ PageService = _.extend({
 	activeIndex : -1,
 	
 	initialize : function() {
-		this.on('pageshow', this.updatePageIndex);
+		PageService.listenTo(FormApp, 'renderPages', PageService.renderPages);
+		PageService.listenTo(FormApp, 'decoratePages', PageService.decoratePages);
+
+		PageService.on('pageshow', PageService.updatePageIndex);
 	},
 	
 	setPageModels : function(pages) {
@@ -172,9 +181,23 @@ PageService = _.extend({
 	},
 	
 	renderPages : function() {
-		this.pageModels.each(function(page) {
-			page.generatePageView();
-		});
+		for (var i = 0; i < PageService.pageModels.length; i++) {
+			var pageView = PageService.pageModels.at(i).generatePageView();
+			PageService.listenTo(pageView, 'all', PageService.pageEventFired);
+		}
+	},
+	
+	decoratePages : function() {
+		for (var i = 0; i < PageService.pageModels.length; i++) {
+			PageService.pageModels.at(i).pageView.$el.page();
+		}
+	},
+	
+	pageEventFired : function(eventName) {
+		var args = [eventName]; //ie ViewService:registered
+		args = args.concat(Array.prototype.splice.call(arguments, 1));
+		
+		PageService.trigger.apply(this, args);
 	},
 	
 	getActivePageIndex : function() {
@@ -215,20 +238,24 @@ PageService = _.extend({
 	},
 	
 	prevPage : function() {
-		this.setActivePageIndex(this.activeIndex - 1, {transition:"slide",reverse:true});
+		if (!$.mobile.pageContainer.is(".ui-mobile-viewport-transitioning")) {
+			this.setActivePageIndex(this.activeIndex - 1, {transition:"slide",reverse:true});
+		}
 	},
 	
 	nextPage : function(force) {
-		var pageView = this.pageModels.at(this.activeIndex).pageView;
-		
-		if (Form.getGlobalVariable('validation', 'validateOnNextPage') && !force) {
-			var errors = ValidationService.validatePage(pageView);
-			if (errors && errors.length > 0) {
-				return;
+		if (!$.mobile.pageContainer.is(".ui-mobile-viewport-transitioning")) {
+			var pageView = this.pageModels.at(this.activeIndex).pageView;
+			
+			if (Form.getGlobalVariable('validation', 'validateOnNextPage') && !force) {
+				var errors = ValidationService.validatePage(pageView);
+				if (errors && errors.length > 0) {
+					return;
+				}
 			}
+			
+			this.setActivePageIndex(this.activeIndex + 1, {transition:"slide",reverse:false});
 		}
-		
-		this.setActivePageIndex(this.activeIndex + 1, {transition:"slide",reverse:false});
 	},
 	
 	getPageFromElement : function(element) {
@@ -524,30 +551,42 @@ FormApp.registerService('ValidationService', ValidationService);
 
 UiService = _.extend({
 	initialize : function() {
-		$(window).on('resize', UiService.positionFooter);
-		this.listenToOnce(PageService, 'pageshow', UiService.positionFooter);
+		$(window).on('resize', UiService.positionFooters);
+		this.listenToOnce(FormApp, 'decoratePagesComplete', UiService.positionFooters);
 	},
 	
-	positionFooter : function() {
-		var page = PageService.getActivePageView();
-		
-		if (!page) {
-			return;
+	positionFooters : function() {
+		var page;
+		for (var i = 0; i < PageService.pageModels.length; i++) {
+			page = PageService.pageModels.at(i).pageView;
+			
+			//so height can be ascertained
+			page.$el.css({position:"absolute",visibility:"hidden",display:"block"});
+			
+			if (!page) {
+				return;
+			}
+			
+			var content = page.content.$el;
+			
+			var headerHeight = page.header.$el.outerHeight(true);
+			var contentHeight = content.outerHeight();
+			var footerHeight = page.footer.$el.outerHeight(true);
+
+			var pageHeight = headerHeight + contentHeight + footerHeight;
+
+			var contentMargin = content.outerHeight() - content.height();
+			var targetContentHeight = window.innerHeight - headerHeight
+					- footerHeight - contentMargin;
+			
+//			$("[formpage=true] :jqmData(role='content')").css("min-height", targetContentHeight + "px");
+			content.css("min-height", targetContentHeight + "px");
+			if (!content.parent().is(":jqmData(role='page')")) {
+				content.parent().css("min-height", targetContentHeight + "px");
+			}
+			
+			page.$el.css({position:"", visibility:"", display:""});
 		}
-		
-		var content = page.content.$el;
-		
-		var headerHeight = page.header.$el.outerHeight();
-		var contentHeight = content.outerHeight();
-		var footerHeight = page.footer.$el.outerHeight();
-
-		var pageHeight = headerHeight + contentHeight + footerHeight;
-
-		var contentMargin = content.outerHeight() - content.height();
-		var targetContentHeight = window.innerHeight - headerHeight
-				- footerHeight - contentMargin;
-		
-		$("[formpage=true] :jqmData(role='content')").css("min-height", targetContentHeight + "px");
 	}
 }, Backbone.Events);
 FormApp.registerService('UiService', UiService);

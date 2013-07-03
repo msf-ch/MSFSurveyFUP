@@ -62,7 +62,7 @@
 		        		<a id="exportReport" data-role="button" href="#" data-icon="check" data-iconpos="left" data-ajax="false" >Exporter un rapport</a>
 	        		</div>
 		        </div>
-		        <div data-role="collapsible">
+		        <div id="adminCollapsible" data-role="collapsible" data-disabled="true">
 		        	<h3>Administration</h3>
 					<div data-role="fieldcontain">
 						<label for="testIterationCount">Number of iterations: </label>
@@ -77,6 +77,7 @@
 	    
 	    <script type="text/javascript">
 	    	$(function() {
+	    		$("#adminCollapsible").hide();
 	    		$("[formButton]:jqmData(role='button')").click(function(event) {
 	    			var formFilePath = $(this).attr('formFilePath');
 	    			sessionStorage.formFilePath = formFilePath;

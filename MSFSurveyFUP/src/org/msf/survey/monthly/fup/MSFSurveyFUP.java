@@ -19,15 +19,40 @@ under the License.
 
 package org.msf.survey.monthly.fup;
 
-import android.os.Bundle;
-import org.apache.cordova.*;
+import org.apache.cordova.Config;
+import org.apache.cordova.DroidGap;
 
-public class MSFSurveyFUP extends DroidGap {
+import android.os.Bundle;
+import android.view.MotionEvent;
+import android.view.View;
+
+public class MSFSurveyFUP extends DroidGap implements View.OnTouchListener {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// Set by <content src="home.html" /> in config.xml
 		super.loadUrl(Config.getStartUrl());
-		// super.loadUrl("file:///android_asset/www/home.html")
 	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		appView.setOnTouchListener(this);
+	}
+
+	/*
+	 * This is an attempted workaround to avoid issue where users can no
+	 * longer enter data into forms. Seems to be a focus issue.
+	 */
+	public boolean onTouch(View v, MotionEvent event) {
+		switch (event.getAction()) {
+		case MotionEvent.ACTION_DOWN:
+		case MotionEvent.ACTION_UP:
+			if (!v.hasFocus()) {
+				v.requestFocus();
+			}
+			break;
+		}
+		return false;
+	}
+
 }

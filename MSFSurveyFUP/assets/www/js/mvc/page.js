@@ -60,13 +60,17 @@ PageModel = Backbone.Model.extend({
 	generatePageView : function() {
 		var element = $("<div></div>").appendTo($("body"));
 		this.pageView = new PageView({model : this, el : element});
+		
+		return this.pageView;
 	}
 });
 
 PageView = Backbone.View.extend({
 	events: {
 		"pageshow" : "onShow",
-		"pagebeforeshow" : "beforeShow"
+		"pagebeforeshow" : "beforeShow",
+		"pagehide" : "onHide",
+		"pagebeforehide" : "beforeHide"
 	},
 	
 	tagName: "div",
@@ -96,28 +100,40 @@ PageView = Backbone.View.extend({
 		this.header.render();
 		this.content.render();
 		this.footer.render();
-		
+	},
+	
+	decorate : function() {
 		this.$el.page();
-		
-		this.content.registerViews();
+		this.trigger('pageDecorated', this);
 	},
 	
 	beforeShow : function() {
 		this.footer.refresh();
+		$.mobile.silentScroll(0);
 		
-		this.trigger('pagebeforeshow');
-		PageService.trigger('pagebeforeshow', [this]);
+		this.trigger('pagebeforeshow', this);
 	},
 	
 	onShow : function() {
 		$.mobile.silentScroll(0);
 		
-		this.trigger('pageshow');
-		PageService.trigger('pageshow', [this]);
+		this.trigger('pageshow', this);
+	},
+	
+	beforehide : function() {
+		this.trigger('pagebeforehide', this);
+	},
+	
+	onHide : function() {
+		this.trigger('pagehide', this);
 	}
 });
 
 var Header = Backbone.View.extend({
+	events : {
+		"taphold" : "onTapHold"
+	},
+	
 	initialize : function() {
 		console.log("Header initializing");
 		this.model = this.options.model;
@@ -126,6 +142,10 @@ var Header = Backbone.View.extend({
 	render : function() {
 		this.$el.addClass('ui-bar ui-bar-' + this.model.get('theme'));
 		this.$el.html(_.template($("#tmpl-header").html(), this.model.toJSON(), {variable : "data"}));
+	},
+	
+	onTapHold : function() {
+//		this.$el.siblings(":jqmData(role='panel')").panel('open');
 	}
 });
 
@@ -144,7 +164,6 @@ Content = Backbone.View.extend({
 	},
 	
 	renderModels : function(parentElement, modelList) {
-		
 		a = modelList;
 		modelList.each(function(model) {
 			model.generateView($("<div></div>").appendTo(parentElement), {page : this.page});
@@ -160,6 +179,7 @@ Content = Backbone.View.extend({
 				FormService.registerView(formView);
 			}
 		});
+		this.page.trigger('viewsRegistered');
 	}
 });
 

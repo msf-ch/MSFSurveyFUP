@@ -4,7 +4,7 @@ FormModel = Backbone.Model.extend({
 		nameReadable : undefined,
 		description : undefined,
 		descriptors : [],
-		global : {validation: {validateOnNextPage: true}},
+		global : {validation: {validateOnNextPage: true}, debug : {debugMode : false}},
 		pages : []
 	},
 	
@@ -42,6 +42,10 @@ FormModel = Backbone.Model.extend({
 		}
 		var category = global[category];
 		category[variable] = value;
+		
+		this.trigger("changeglobal", category, variable, value);
+		this.trigger("changeglobal:" + category, variable, value);
+		this.trigger("changeglobal:" + category + ":" + variable, value);
 	}
 });
 
