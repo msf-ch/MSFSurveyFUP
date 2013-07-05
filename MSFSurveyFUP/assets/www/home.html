@@ -76,7 +76,17 @@
 	    </div>
 	    
 	    <script type="text/javascript">
+			$(document).on('deviceready', function() {
+				$(document).on("backbutton", function() {
+					//disable pressing back for this page
+				});
+				$(window).on("beforeunload", function() {
+					$(document).off("backbutton");
+					$(window).off("beforeunload");
+				});
+			});
 	    	$(function() {
+	    		
 	    		$("#adminCollapsible").hide();
 	    		$("[formButton]:jqmData(role='button')").click(function(event) {
 	    			var formFilePath = $(this).attr('formFilePath');

@@ -11,7 +11,6 @@ ContentModel = Backbone.Model.extend({
 	},
 	
 	initialize : function(initValues, classParams) {
-		this.set('views', new FormItemViewModelList(initValues.views));
 	}
 });
 
@@ -154,7 +153,6 @@ Content = Backbone.View.extend({
 		console.log("Content initializing");
 		this.model = this.options.model;
 		this.page = this.options.page;
-		this.viewModels = new FormItemViewModelList([this.model.get('views')]);
 	},
 	
 	render : function() {
@@ -164,10 +162,9 @@ Content = Backbone.View.extend({
 	},
 	
 	renderModels : function(parentElement, modelList) {
-		a = modelList;
-		modelList.each(function(model) {
-			model.generateView($("<div></div>").appendTo(parentElement), {page : this.page});
-		}, this);
+		for (var i = 0; i < modelList.length; i++) {
+			new FormItemViewModel(modelList[i]).generateView($("<div></div>").appendTo(parentElement), {page : this.page});
+		}
 	},
 	
 	registerViews : function() {

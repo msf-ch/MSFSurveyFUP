@@ -90,6 +90,13 @@ FormSelect = Backbone.View.extend({
 });
 
 $(document).on('deviceready', function() {
+	$(document).on("backbutton", function() {
+		document.location.href = "home.html";
+	});
+	$(window).on("beforeunload", function() {
+		$(document).off("backbutton");
+		$(window).off("beforeunload");
+	});
 	$(document).ready(function() {
 		encounterList = new EncounterList();
 		formSelect = new FormSelect();

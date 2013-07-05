@@ -4,7 +4,7 @@ FormService = _.extend({
 	
 	initialize : function() {
 		FormService.listenTo(FormApp, 'backbutton', FormService.backButtonPressed);
-		FormService.listenTo(FormApp, 'registerViews', FormService.registerViews);
+//		FormService.listenTo(FormApp, 'registerViews', FormService.registerViews);
 	},
 	
 	viewValueChange : function(sourceView) {
@@ -164,8 +164,8 @@ PageService = _.extend({
 	activeIndex : -1,
 	
 	initialize : function() {
-		PageService.listenTo(FormApp, 'renderPages', PageService.renderPages);
-		PageService.listenTo(FormApp, 'decoratePages', PageService.decoratePages);
+//		PageService.listenTo(FormApp, 'renderPages', PageService.renderPages);
+//		PageService.listenTo(FormApp, 'decoratePages', PageService.decoratePages);
 
 		PageService.on('pageshow', PageService.updatePageIndex);
 	},
@@ -189,7 +189,7 @@ PageService = _.extend({
 	
 	decoratePages : function() {
 		for (var i = 0; i < PageService.pageModels.length; i++) {
-			PageService.pageModels.at(i).pageView.$el.page();
+			PageService.pageModels.at(i).pageView.decorate();
 		}
 	},
 	
@@ -277,7 +277,7 @@ PageService = _.extend({
 	},
 	
 	showPopup : function(element, options) {
-		var popup = this.getActivePageView().$el.children(".ui-popup-container").children(":jqmData(role='popup')");
+		var popup = this.getActivePageView().$el.children("div.ui-popup-container").children("div:jqmData(role='popup')");
 		popup.html('').append(element);
 		
 		popup.trigger('create').popup('open', options);
@@ -285,7 +285,7 @@ PageService = _.extend({
 	},
 	
 	hidePopup : function() {
-		var popup = this.getActivePageView().$el.children(".ui-popup-container").children(":jqmData(role='popup')");
+		var popup = this.getActivePageView().$el.children("div.ui-popup-container").children("div:jqmData(role='popup')");
 		
 		popup.popup('close');
 		return popup;

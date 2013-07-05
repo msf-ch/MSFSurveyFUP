@@ -36,6 +36,24 @@
  */	
 FormApp = _.extend({
 	start : function() {
+		FormApp.timing = {};
+		FormApp.listenTo(FormApp, 'all', function(eventName) {
+			if (eventName) {
+				FormApp.timing[eventName] = new Date().getTime();
+				console.log(eventName + 'fired');
+			}
+		});
+		
+		FormApp.listenTo(FormApp, 'enterFormComplete', function() {
+			for (var prop in FormApp.timing) {
+				var time;
+				if(FormApp.timing[prop + "Complete"]) {
+					time = FormApp.timing[prop + "Complete"] - FormApp.timing[prop];
+					console.log(prop + ": " + time);
+				}
+			}
+		});
+		
 		this.on("librariesInitialized", function() {
 			$(document).on("backbutton", function() {
 				FormApp.trigger("backbutton");
@@ -61,7 +79,7 @@ FormApp = _.extend({
 		});
 		
 		this.on("loadDataComplete", function(data) {
-			FormApp.trigger("setFormModelStart")
+			FormApp.trigger("setFormModel")
 			Form = new FormModel(data);
 			FormApp.trigger("setFormModelComplete", Form);
 			
@@ -70,12 +88,15 @@ FormApp = _.extend({
 			FormApp.trigger("setPageModelsComplete");
 			
 			FormApp.trigger("renderPages");
+			PageService.renderPages();
 			FormApp.trigger("renderPagesComplete");
 			
 			FormApp.trigger("decoratePages");
+			PageService.decoratePages();
 			FormApp.trigger("decoratePagesComplete");
 			
 			FormApp.trigger("registerViews");
+			FormService.registerViews();
 			FormApp.trigger("registerViewsComplete");
 			
 			FormApp.trigger("initializeObs");

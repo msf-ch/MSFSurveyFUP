@@ -45,7 +45,6 @@ FormItemViewModel = Backbone.Model.extend({
 		var viewType = undefined;
 		var parent = undefined;
 		if (params) {
-			this.page = params.page;
 			viewType = params.viewType;
 			parent = params.parent;
 		}
@@ -82,11 +81,7 @@ FormItemViewModelList = Backbone.Collection.extend({
 FormItemView = Backbone.View.extend({
 	template : undefined,
 	
-	decorated : false,
-	
 	registered : false,
-	
-	page : undefined,
 	
 	customPropertyDescriptors : {
 	},
@@ -111,7 +106,7 @@ FormItemView = Backbone.View.extend({
 		}
 	},
 	
-	renderDefault : function(processBeforeCreateFunction) {
+	renderDefault : function() {
 		this.$el.attr('id', this.id).attr('formview', this.model.get('viewType')).data('form-item-view', this).addClass('formview');
 		
 		this.$el.html(this.template({model : this.model, view : this}));
@@ -122,7 +117,6 @@ FormItemView = Backbone.View.extend({
 	
 	decorate : function() {
 		this.$el.trigger('create');
-		this.decorated = true;
 	},
 	
 	defaultValueChanged : function() {
@@ -141,34 +135,46 @@ FormItemView = Backbone.View.extend({
 	
 	show : function() {
 		this.$el.removeClass('viewhidden');
+		
+		this.trigger('viewShown', this);
 	},
 	
 	hide : function() {
-		this.setValue(undefined);
-		this.error(false);
-		this.defaultValueChanged();
-		
-		this.$el.find(":form-item").each(function(index, element) {
-			var formView = $(element).itemView();
+		//don't do anything if it's already hidden or if a parent has been hidden
+		if (!this.$el.is(".viewhidden") && this.$el.parents(".viewhidden").length == 0) {
+			this.setValue(undefined);
+			this.error(false);
+			this.defaultValueChanged();
 			
-			formView.setValue(undefined);
-			formView.error(false);
-			formView.defaultValueChanged();
-		});
-		
-		this.$el.addClass('viewhidden');
+			this.$el.addClass('viewhidden');
+			
+			//Hide children
+			if (this.model.get('children')) {
+				var formItems = this.$el.find("div:form-item");
+				var formView;
+				for (var i = 0; i < formItems.length; i++) {
+					formView = $(formItems[i]).itemView();
+					
+					formView.setValue(undefined);
+					formView.error(false);
+					formView.defaultValueChanged();
+				}
+			}
+			
+			this.trigger('viewHidden', this);
+		}
 	},
 	
 	error : function(showError, messages) {
 		this.$el.children(".errorfield").remove();
 		
-		if (!showError) {
-			this.$el.removeClass('viewwitherror');
-		} else {
+		if (showError) {
 			this.$el.addClass('viewwitherror');
 			var errorHtml = _.template($("#tmpl-errormsg").html(),
 					{model : this.model, view : this, errors : messages});
 			this.$el.prepend(errorHtml);
+		} else {
+			this.$el.removeClass('viewwitherror');
 		}
 	},
 	
@@ -199,7 +205,7 @@ TextView = FormItemView.extend({
 	setValue : function(value) {
 		var input = this.$el.find("input");
 		if (input.val() != value) {
-			this.$el.find("input").val(value);
+			input.val(value);
 		}
 	}
 });
@@ -238,7 +244,7 @@ RadioView = TextView.extend({
 	},
 	
 	getValue : function() {
-		var selected = this.$el.find(":checked");
+		var selected = this.$el.find("input:checked");
 		if (selected.length > 0) {
 			val = selected.val();
 			return val;
@@ -285,10 +291,15 @@ CheckGroupView = FormItemView.extend({
 	
 	render : function() {		
 		this.renderDefault();
-		this.model.childrenModels.each(function(childModel, index, list) {
-			var newElement = $("<div></div>").appendTo(this.$el.find('fieldset'));
+		
+		var fieldset = this.$el.find('fieldset');
+		var childModel;
+		for (var i = 0; i < this.model.childrenModels.length; i++) {
+			childModel = this.model.childrenModels.at(i);
+
+			var newElement = $("<div></div>").appendTo(fieldset);
 			childModel.generateView(newElement, {viewType: 'checkbox'});
-		}, this);
+		}
 	}
 });
 
@@ -441,6 +452,9 @@ RankingView = FormItemView.extend({
 	
 	render : function() {
 		this.renderDefault();
+		var rankedTbody = this.$el.find("div[ranked] tbody");
+		var unrankedTbody = this.$el.find("div[unranked] tbody");
+		
 		for (var i = 0; i < this.model.childrenModels.length; i++) {
 			var childModel = this.model.childrenModels.at(i);
 			var conceptId = childModel.get('conceptId');
@@ -448,10 +462,10 @@ RankingView = FormItemView.extend({
 			var formViewElement = $("<div></div>").appendTo(this.$el);
 			var formView = childModel.generateView(formViewElement, {viewType: 'rankingitem', parent : this});
 			
-			var rankedRow = $("<tr></tr>", {"conceptId" : conceptId}).appendTo(this.$el.find("[ranked] tbody"));
+			var rankedRow = $("<tr></tr>", {"conceptId" : conceptId}).appendTo(rankedTbody);
 			rankedRow.html(this.rankedRowTemplate({item : childModel}));
 			
-			var unrankedRow = $("<tr></tr>", {"conceptId" : conceptId}).appendTo(this.$el.find("[unranked] tbody"));
+			var unrankedRow = $("<tr></tr>", {"conceptId" : conceptId}).appendTo(unrankedTbody);
 			unrankedRow.html(this.unrankedRowTemplate({item : childModel}));
 			
 			this.items.add({"conceptId" : conceptId,
@@ -461,16 +475,21 @@ RankingView = FormItemView.extend({
 		}
 		
 		this.refresh();
-		this.$el.find("tr").css('display', '');
+		this.$el.find("tr").css('display', ''); //fixes a bug with JQuery mobile's rendering of tables
 	},
 	
 	refresh : function() {
-		var rankedTbody = this.$el.find("[ranked] tbody");
+		var rankedTable = this.$el.find("[ranked] > table");
+		var unrankedTable = this.$el.find("[unranked] > table");
+		
+		var rankedTbody = rankedTable.children("tbody");
+		var unrankedTbody = unrankedTable.children("tbody");
+		
 		for (var i = this.items.length - 1; i >= 0; i--) {
 			var element = this.items.at(i);
 			if(element.get('isValueSet')) {
 				var rank = this.items.getRank(element.get('conceptId')) + 1;
-				element.get('rankedRow').prependTo(rankedTbody).find(".ranknumber").html(rank);
+				element.get('rankedRow').prependTo(rankedTbody).find("span.ranknumber").html(rank);
 				element.get("rankedRow").removeClass('hidden');
 				element.get("unrankedRow").addClass('hidden');
 			} else {
@@ -479,24 +498,24 @@ RankingView = FormItemView.extend({
 			}
 		}
 		
-		var visibleItems = this.$el.find("tbody tr:not(.hidden)");
+		var visibleItems = rankedTbody.add(unrankedTbody).find("tr:not(.hidden)");
 		visibleItems.removeClass("alt").filter(":odd").addClass("alt");
 		
-		var visibleRankedItems = visibleItems.filter("[ranked] tr");
+		var visibleRankedItems = visibleItems.filter("div[ranked] tr");
 		visibleRankedItems.find("a[action]").removeClass('ui-disabled');
 		visibleRankedItems.first().find("a[action='moveup']").addClass('ui-disabled');
 		visibleRankedItems.last().find("a[action='movedown']").addClass('ui-disabled');
 		
 		if (visibleRankedItems.length > 0) {
-			this.$el.find("[ranked] tfoot").hide();
+			rankedTable.children("tfoot").hide();
 		} else {
-			this.$el.find("[ranked] tfoot").show();
+			rankedTable.children("tfoot").show();
 		}
 		
-		if (this.$el.find("[unranked] tbody tr:not(.hidden)").length > 0) {
-			this.$el.find("[unranked] thead").show();
+		if (unrankedTable.find("tbody tr:not(.hidden)").length > 0) {
+			unrankedTable.children("thead").show();
 		} else {
-			this.$el.find("[unranked] thead").hide();
+			unrankedTable.children("thead").hide();
 		}
 		
 		if(this.registered) {
@@ -611,14 +630,17 @@ GPSAcquireView = FormItemView.extend({
 	
 	acquireGPS : function() {
 		var _this = this;
-		navigator.geolocation.getCurrentPosition(function(position) {
-			_this.acquireSuccess(position);
-			}, function() {
-				_this.acquireFail(error);
-			},
-			{ maximumAge: (5 * 60 * 1000), //OK within 5 minutes
-			timeout: (5 * 60 * 1000), //Give it 5 minutes
-			enableHighAccuracy: true });
+		navigator.geolocation.getCurrentPosition(
+				function(position) {
+					_this.acquireSuccess(position);
+				},
+				function() {
+					_this.acquireFail(error);
+				},
+				{ maximumAge: (5 * 60 * 1000), //OK within 5 minutes
+					timeout: (5 * 60 * 1000), //Give it 5 minutes
+					enableHighAccuracy: true }
+				);
 	},
 	
 	acquireSuccess : function(position) {
@@ -672,9 +694,7 @@ SubmitPageView = FormItemView.extend({
 	template : _.template($("#tmpl-submitpage2").html()),
 	
 	initialize2 : function() {
-		if(this.model.page) {
-			this.listenTo(this.model.page, 'pagebeforeshow', this.renderBeforeShow);
-		}
+		this.listenTo(this.$el.parents("div:form-page").pageView(), 'pagebeforeshow', this.renderBeforeShow);
 	},
 	
 	render : function() {
