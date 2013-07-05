@@ -2016,6 +2016,43 @@
                      "condition":"ratvente == '1'"
                   },
                   "required":false
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"statutenf",
+                  "label":"Statut actuel de l'enfant dans étude",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"suivi normal"
+                     },
+                     {
+                        "value":"2",
+                        "label":"suivi aprés recherche pour absence"
+                     },
+                     {
+                        "value":"3",
+                        "label":"sortie"
+                     },
+                     {
+                        "value":"4",
+                        "label":"autre"
+                     }
+                  ]
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"statutaut",
+                  "label":"Préciser:",
+                  "showIf":{
+                     "conceptIds":[
+                        "statutenf"
+                     ],
+                     "condition":"statutenf == '4'"
+                  },
+                  "bounds":{
+                     "maxLength":25
+                  }
                }
             ]
          }
