@@ -20,8 +20,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.msf.survey.monthly.fup"
     android:hardwareAccelerated="true"
-    android:versionCode="6"
-    android:versionName="1.0.0"
+    android:versionCode="7"
+    android:versionName="1.0.1"
     android:windowSoftInputMode="adjustPan" >
 
     <supports-screens
@@ -49,8 +49,11 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.BROADCAST_STICKY" />
 
+    <uses-sdk
+        android:minSdkVersion="14"
+        android:targetSdkVersion="17" />
+
     <application
-        android:debuggable="true"
         android:hardwareAccelerated="true"
         android:icon="@drawable/icon"
         android:label="@string/app_name" >
@@ -72,9 +75,5 @@
             android:theme="@style/FullscreenTheme" >
         </activity>
     </application>
-
-    <uses-sdk
-        android:minSdkVersion="14"
-        android:targetSdkVersion="17" />
 
 </manifest>
