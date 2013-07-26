@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">MSFSurveyFUP</string>
+    <string name="app_name">MSF Cameroon</string>
     <string name="title_activity_final">Summary</string>
     <string name="dummy_button">Close the app</string>
     <string name="dummy_content">Show the final step here: where to store file etc, or what else that Ludo wants to have in this page!</string>
