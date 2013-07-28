@@ -51,6 +51,7 @@
 		        <a data-role="button" formButton href="#" formFilePath="js/forms/Cameroon_Patient.json" data-icon="plus" data-iconpos="bottom" data-ajax="false" data-inline="true">Cameroon Patient</a>
 	        </div>
 	        <hr>
+       		<a id="testCamera" data-role="button" href="#" data-icon="check" data-iconpos="left" data-ajax="false" >Test Camera</a>
 	        <a data-role="button" href="LoadEncounter.html" data-icon="search" data-iconpos="left" data-ajax="false" data-theme="e">Modifier les données</a>
 	        <hr>
 	        <div data-role="collapsible-set">
@@ -99,6 +100,13 @@
 	    			}, function() {
 	    				alert('Une erreur est survenue pendant la création du rapport');
 	    			}, "ReportService", "exportReport", []);
+	    		});
+
+	    		$("#testCamera").click(function() {
+	    			cordova.exec(function() {
+	    			}, function() {
+	    				alert('Camera not working');
+	    			}, "CameraService", "testCamera", []);
 	    		});
 	    		
 	    		$("#executeTestsButton").click(function() {

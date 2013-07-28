@@ -110,6 +110,10 @@
     <feature name="ReportService">
       <param name="android-package" value="org.msf.survey.monthly.fup.plugin.ReportingPlugin"/>
     </feature>
+    <feature name="CameraService">
+      <param name="android-package" value="org.msf.survey.monthly.fup.plugin.CameraPlugin"/>
+    </feature>
+    
     <!-- Deprecated plugins element. Remove in 3.0 -->
     <plugins>
     </plugins>

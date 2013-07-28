@@ -7,5 +7,7 @@
     <string name="dummy_content">Show the final step here: where to store file etc, or what else that Ludo wants to have in this page!</string>
     
     <color name="white">#FFFFFF</color>
-
+    <string name="album_name">MSF CamTest</string>
+    <string name="cannot">Cannot</string>
+    
 </resources>
