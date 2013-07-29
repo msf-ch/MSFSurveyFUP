@@ -40,6 +40,7 @@ FormApp.once("initViewClassesComplete", function() {
 	ViewService.registerViewClass("submitpage", SubmitPageView, []);
 	ViewService.registerViewClass("gps", GPSAcquireView, []);
 	ViewService.registerViewClass("html", HTMLView, []);
+	ViewService.registerViewClass("photo", PhotoView, []);
 	
 	FormApp.trigger("defaultViewClassesRegistered");
 });

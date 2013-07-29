@@ -613,6 +613,61 @@ RankingItemView = FormItemView.extend({
 	}
 });
 
+PhotoView = FormItemView.extend({
+	template : _.template($("#tmpl-photoview").html()),
+	
+	events : {
+		"click a.takepic" : "takePicture",
+		"click a.removepic" : "removePicture"
+	},
+	
+	render : function() {
+		this.renderDefault();
+		this.$el.find("img.photo").hide();
+	},
+	
+	cameraOptions : { 
+		quality : 100,
+		sourceType : Camera.PictureSourceType.CAMERA,
+		destinationType : Camera.DestinationType.FILE_URI,
+		encodingType : Camera.EncodingType.JPEG,
+		mediaType : Camera.MediaType.PICTURE,
+		correctOrientation : true
+	},
+	
+	takePicture : function() {
+		var $this = this;
+		
+		navigator.camera.getPicture(function(imageURI) {
+			//onSuccess
+			$this.setValue(imageURI);
+			$this.defaultValueChanged();
+		}, function() {
+			//onFail
+			//error dialog?
+		}, this.cameraOptions); 
+	},
+	
+	removePicture : function() {
+		this.setValue("");
+	},
+	
+	getValue : function() {
+		return this.$el.find("input.image-uri").val();
+	},
+	
+	setValue : function(imageURI) {
+		this.$el.find("input.imageuri").val(imageURI);
+		var img = this.$el.find("img.photo").attr("src", imageURI);
+		
+		if (imageURI) {
+			img.show();
+		} else {
+			img.hide();
+		}
+	}
+});
+
 GPSAcquireView = FormItemView.extend({
 	template : _.template($("#tmpl-gpsacquireview").html()),
 	

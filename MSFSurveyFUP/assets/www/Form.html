@@ -88,6 +88,22 @@ var inputId = view.id + '_input';
 </div>
 </script>
 
+
+<script id='tmpl-photoview' type='text/template'>
+<%
+var inputId = view.id + '_input';
+%>
+<div class="photoview" data-role="fieldcontain">
+	<label><%= model.get('label') %></label>
+	<div class="photocontainer">
+		<a class="takepic" href="#" data-role="button" data-theme="b" data-inline="true" data-icon="star">Take picture</a>
+		<a class="removepic" href="#" data-role="button" data-icon="delete" data-iconpos="notext" data-theme="a" data-inline="true">Delete</a>
+		<input class="imageuri" type="text" id="<%= inputId %>" value="" disabled/>
+		<img class="photo" alt="No image assigned" />
+	</div>
+</div>
+</script>
+
 <script id='tmpl-radioview' type='text/template'>
 <%
 var inputId = view.id + '-input';

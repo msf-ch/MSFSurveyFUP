@@ -1,6 +1,8 @@
 @CHARSET "UTF-8";
 
 @media ( min-width: 35em ) {
+	/* Ranking View */
+	
 	.ui-table-reflow.rankingtable {
 		display: table;
 	}
@@ -50,6 +52,37 @@
     
     .rankingview tfoot {
     	text-align: center;
+    }
+    
+    /* Photo View */
+    div.photoview > label {
+        display : inline-block;
+        width : 18%;
+        margin-right : 2%;
+        vertical-align : top;
+    }
+    
+    div.photoview > div.photocontainer {
+        width : 80%;
+        display : inline-block;
+    }
+    
+    div.photoview img.photo {
+    	display : block;
+    	width : 100%;
+    }
+    
+    div.photoview div.ui-input-text {    
+    	width : 100%;
+    	margin-top : 5px;
+    	margin-bottom : 5px;
+    }
+    
+    div.photoview a.takepic {
+    }
+    
+    div.photoview a.removepic {
+    	float: right;
     }
 }
 

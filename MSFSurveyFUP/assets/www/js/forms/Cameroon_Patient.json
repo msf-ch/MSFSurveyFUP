@@ -1,10 +1,20 @@
 {
    "name":"cameroon_patient",
    "nameReadable":"Cameroon Patient",
-   "description":"",
+   "description":"Form to fill for each patient",
    "global":{
 
    },
+   "descriptors":[
+      {
+         "label":"Numéro d'identification",
+         "conceptId":"idnum"
+      },
+      {
+         "label":"L'âge de l'enfant (ans)",
+         "conceptId":"ageans"
+      }
+   ],
    "pages":[
       {
          "header":{
@@ -149,7 +159,7 @@
                   ],
                   "showIf":{
                      "conceptIds":[
-                        ""
+                        "ageans"
                      ],
                      "condition":"parseInt(ageans) == 0"
                   }
@@ -317,7 +327,7 @@
                         "exampaludsimple",
                         "exampaludgrav"
                      ],
-                     "condition":"exampaludsimple == 'true' || exampaludgrav =='true'"
+                     "condition":"exampaludsimple == true || exampaludgrav == true"
                   }
                },
                {

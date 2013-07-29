@@ -1,10 +1,20 @@
 {
    "name":"cameroon_village",
-   "nameReadable":"Cameroon Village",
-   "description":"",
+   "nameReadable":"Cameroon Village Form",
+   "description":"Form to fill at each village",
    "global":{
 
    },
+   "descriptors":[
+      {
+         "label":"Date",
+         "conceptId":"datLieu"
+      },
+      {
+         "label":"Nom du lieu",
+         "conceptId":"nomLieu"
+      }
+   ],
    "pages":[
       {
          "header":{
