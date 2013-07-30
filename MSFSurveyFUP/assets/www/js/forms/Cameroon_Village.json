@@ -28,43 +28,43 @@
             "theme":"c",
             "views":[
                {
-                  "viewType":"number",
-                  "conceptId":"gpslong",
+                  "viewType":"gps",
+                  "conceptId":"gps_long",
                   "label":"Longitude"
                },
                {
-                  "viewType":"number",
-                  "conceptId":"gpslat",
+                  "viewType":"gps",
+                  "conceptId":"gps_lat",
                   "label":"Latitude"
                },
                {
-                  "viewType":"number",
-                  "conceptId":"gpsaccuracy",
+                  "viewType":"gps",
+                  "conceptId":"gps_accuracy",
                   "label":"Accuracy"
                },
                {
-                  "viewType":"number",
-                  "conceptId":"gpstimestamp",
+                  "viewType":"gps",
+                  "conceptId":"gps_timestamp",
                   "label":"Timestamp"
                },
                {
                   "viewType":"text",
-                  "conceptId":"nomLieu",
+                  "conceptId":"nom_lieu",
                   "label":"Nom du lieu:"
                },
                {
                   "viewType":"date",
-                  "conceptId":"datLieu",
+                  "conceptId":"date_ieu",
                   "label":"Date:"
                },
                {
                   "viewType":"text",
-                  "conceptId":"nomEnregis",
+                  "conceptId":"nom_enregis",
                   "label":"Nom de l'enregistreur:"
                },
                {
                   "viewType":"number",
-                  "conceptId":"numEnfant",
+                  "conceptId":"nombre_enfant",
                   "label":"Nombre d'enfants attendus dans le village"
                }
             ]

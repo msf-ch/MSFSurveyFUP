@@ -29,12 +29,12 @@
             "views":[
                {
                   "viewType":"text",
-                  "conceptId":"idnum",
+                  "conceptId":"id_patient",
                   "label":"Numéro d'identification"
                },
                {
                   "viewType":"select",
-                  "conceptId":"ageans",
+                  "conceptId":"age_ans",
                   "label":"Quel est l'âge de l'enfant (ans)?",
                   "options":[
                      {
@@ -105,7 +105,7 @@
                },
                {
                   "viewType":"select",
-                  "conceptId":"agemois",
+                  "conceptId":"age_mois",
                   "label":"Quel est l'âge de l'enfant (mois)?",
                   "options":[
                      {
@@ -159,7 +159,7 @@
                   ],
                   "showIf":{
                      "conceptIds":[
-                        "ageans"
+                        ""
                      ],
                      "condition":"parseInt(ageans) == 0"
                   }
@@ -196,7 +196,7 @@
                },
                {
                   "viewType":"radio",
-                  "conceptId":"scol",
+                  "conceptId":"village_scolarise",
                   "label":"Dans quel village est-il scolarisé?",
                   "options":[
                      {
@@ -217,7 +217,7 @@
                },
                {
                   "viewType":"radio",
-                  "conceptId":"scolnonraison",
+                  "conceptId":"non_scolarise_raison",
                   "label":"Pourquoi n'est-il pas scolarisé?:",
                   "options":[
                      {
@@ -238,7 +238,7 @@
                },
                {
                   "viewType":"text",
-                  "conceptId":"scolnonraisonautre",
+                  "conceptId":"non_scolarise_raison_autre",
                   "label":"Pourquoi pas?",
                   "showIf":{
                      "conceptIds":[
@@ -264,31 +264,31 @@
                {
                   "viewType":"checkboxgroup",
                   "label":"Résultat de l'examen clinique général",
-                  "conceptId":"cliniqueCheckbox",
+                  "conceptId":"clinique_resultat_checkbox",
                   "children":[
                      {
                         "label":"Pas de problème médical",
-                        "conceptId":"pasProblem"
+                        "conceptId":"pas_problem_medical"
                      },
                      {
                         "label":"Paludisme simple",
-                        "conceptId":"exampaludsimp"
+                        "conceptId":"paludisme_simp"
                      },
                      {
                         "label":"Paludisme grave",
-                        "conceptId":"exampaludgrav"
+                        "conceptId":"paludisme_grave"
                      },
                      {
                         "label":"Diarrhée aigue",
-                        "conceptId":"diarrAigue"
+                        "conceptId":"diarrhee_aigue"
                      },
                      {
                         "label":"Infection respiratoire aigue",
-                        "conceptId":"infectAigue"
+                        "conceptId":"infect_resp_aigue"
                      },
                      {
                         "label":"Gale (Scabiose)",
-                        "conceptId":"galeScab"
+                        "conceptId":"gale"
                      },
                      {
                         "label":"Teigne",
@@ -296,7 +296,7 @@
                      },
                      {
                         "label":"Dermatose",
-                        "conceptId":"dermato"
+                        "conceptId":"dermatose"
                      },
                      {
                         "label":"Hernie",
@@ -306,7 +306,7 @@
                },
                {
                   "viewType":"radio",
-                  "conceptId":"testRapide",
+                  "conceptId":"test_rapide",
                   "label":"Le test rapide a-t-il été fait ?",
                   "options":[
                      {
@@ -327,7 +327,7 @@
                         "exampaludsimple",
                         "exampaludgrav"
                      ],
-                     "condition":"exampaludsimple == true || exampaludgrav == true"
+                     "condition":"exampaludsimple == 'true' || exampaludgrav =='true'"
                   }
                },
                {
@@ -348,7 +348,7 @@
                },
                {
                   "viewType":"number",
-                  "conceptId":"tempAxil",
+                  "conceptId":"temp_axil",
                   "label":"Température axillaire"
                }
             ]
@@ -367,7 +367,7 @@
             "views":[
                {
                   "viewType":"radio",
-                  "conceptId":"medicaPrescrit",
+                  "conceptId":"medicament_prescrit",
                   "label":"Un médicament a-t-il été prescrit ?",
                   "options":[
                      {
@@ -379,6 +379,314 @@
                         "label":"Non"
                      }
                   ]
+               },
+               {
+                  "viewType":"number",
+                  "conceptId":"med_paracetamol_100",
+                  "label":"Paracétamol 100mg"
+               },
+               {
+                  "viewType":"number",
+                  "conceptId":"med_paracetamol_500",
+                  "label":"Paracétamol 500mg"
+               },
+               {
+                  "viewType":"number",
+                  "conceptId":"med_sro",
+                  "label":"SRO"
+               },
+               {
+                  "viewType":"number",
+                  "conceptId":"med_zinc",
+                  "label":"Zinc"
+               },
+               {
+                  "viewType":"number",
+                  "conceptId":"med_coartem",
+                  "label":"Coartem"
+               },
+               {
+                  "viewType":"number",
+                  "conceptId":"med_amox",
+                  "label":"Amoxicilline"
+               },
+               {
+                  "viewType":"number",
+                  "conceptId":"med_gris",
+                  "label":"Griséofulvine"
+               },
+               {
+                  "viewType":"number",
+                  "conceptId":"med_gris_pom",
+                  "label":"Griséofulvine pommade"
+               },
+               {
+                  "viewType":"number",
+                  "conceptId":"med_benzoate",
+                  "label":"Benzoate de benzyle"
+               },
+               {
+                  "viewType":"number",
+                  "conceptId":"med_plumpy",
+                  "label":"Plumpy nut"
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"nombre_lesions",
+                  "label":"Quel est le nombre de lésions suspectes de Buruli actif ?",
+                  "options":[
+                     {
+                        "value":"0",
+                        "label":"0"
+                     },
+                     {
+                        "value":"1",
+                        "label":"1"
+                     },
+                     {
+                        "value":"2",
+                        "label":"2"
+                     },
+                     {
+                        "value":"3",
+                        "label":"3"
+                     },
+                     {
+                        "value":"4",
+                        "label":"4"
+                     },
+                     {
+                        "value":"5",
+                        "label":"5"
+                     }
+                  ]
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion_desc",
+                  "label":"Description de la lésion",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Pas de lésion suspecte de Buruli"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Papule"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Plaque"
+                     },
+                     {
+                        "value":"4",
+                        "label":"Nodule"
+                     },
+                     {
+                        "value":"5",
+                        "label":"Oedeme"
+                     },
+                     {
+                        "value":"6",
+                        "label":"Plaie"
+                     },
+                     {
+                        "value":"7",
+                        "label":"Ostéomyélite"
+                     }
+                  ]
+               },
+               {
+                  "viewType":"photo",
+                  "conceptId":"lesion_photo_pres",
+                  "label":"Photo de la lésion (vu de près):"
+               },
+               {
+                  "viewType":"photo",
+                  "conceptId":"blesion_photo_loin",
+                  "label":"Photo de la lésion (vu de loin):"
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion_siege",
+                  "label":"Siège de la lésion",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Membre supérieur"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Membre inférieur"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Abdomen"
+                     },
+                     {
+                        "value":"4",
+                        "label":"Dos"
+                     },
+                     {
+                        "value":"5",
+                        "label":"Fesses et périnée"
+                     },
+                     {
+                        "value":"6",
+                        "label":"Thorax"
+                     },
+                     {
+                        "value":"7",
+                        "label":"Téte et cou"
+                     }
+                  ]
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"first_nom_patient",
+                  "label":"Premier nom du patient (obligatoire) :"
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"second_nom_patient",
+                  "label":"Deuxième nom du patient (obligatoire) :"
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"third_nom_patient",
+                  "label":"Troisième nom du patient"
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"adress_patient",
+                  "label":"Adresse :"
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"tel_patient",
+                  "label":"Numéro de téléphone"
+               },
+               {
+                  "viewType":"date",
+                  "conceptId":"date_rdvz",
+                  "label":"Date de rendez vous pour observations et inclusion à l’hôpital"
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"exist_lesion_buruli",
+                  "label":"Existe il des lésions suspectes de Buruli cicatrisées ?",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Pas de lésoin"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Cicatrisée sans séquelle"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Cicatrisée avec séquelle"
+                     }
+                  ]
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"ou_traite_lesion",
+                  "label":"Oû la lésion a-t-elle traité",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Lésion traité par un tradipraticien"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Lésion traité par le programme Buruli"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Lésion traité par un autre centre de médecine"
+                     },
+                     {
+                        "value":"4",
+                        "label":"Cicatrisation sans soins"
+                     }
+                  ]
+               },
+               {
+                  "viewType":"photo",
+                  "conceptId":"photo_lesion_pres_2",
+                  "label":"Photo de la lésion (vu de près) :"
+               },
+               {
+                  "viewType":"photo",
+                  "conceptId":"photo_lesion_loin_2",
+                  "label":"Photo de la lésion (vu de loin) :"
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion_siege_2",
+                  "label":"Siège de la lésion",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Membre supérieur"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Membre inférieur"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Abdomen"
+                     },
+                     {
+                        "value":"4",
+                        "label":"Dos"
+                     },
+                     {
+                        "value":"5",
+                        "label":"Fesses et périnée"
+                     },
+                     {
+                        "value":"6",
+                        "label":"Thorax"
+                     },
+                     {
+                        "value":"7",
+                        "label":"Téte et cou"
+                     }
+                  ]
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"first_nom_patient_2",
+                  "label":"Premier nom du patient (obligatoire) :"
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"second_nom_patient_2",
+                  "label":"Deuxième nom du patient (obligatoire) :"
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"third_nom_patient_2",
+                  "label":"Troisième nom du patient"
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"adress_patient_2",
+                  "label":"Adresse :"
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"tel_patient_2",
+                  "label":"Numéro de téléphone"
+               },
+               {
+                  "viewType":"date",
+                  "conceptId":"date_rdvz_2",
+                  "label":"Date de rendez vous pour observations et inclusion à l’hôpital avec le physiothérapeute,"
                }
             ]
          }
