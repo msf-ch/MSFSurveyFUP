@@ -19,6 +19,7 @@ FormItemViewModel = Backbone.Model.extend({
 		dateBounds : undefined, //{maxDate : [4-digit year, month, day], minDate : [4-digit year, month, day], dateFormat : "", dateOrder : ""}
 		rankingBounds : undefined, //{minSelections: 0}
 		checkboxgroupBounds : undefined, //{minSelections: 0}
+		calculatedValue : undefined, //{conceptIds : ["conceptId1"], functionCode : "return conceptId1 + ', and detail'"}
 		horizontalMode : false,
 		required : true
 	},
@@ -700,11 +701,39 @@ GPSAcquireView = FormItemView.extend({
 	
 	acquireSuccess : function(position) {
 		this.value = position;
+		
+//		var conceptId = this.model.get("conceptId");
+//		ObsService.setObs(conceptId + "_longitude", position.coords.longitude);
+//		ObsService.setObs(conceptId + "_latitude", position.coords.latitude);
+//		ObsService.setObs(conceptId + "_altitude", position.coords.altitude);
+//		ObsService.setObs(conceptId + "_accuracy", position.coords.accuracy);
+//		ObsService.setObs(conceptId + "_altaccuracy", position.coords.altaccuracy);
+//		ObsService.setObs(conceptId + "_heading", position.coords.heading);
+//		ObsService.setObs(conceptId + "_speed", position.coords.speed);
+//		ObsService.setObs(conceptId + "_timestamp", position.timestamp);
+//		
+//		ObsService.setObs(conceptId + "_errorcode", "");
+//		ObsService.setObs(conceptId + "_errormessage", "");
+		
 		this.defaultValueChanged();
 	},
 	
 	acquireFail : function(error) {
 		this.value = error;
+
+//		var conceptId = this.model.get("conceptId");
+//		ObsService.setObs(conceptId + "_longitude", "");
+//		ObsService.setObs(conceptId + "_latitude", "");
+//		ObsService.setObs(conceptId + "_altitude", "");
+//		ObsService.setObs(conceptId + "_accuracy", "");
+//		ObsService.setObs(conceptId + "_altaccuracy", "");
+//		ObsService.setObs(conceptId + "_heading", "");
+//		ObsService.setObs(conceptId + "_speed", "");
+//		ObsService.setObs(conceptId + "_timestamp", "");
+//		
+//		ObsService.setObs(conceptId + "_errorcode", error.code);
+//		ObsService.setObs(conceptId + "_errormessage", error.message);
+		
 		this.defaultValueChanged();
 	},
 	

@@ -8,11 +8,11 @@
    "descriptors":[
       {
          "label":"Numéro d'identification",
-         "conceptId":"idnum"
+         "conceptId":"id_patient"
       },
       {
          "label":"L'âge de l'enfant (ans)",
-         "conceptId":"ageans"
+         "conceptId":"age_ans"
       }
    ],
    "pages":[
@@ -159,9 +159,9 @@
                   ],
                   "showIf":{
                      "conceptIds":[
-                        ""
+                        "age_ans"
                      ],
-                     "condition":"parseInt(ageans) == 0"
+                     "condition":"parseInt(age_ans) == 0"
                   }
                },
                {
@@ -242,9 +242,9 @@
                   "label":"Pourquoi pas?",
                   "showIf":{
                      "conceptIds":[
-                        "scolnonraison"
+                        "non_scolarise_raison"
                      ],
-                     "condition":"scolnonraison == '2'"
+                     "condition":"non_scolarise_raison == '2'"
                   }
                }
             ]
@@ -327,7 +327,7 @@
                         "exampaludsimple",
                         "exampaludgrav"
                      ],
-                     "condition":"exampaludsimple == 'true' || exampaludgrav =='true'"
+                     "condition":"paludisme_simp == true || paludisme_grave == true"
                   }
                },
                {
@@ -462,8 +462,78 @@
                   ]
                },
                {
+                  "viewType":"text",
+                  "conceptId":"first_nom_patient",
+                  "label":"Premier nom du patient (obligatoire) :",
+                  "showIf":{
+                     "conceptIds":[
+                        "nombre_lesions"
+                     ],
+                     "condition":"parseInt(nombre_lesions) >= 1"
+                  }
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"second_nom_patient",
+                  "label":"Deuxième nom du patient (obligatoire) :",
+                  "showIf":{
+                     "conceptIds":[
+                        "nombre_lesions"
+                     ],
+                     "condition":"parseInt(nombre_lesions) >= 1"
+                  }
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"third_nom_patient",
+                  "label":"Troisième nom du patient",
+                  "required":false,
+                  "showIf":{
+                     "conceptIds":[
+                        "nombre_lesions"
+                     ],
+                     "condition":"parseInt(nombre_lesions) >= 1"
+                  }
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"adress_patient",
+                  "label":"Adresse :",
+                  "required":false,
+                  "showIf":{
+                     "conceptIds":[
+                        "nombre_lesions"
+                     ],
+                     "condition":"parseInt(nombre_lesions) >= 1"
+                  }
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"tel_patient",
+                  "label":"Numéro de téléphone",
+                  "required":false,
+                  "showIf":{
+                     "conceptIds":[
+                        "nombre_lesions"
+                     ],
+                     "condition":"parseInt(nombre_lesions) >= 1"
+                  }
+               },
+               {
+                  "viewType":"date",
+                  "conceptId":"date_rdvz",
+                  "label":"Date de rendez vous pour observations et inclusion à l’hôpital",
+                  "required":false,
+                  "showIf":{
+                     "conceptIds":[
+                        "nombre_lesions"
+                     ],
+                     "condition":"parseInt(nombre_lesions) >= 1"
+                  }
+               },
+               {
                   "viewType":"radio",
-                  "conceptId":"lesion_desc",
+                  "conceptId":"lesion_desc_1",
                   "label":"Description de la lésion",
                   "options":[
                      {
@@ -494,21 +564,39 @@
                         "value":"7",
                         "label":"Ostéomyélite"
                      }
-                  ]
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "nombre_lesions"
+                     ],
+                     "condition":"parseInt(nombre_lesions) >= 1"
+                  }
                },
                {
                   "viewType":"photo",
-                  "conceptId":"lesion_photo_pres",
-                  "label":"Photo de la lésion (vu de près):"
+                  "conceptId":"lesion_photo_pres_1",
+                  "label":"Photo de la lésion (vu de près):",
+                  "showIf":{
+                     "conceptIds":[
+                        "nombre_lesions"
+                     ],
+                     "condition":"parseInt(nombre_lesions) >= 1"
+                  }
                },
                {
                   "viewType":"photo",
-                  "conceptId":"blesion_photo_loin",
-                  "label":"Photo de la lésion (vu de loin):"
+                  "conceptId":"blesion_photo_loin_1",
+                  "label":"Photo de la lésion (vu de loin):",
+                  "showIf":{
+                     "conceptIds":[
+                        "nombre_lesions"
+                     ],
+                     "condition":"parseInt(nombre_lesions) >= 1"
+                  }
                },
                {
                   "viewType":"radio",
-                  "conceptId":"lesion_siege",
+                  "conceptId":"lesion_siege_1",
                   "label":"Siège de la lésion",
                   "options":[
                      {
@@ -539,38 +627,444 @@
                         "value":"7",
                         "label":"Téte et cou"
                      }
-                  ]
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "nombre_lesions"
+                     ],
+                     "condition":"parseInt(nombre_lesions) >= 1"
+                  }
                },
                {
-                  "viewType":"text",
-                  "conceptId":"first_nom_patient",
-                  "label":"Premier nom du patient (obligatoire) :"
+                  "viewType":"radio",
+                  "conceptId":"lesion_desc_2",
+                  "label":"Description de la lésion",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Pas de lésion suspecte de Buruli"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Papule"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Plaque"
+                     },
+                     {
+                        "value":"4",
+                        "label":"Nodule"
+                     },
+                     {
+                        "value":"5",
+                        "label":"Oedeme"
+                     },
+                     {
+                        "value":"6",
+                        "label":"Plaie"
+                     },
+                     {
+                        "value":"7",
+                        "label":"Ostéomyélite"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "nombre_lesions"
+                     ],
+                     "condition":"parseInt(nombre_lesions) >= 2"
+                  }
                },
                {
-                  "viewType":"text",
-                  "conceptId":"second_nom_patient",
-                  "label":"Deuxième nom du patient (obligatoire) :"
+                  "viewType":"photo",
+                  "conceptId":"lesion_photo_pres_2",
+                  "label":"Photo de la lésion (vu de près):",
+                  "showIf":{
+                     "conceptIds":[
+                        "nombre_lesions"
+                     ],
+                     "condition":"parseInt(nombre_lesions) >= 2"
+                  }
                },
                {
-                  "viewType":"text",
-                  "conceptId":"third_nom_patient",
-                  "label":"Troisième nom du patient"
+                  "viewType":"photo",
+                  "conceptId":"blesion_photo_loin_2",
+                  "label":"Photo de la lésion (vu de loin):",
+                  "showIf":{
+                     "conceptIds":[
+                        "nombre_lesions"
+                     ],
+                     "condition":"parseInt(nombre_lesions) >= 2"
+                  }
                },
                {
-                  "viewType":"text",
-                  "conceptId":"adress_patient",
-                  "label":"Adresse :"
+                  "viewType":"radio",
+                  "conceptId":"lesion_siege_2",
+                  "label":"Siège de la lésion",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Membre supérieur"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Membre inférieur"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Abdomen"
+                     },
+                     {
+                        "value":"4",
+                        "label":"Dos"
+                     },
+                     {
+                        "value":"5",
+                        "label":"Fesses et périnée"
+                     },
+                     {
+                        "value":"6",
+                        "label":"Thorax"
+                     },
+                     {
+                        "value":"7",
+                        "label":"Téte et cou"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "nombre_lesions"
+                     ],
+                     "condition":"parseInt(nombre_lesions) >= 2"
+                  }
                },
                {
-                  "viewType":"text",
-                  "conceptId":"tel_patient",
-                  "label":"Numéro de téléphone"
+                  "viewType":"radio",
+                  "conceptId":"lesion_desc_3",
+                  "label":"Description de la lésion",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Pas de lésion suspecte de Buruli"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Papule"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Plaque"
+                     },
+                     {
+                        "value":"4",
+                        "label":"Nodule"
+                     },
+                     {
+                        "value":"5",
+                        "label":"Oedeme"
+                     },
+                     {
+                        "value":"6",
+                        "label":"Plaie"
+                     },
+                     {
+                        "value":"7",
+                        "label":"Ostéomyélite"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "nombre_lesions"
+                     ],
+                     "condition":"parseInt(nombre_lesions) >= 3"
+                  }
                },
                {
-                  "viewType":"date",
-                  "conceptId":"date_rdvz",
-                  "label":"Date de rendez vous pour observations et inclusion à l’hôpital"
+                  "viewType":"photo",
+                  "conceptId":"lesion_photo_pres_3",
+                  "label":"Photo de la lésion (vu de près):",
+                  "showIf":{
+                     "conceptIds":[
+                        "nombre_lesions"
+                     ],
+                     "condition":"parseInt(nombre_lesions) >= 3"
+                  }
                },
+               {
+                  "viewType":"photo",
+                  "conceptId":"blesion_photo_loin_3",
+                  "label":"Photo de la lésion (vu de loin):",
+                  "showIf":{
+                     "conceptIds":[
+                        "nombre_lesions"
+                     ],
+                     "condition":"parseInt(nombre_lesions) >= 3"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion_siege_3",
+                  "label":"Siège de la lésion",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Membre supérieur"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Membre inférieur"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Abdomen"
+                     },
+                     {
+                        "value":"4",
+                        "label":"Dos"
+                     },
+                     {
+                        "value":"5",
+                        "label":"Fesses et périnée"
+                     },
+                     {
+                        "value":"6",
+                        "label":"Thorax"
+                     },
+                     {
+                        "value":"7",
+                        "label":"Téte et cou"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "nombre_lesions"
+                     ],
+                     "condition":"parseInt(nombre_lesions) >= 3"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion_desc_4",
+                  "label":"Description de la lésion",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Pas de lésion suspecte de Buruli"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Papule"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Plaque"
+                     },
+                     {
+                        "value":"4",
+                        "label":"Nodule"
+                     },
+                     {
+                        "value":"5",
+                        "label":"Oedeme"
+                     },
+                     {
+                        "value":"6",
+                        "label":"Plaie"
+                     },
+                     {
+                        "value":"7",
+                        "label":"Ostéomyélite"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "nombre_lesions"
+                     ],
+                     "condition":"parseInt(nombre_lesions) >= 4"
+                  }
+               },
+               {
+                  "viewType":"photo",
+                  "conceptId":"lesion_photo_pres_4",
+                  "label":"Photo de la lésion (vu de près):",
+                  "showIf":{
+                     "conceptIds":[
+                        "nombre_lesions"
+                     ],
+                     "condition":"parseInt(nombre_lesions) >= 4"
+                  }
+               },
+               {
+                  "viewType":"photo",
+                  "conceptId":"blesion_photo_loin_4",
+                  "label":"Photo de la lésion (vu de loin):",
+                  "showIf":{
+                     "conceptIds":[
+                        "nombre_lesions"
+                     ],
+                     "condition":"parseInt(nombre_lesions) >= 4"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion_siege_4",
+                  "label":"Siège de la lésion",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Membre supérieur"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Membre inférieur"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Abdomen"
+                     },
+                     {
+                        "value":"4",
+                        "label":"Dos"
+                     },
+                     {
+                        "value":"5",
+                        "label":"Fesses et périnée"
+                     },
+                     {
+                        "value":"6",
+                        "label":"Thorax"
+                     },
+                     {
+                        "value":"7",
+                        "label":"Téte et cou"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "nombre_lesions"
+                     ],
+                     "condition":"parseInt(nombre_lesions) >= 4"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion_desc_5",
+                  "label":"Description de la lésion",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Pas de lésion suspecte de Buruli"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Papule"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Plaque"
+                     },
+                     {
+                        "value":"4",
+                        "label":"Nodule"
+                     },
+                     {
+                        "value":"5",
+                        "label":"Oedeme"
+                     },
+                     {
+                        "value":"6",
+                        "label":"Plaie"
+                     },
+                     {
+                        "value":"7",
+                        "label":"Ostéomyélite"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "nombre_lesions"
+                     ],
+                     "condition":"parseInt(nombre_lesions) >= 5"
+                  }
+               },
+               {
+                  "viewType":"photo",
+                  "conceptId":"lesion_photo_pres_5",
+                  "label":"Photo de la lésion (vu de près):",
+                  "showIf":{
+                     "conceptIds":[
+                        "nombre_lesions"
+                     ],
+                     "condition":"parseInt(nombre_lesions) >= 5"
+                  }
+               },
+               {
+                  "viewType":"photo",
+                  "conceptId":"blesion_photo_loin_5",
+                  "label":"Photo de la lésion (vu de loin):",
+                  "showIf":{
+                     "conceptIds":[
+                        "nombre_lesions"
+                     ],
+                     "condition":"parseInt(nombre_lesions) >= 5"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion_siege_5",
+                  "label":"Siège de la lésion",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Membre supérieur"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Membre inférieur"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Abdomen"
+                     },
+                     {
+                        "value":"4",
+                        "label":"Dos"
+                     },
+                     {
+                        "value":"5",
+                        "label":"Fesses et périnée"
+                     },
+                     {
+                        "value":"6",
+                        "label":"Thorax"
+                     },
+                     {
+                        "value":"7",
+                        "label":"Téte et cou"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "nombre_lesions"
+                     ],
+                     "condition":"parseInt(nombre_lesions) >= 5"
+                  }
+               }
+            ]
+         }
+      },
+      {
+         "header":{
+            "title":"Lésions suspectes de Buruli cicatrisées ",
+            "theme":"b"
+         },
+         "footer":{
+            "theme":"c"
+         },
+         "content":{
+            "theme":"c",
+            "views":[
                {
                   "viewType":"radio",
                   "conceptId":"exist_lesion_buruli",
@@ -615,13 +1109,53 @@
                },
                {
                   "viewType":"photo",
-                  "conceptId":"photo_lesion_pres_2",
-                  "label":"Photo de la lésion (vu de près) :"
+                  "conceptId":"photo_lesion_pres_2_1",
+                  "label":"Photo de la lésion 1 (vu de près) :"
                },
                {
                   "viewType":"photo",
-                  "conceptId":"photo_lesion_loin_2",
-                  "label":"Photo de la lésion (vu de loin) :"
+                  "conceptId":"photo_lesion_loin_2_1",
+                  "label":"Photo de la lésion 1 (vu de loin) :"
+               },
+               {
+                  "viewType":"photo",
+                  "conceptId":"photo_lesion_pres_2_2",
+                  "label":"Photo de la lésion 2 (vu de près) :"
+               },
+               {
+                  "viewType":"photo",
+                  "conceptId":"photo_lesion_loin_2_2",
+                  "label":"Photo de la lésion 2 (vu de loin) :"
+               },
+               {
+                  "viewType":"photo",
+                  "conceptId":"photo_lesion_pres_2_3",
+                  "label":"Photo de la lésion 3 (vu de près) :"
+               },
+               {
+                  "viewType":"photo",
+                  "conceptId":"photo_lesion_loin_2_3",
+                  "label":"Photo de la lésion 3 (vu de loin) :"
+               },
+               {
+                  "viewType":"photo",
+                  "conceptId":"photo_lesion_pres_2_4",
+                  "label":"Photo de la lésion 4 (vu de près) :"
+               },
+               {
+                  "viewType":"photo",
+                  "conceptId":"photo_lesion_loin_2_4",
+                  "label":"Photo de la lésion 4 (vu de loin) :"
+               },
+               {
+                  "viewType":"photo",
+                  "conceptId":"photo_lesion_loin_2_5",
+                  "label":"Photo de la lésion 5 (vu de loin) :"
+               },
+               {
+                  "viewType":"photo",
+                  "conceptId":"photo_lesion_loin_2_5",
+                  "label":"Photo de la lésion 5 (vu de loin) :"
                },
                {
                   "viewType":"radio",
@@ -671,22 +1205,26 @@
                {
                   "viewType":"text",
                   "conceptId":"third_nom_patient_2",
-                  "label":"Troisième nom du patient"
+                  "label":"Troisième nom du patient",
+                  "required":false
                },
                {
                   "viewType":"text",
                   "conceptId":"adress_patient_2",
-                  "label":"Adresse :"
+                  "label":"Adresse :",
+                  "required":false
                },
                {
                   "viewType":"text",
                   "conceptId":"tel_patient_2",
-                  "label":"Numéro de téléphone"
+                  "label":"Numéro de téléphone",
+                  "required":false
                },
                {
                   "viewType":"date",
                   "conceptId":"date_rdvz_2",
-                  "label":"Date de rendez vous pour observations et inclusion à l’hôpital avec le physiothérapeute,"
+                  "label":"Date de rendez vous pour observations et inclusion à l’hôpital avec le physiothérapeute:",
+                  "required":false
                }
             ]
          }

@@ -29,23 +29,104 @@
             "views":[
                {
                   "viewType":"gps",
+                  "conceptId":"gps",
+                  "label":"GPS"
+               },
+               {
+                  "viewType":"text",
                   "conceptId":"gps_long",
-                  "label":"Longitude"
+                  "label":"Longitude",
+                  "calculatedValue": {
+                     "conceptIds" : [
+                        "gps"
+                     ],
+                     "functionCode" : "if (gps) {var $gps = JSON.parse(gps); if ($gps.coords) {return $gps.coords.longitude;}} return '';"
+                  },
+                  "showIf":{
+                     "conceptIds":[
+                     ],
+                     "condition":"false"
+                  }
                },
                {
-                  "viewType":"gps",
+                  "viewType":"text",
                   "conceptId":"gps_lat",
-                  "label":"Latitude"
+                  "label":"Latitude",
+                  "calculatedValue": {
+                     "conceptIds" : [
+                        "gps"
+                     ],
+                     "functionCode" : "if (gps) {var $gps = JSON.parse(gps); if ($gps.coords) {return $gps.coords.latitude;}} return '';"
+                  },
+                  "showIf":{
+                     "conceptIds":[
+                     ],
+                     "condition":"false"
+                  }
                },
                {
-                  "viewType":"gps",
+                  "viewType":"text",
                   "conceptId":"gps_accuracy",
-                  "label":"Accuracy"
+                  "label":"Accuracy",
+                  "calculatedValue": {
+                     "conceptIds" : [
+                        "gps"
+                     ],
+                     "functionCode" : "if (gps) {var $gps = JSON.parse(gps); if ($gps.coords) {return $gps.coords.accuracy;}} return '';"
+                  },
+                  "showIf":{
+                     "conceptIds":[
+                     ],
+                     "condition":"false"
+                  }
                },
                {
-                  "viewType":"gps",
+                  "viewType":"text",
+                  "conceptId":"gps_altitude",
+                  "label":"Altitude",
+                  "calculatedValue": {
+                     "conceptIds" : [
+                        "gps"
+                     ],
+                     "functionCode" : "if (gps) {var $gps = JSON.parse(gps); if ($gps.coords) {return $gps.coords.altitude;}} return '';"
+                  },
+                  "showIf":{
+                     "conceptIds":[
+                     ],
+                     "condition":"false"
+                  }
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"gps_altaccuracy",
+                  "label":"Altitude accuracy",
+                  "calculatedValue": {
+                     "conceptIds" : [
+                        "gps"
+                     ],
+                     "functionCode" : "if (gps) {var $gps = JSON.parse(gps); if ($gps.coords) {return $gps.coords.altitudeAccuracy;}} return '';"
+                  },
+                  "showIf":{
+                     "conceptIds":[
+                     ],
+                     "condition":"false"
+                  }
+               },
+               {
+                  "viewType":"text",
                   "conceptId":"gps_timestamp",
-                  "label":"Timestamp"
+                  "label":"Timestamp",
+                  "calculatedValue": {
+                     "conceptIds" : [
+                        "gps"
+                     ],
+                     "functionCode" : "if (gps) {var $gps = JSON.parse(gps); if ($gps.coords) {return $gps.timestamp;}} return '';"
+                  },
+                  "showIf":{
+                     "conceptIds":[
+                     ],
+                     "condition":"false"
+                  }
                },
                {
                   "viewType":"text",

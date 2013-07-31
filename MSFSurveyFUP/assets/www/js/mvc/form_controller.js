@@ -69,6 +69,19 @@ FormService = _.extend({
 				}
 			});
 		}
+		
+		var calculatedValueSerialized = view.model.get('calculatedValue');
+		if (calculatedValueSerialized && calculatedValueSerialized.functionCode) {
+			view.listenTo(obsList, "initialize changeObsValue:" + calculatedValueSerialized.conceptIds.join(" changeObsValue:"), function(model, value, options) {
+				console.log('Point 1 reached, value: ' + value);
+				var calculatedValue = EvaluationService.executeCalculatedValueFunction(calculatedValueSerialized);
+				console.log('Point 2 reached, calculated value: ' + calculatedValue);
+				if (calculatedValue != undefined) {
+					var conceptId = view.model.get('conceptId');
+					ObsService.setObs(conceptId, calculatedValue);
+				}
+			});
+		}
 	},
 	
 	submit : function(complete) {
@@ -324,7 +337,7 @@ EvaluationService = _.extend({
 				conceptIdValues[i] = ObsService.getObs(obsEvalSerialized.conceptIds[i]);
 			}
 			
-			if (!obsEvalSerialized.compiledFunction) {
+			if (!obsEvalSerialized.compiledCondition) {
 				//compile
 				EvaluationService.compileObsCondition(obsEvalSerialized);
 			}
@@ -353,12 +366,31 @@ EvaluationService = _.extend({
 				}
 			}
 			
-			if (!viewEvalSerialized.compiledFunction) {
+			if (!viewEvalSerialized.compiledCondition) {
 				//compile
 				EvaluationService.compileViewCondition(viewEvalSerialized, view);
 			}
 			
 			return viewEvalSerialized.compiledCondition.apply(viewEvalSerialized, paramValues);
+		},
+		compileCalculatedValueFunction : function(calculatedValueFunction) {
+			var func = new Function(calculatedValueFunction.conceptIds, calculatedValueFunction.functionCode);
+			calculatedValueFunction.compiledFunction = func;
+			
+			return func;
+		},
+		executeCalculatedValueFunction : function(calculatedValueFunction) {	
+			var conceptIdValues = [];
+			for (var i = 0; i < calculatedValueFunction.conceptIds.length; i++) {
+				conceptIdValues[i] = ObsService.getObs(calculatedValueFunction.conceptIds[i]);
+			}
+			
+			if (!calculatedValueFunction.compiledFunction) {
+				//compile
+				EvaluationService.compileCalculatedValueFunction(calculatedValueFunction);
+			}
+			
+			return calculatedValueFunction.compiledFunction.apply(calculatedValueFunction, conceptIdValues);
 		},
 }, Backbone.Events);
 FormApp.registerService('EvaluationService', EvaluationService);
