@@ -1190,7 +1190,7 @@
       },
       {
          "header":{
-            "title":"LÉSIONS SUSPECTES DE BURULI CICATRISÉES",
+            "title":"Page 5 : LÉSIONS SUSPECTES DE BURULI CICATRISÉES",
             "theme":"b"
          },
          "footer":{
@@ -1274,7 +1274,7 @@
                },
                {
                   "viewType":"text",
-                  "conceptId":"first_nom_patient",
+                  "conceptId":"first_nom_patient_cicatrisees",
                   "label":"Premier nom du patient (obligatoire) :",
                   "showIf":{
                      "conceptIds":[
@@ -1285,7 +1285,7 @@
                },
                {
                   "viewType":"text",
-                  "conceptId":"second_nom_patient",
+                  "conceptId":"second_nom_patient_cicatrisees",
                   "label":"Deuxième nom du patient (obligatoire) :",
                   "showIf":{
                      "conceptIds":[
@@ -1296,7 +1296,7 @@
                },
                {
                   "viewType":"text",
-                  "conceptId":"third_nom_patient",
+                  "conceptId":"third_nom_patient_cicatrisees",
                   "label":"Troisième nom du patient",
                   "required":false,
                   "showIf":{
@@ -1308,7 +1308,7 @@
                },
                {
                   "viewType":"text",
-                  "conceptId":"adress_patient",
+                  "conceptId":"adress_patient_cicatrisees",
                   "label":"Adresse :",
                   "required":false,
                   "showIf":{
@@ -1320,7 +1320,7 @@
                },
                {
                   "viewType":"text",
-                  "conceptId":"tel_patient",
+                  "conceptId":"tel_patient_cicatrisees",
                   "label":"Numéro de téléphone",
                   "required":false,
                   "showIf":{
@@ -1332,7 +1332,7 @@
                },
                {
                   "viewType":"date",
-                  "conceptId":"date_rdvz",
+                  "conceptId":"date_rdvz_cicatrisees",
                   "label":"Date de rendez vous pour observations et inclusion à l’hôpital",
                   "required":false,
                   "showIf":{
@@ -1347,36 +1347,36 @@
                   "htmlContent":"<hr><h2><u>Lesion 1</u></h2>",
                   "showIf":{
                      "conceptIds":[
-                        "nombre_lesions"
+                        "nombre_lesions_cicatrisees"
                      ],
                      "condition":"parseInt(nombre_lesions_cicatrisees) >= 1"
                   }
                },
                {
                   "viewType":"photo",
-                  "conceptId":"photo_lesion_pres_2_1",
+                  "conceptId":"photo_lesion_pres_cicatrisees_1",
                   "label":"Photo de la lésion 1 (vu de près) :",
                   "showIf":{
                      "conceptIds":[
-                        "nombre_lesions"
+                        "nombre_lesions_cicatrisees"
                      ],
                      "condition":"parseInt(nombre_lesions_cicatrisees) >= 1"
                   }
                },
                {
                   "viewType":"photo",
-                  "conceptId":"photo_lesion_loin_2_1",
+                  "conceptId":"photo_lesion_loin_cicatrisees_1",
                   "label":"Photo de la lésion 1 (vu de loin) :",
                   "showIf":{
                      "conceptIds":[
-                        "nombre_lesions"
+                        "nombre_lesions_cicatrisees"
                      ],
                      "condition":"parseInt(nombre_lesions_cicatrisees) >= 1"
                   }
                },
                {
                   "viewType":"radio",
-                  "conceptId":"lesion_siege_2_1",
+                  "conceptId":"lesion_siege_cicatrisees_1",
                   "label":"Siège de la lésion",
                   "options":[
                      {
@@ -1410,7 +1410,7 @@
                   ],
                   "showIf":{
                      "conceptIds":[
-                        "nombre_lesions"
+                        "nombre_lesions_cicatrisees"
                      ],
                      "condition":"parseInt(nombre_lesions_cicatrisees) >= 1"
                   }
@@ -1420,36 +1420,36 @@
                   "htmlContent":"<hr><h2><u>Lesion 2</u></h2>",
                   "showIf":{
                      "conceptIds":[
-                        "nombre_lesions"
+                        "nombre_lesions_cicatrisees"
                      ],
                      "condition":"parseInt(nombre_lesions_cicatrisees) >= 2"
                   }
                },
                {
                   "viewType":"photo",
-                  "conceptId":"photo_lesion_pres_2_2",
+                  "conceptId":"photo_lesion_pres_cicatrisees_2",
                   "label":"Photo de la lésion 2 (vu de près) :",
                   "showIf":{
                      "conceptIds":[
-                        "nombre_lesions"
+                        "nombre_lesions_cicatrisees"
                      ],
                      "condition":"parseInt(nombre_lesions_cicatrisees) >= 2"
                   }
                },
                {
                   "viewType":"photo",
-                  "conceptId":"photo_lesion_loin_2_2",
+                  "conceptId":"photo_lesion_loin_cicatrisees_2",
                   "label":"Photo de la lésion 2 (vu de loin) :",
                   "showIf":{
                      "conceptIds":[
-                        "nombre_lesions"
+                        "nombre_lesions_cicatrisees"
                      ],
                      "condition":"parseInt(nombre_lesions_cicatrisees) >= 2"
                   }
                },
                {
                   "viewType":"radio",
-                  "conceptId":"lesion_siege_2_2",
+                  "conceptId":"lesion_siege_cicatrisees_cicatrisees_2",
                   "label":"Siège de la lésion",
                   "options":[
                      {
@@ -1483,7 +1483,7 @@
                   ],
                   "showIf":{
                      "conceptIds":[
-                        "nombre_lesions"
+                        "nombre_lesions_cicatrisees"
                      ],
                      "condition":"parseInt(nombre_lesions_cicatrisees) >= 2"
                   }
@@ -1493,36 +1493,36 @@
                   "htmlContent":"<hr><h2><u>Lesion 3</u></h2>",
                   "showIf":{
                      "conceptIds":[
-                        "nombre_lesions"
+                        "nombre_lesions_cicatrisees"
                      ],
                      "condition":"parseInt(nombre_lesions_cicatrisees) >= 3"
                   }
                },
                {
                   "viewType":"photo",
-                  "conceptId":"photo_lesion_pres_2_3",
+                  "conceptId":"photo_lesion_pres_cicatrisees_3",
                   "label":"Photo de la lésion 3 (vu de près) :",
                   "showIf":{
                      "conceptIds":[
-                        "nombre_lesions"
+                        "nombre_lesions_cicatrisees"
                      ],
                      "condition":"parseInt(nombre_lesions_cicatrisees) >= 3"
                   }
                },
                {
                   "viewType":"photo",
-                  "conceptId":"photo_lesion_loin_2_3",
+                  "conceptId":"photo_lesion_loin_cicatrisees_3",
                   "label":"Photo de la lésion 3 (vu de loin) :",
                   "showIf":{
                      "conceptIds":[
-                        "nombre_lesions"
+                        "nombre_lesions_cicatrisees"
                      ],
                      "condition":"parseInt(nombre_lesions_cicatrisees) >= 3"
                   }
                },
                {
                   "viewType":"radio",
-                  "conceptId":"lesion_siege_3",
+                  "conceptId":"lesion_siege_cicatrisees_cicatrisees_3",
                   "label":"Siège de la lésion",
                   "options":[
                      {
@@ -1556,7 +1556,7 @@
                   ],
                   "showIf":{
                      "conceptIds":[
-                        "nombre_lesions"
+                        "nombre_lesions_cicatrisees"
                      ],
                      "condition":"parseInt(nombre_lesions_cicatrisees) >= 3"
                   }
@@ -1566,36 +1566,36 @@
                   "htmlContent":"<hr><h2><u>Lesion 4</u></h2>",
                   "showIf":{
                      "conceptIds":[
-                        "nombre_lesions"
+                        "nombre_lesions_cicatrisees"
                      ],
                      "condition":"parseInt(nombre_lesions_cicatrisees) >= 4"
                   }
                },
                {
                   "viewType":"photo",
-                  "conceptId":"photo_lesion_pres_2_4",
+                  "conceptId":"photo_lesion_pres_cicatrisees_4",
                   "label":"Photo de la lésion 4 (vu de près) :",
                   "showIf":{
                      "conceptIds":[
-                        "nombre_lesions"
+                        "nombre_lesions_cicatrisees"
                      ],
                      "condition":"parseInt(nombre_lesions_cicatrisees) >= 4"
                   }
                },
                {
                   "viewType":"photo",
-                  "conceptId":"photo_lesion_loin_2_4",
+                  "conceptId":"photo_lesion_loin_cicatrisees_4",
                   "label":"Photo de la lésion 4 (vu de loin) :",
                   "showIf":{
                      "conceptIds":[
-                        "nombre_lesions"
+                        "nombre_lesions_cicatrisees"
                      ],
                      "condition":"parseInt(nombre_lesions_cicatrisees) >= 4"
                   }
                },
                {
                   "viewType":"radio",
-                  "conceptId":"lesion_siege_4_4",
+                  "conceptId":"lesion_siege_cicatrisees_4",
                   "label":"Siège de la lésion",
                   "options":[
                      {
@@ -1629,7 +1629,7 @@
                   ],
                   "showIf":{
                      "conceptIds":[
-                        "nombre_lesions"
+                        "nombre_lesions_cicatrisees"
                      ],
                      "condition":"parseInt(nombre_lesions_cicatrisees) >= 4"
                   }
@@ -1639,36 +1639,36 @@
                   "htmlContent":"<hr><h2><u>Lesion 5</u></h2>",
                   "showIf":{
                      "conceptIds":[
-                        "nombre_lesions"
+                        "nombre_lesions_cicatrisees"
                      ],
                      "condition":"parseInt(nombre_lesions_cicatrisees) >= 5"
                   }
                },
                {
                   "viewType":"photo",
-                  "conceptId":"photo_lesion_loin_2_5",
+                  "conceptId":"photo_lesion_loin_cicatrisees_5",
                   "label":"Photo de la lésion 5 (vu de loin) :",
                   "showIf":{
                      "conceptIds":[
-                        "nombre_lesions"
+                        "nombre_lesions_cicatrisees"
                      ],
                      "condition":"parseInt(nombre_lesions_cicatrisees) >= 5"
                   }
                },
                {
                   "viewType":"photo",
-                  "conceptId":"photo_lesion_loin_2_5",
+                  "conceptId":"photo_lesion_loin_cicatrisees_5",
                   "label":"Photo de la lésion 5 (vu de loin) :",
                   "showIf":{
                      "conceptIds":[
-                        "nombre_lesions"
+                        "nombre_lesions_cicatrisees"
                      ],
                      "condition":"parseInt(nombre_lesions_cicatrisees) >= 5"
                   }
                },
                {
                   "viewType":"radio",
-                  "conceptId":"lesion_siege_2_5",
+                  "conceptId":"lesion_siege_cicatrisees_5",
                   "label":"Siège de la lésion",
                   "options":[
                      {
@@ -1702,7 +1702,7 @@
                   ],
                   "showIf":{
                      "conceptIds":[
-                        "nombre_lesions"
+                        "nombre_lesions_cicatrisees"
                      ],
                      "condition":"parseInt(nombre_lesions_cicatrisees) >= 5"
                   }
