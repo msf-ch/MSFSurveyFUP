@@ -30,7 +30,8 @@
                {
                   "viewType":"text",
                   "conceptId":"id_patient",
-                  "label":"Numéro d'identification"
+                  "label":"Numéro d'identification",
+                  "required":false
                },
                {
                   "viewType":"select",
