@@ -324,8 +324,8 @@
                   ],
                   "showIf":{
                      "conceptIds":[
-                        "exampaludsimple",
-                        "exampaludgrav"
+                        "paludisme_simp",
+                        "paludisme_grave"
                      ],
                      "condition":"paludisme_simp == true || paludisme_grave == true"
                   }
@@ -356,7 +356,7 @@
       },
       {
          "header":{
-            "title":"Page 3 : L'EXAMEN",
+            "title":"Page 3 : MEDICAMENT",
             "theme":"b"
          },
          "footer":{
@@ -383,53 +383,137 @@
                {
                   "viewType":"number",
                   "conceptId":"med_paracetamol_100",
-                  "label":"Paracétamol 100mg"
+                  "label":"Paracétamol 100mg",
+                  "required":false,
+                  "showIf":{
+                     "conceptIds":[
+                        "medicament_prescrit"
+                     ],
+                     "condition":"medicament_prescrit == '1'"
+                  }
                },
                {
                   "viewType":"number",
                   "conceptId":"med_paracetamol_500",
-                  "label":"Paracétamol 500mg"
+                  "label":"Paracétamol 500mg",
+                  "required":false,
+                  "showIf":{
+                     "conceptIds":[
+                        "medicament_prescrit"
+                     ],
+                     "condition":"medicament_prescrit == '1'"
+                  }
                },
                {
                   "viewType":"number",
                   "conceptId":"med_sro",
-                  "label":"SRO"
+                  "label":"SRO",
+                  "required":false,
+                  "showIf":{
+                     "conceptIds":[
+                        "medicament_prescrit"
+                     ],
+                     "condition":"medicament_prescrit == '1'"
+                  }
                },
                {
                   "viewType":"number",
                   "conceptId":"med_zinc",
-                  "label":"Zinc"
+                  "label":"Zinc",
+                  "required":false,
+                  "showIf":{
+                     "conceptIds":[
+                        "medicament_prescrit"
+                     ],
+                     "condition":"medicament_prescrit == '1'"
+                  }
                },
                {
                   "viewType":"number",
                   "conceptId":"med_coartem",
-                  "label":"Coartem"
+                  "label":"Coartem",
+                  "required":false,
+                  "showIf":{
+                     "conceptIds":[
+                        "medicament_prescrit"
+                     ],
+                     "condition":"medicament_prescrit == '1'"
+                  }
                },
                {
                   "viewType":"number",
                   "conceptId":"med_amox",
-                  "label":"Amoxicilline"
+                  "label":"Amoxicilline",
+                  "required":false,
+                  "showIf":{
+                     "conceptIds":[
+                        "medicament_prescrit"
+                     ],
+                     "condition":"medicament_prescrit == '1'"
+                  }
                },
                {
                   "viewType":"number",
                   "conceptId":"med_gris",
-                  "label":"Griséofulvine"
+                  "label":"Griséofulvine",
+                  "required":false,
+                  "showIf":{
+                     "conceptIds":[
+                        "medicament_prescrit"
+                     ],
+                     "condition":"medicament_prescrit == '1'"
+                  }
                },
                {
                   "viewType":"number",
                   "conceptId":"med_gris_pom",
-                  "label":"Griséofulvine pommade"
+                  "label":"Griséofulvine pommade",
+                  "required":false,
+                  "showIf":{
+                     "conceptIds":[
+                        "medicament_prescrit"
+                     ],
+                     "condition":"medicament_prescrit == '1'"
+                  }
                },
                {
                   "viewType":"number",
                   "conceptId":"med_benzoate",
-                  "label":"Benzoate de benzyle"
+                  "label":"Benzoate de benzyle",
+                  "required":false,
+                  "showIf":{
+                     "conceptIds":[
+                        "medicament_prescrit"
+                     ],
+                     "condition":"medicament_prescrit == '1'"
+                  }
                },
                {
                   "viewType":"number",
                   "conceptId":"med_plumpy",
-                  "label":"Plumpy nut"
-               },
+                  "label":"Plumpy nut",
+                  "required":false,
+                  "showIf":{
+                     "conceptIds":[
+                        "medicament_prescrit"
+                     ],
+                     "condition":"medicament_prescrit == '1'"
+                  }
+               }
+            ]
+         }
+      },
+      {
+         "header":{
+            "title":"Page 4 : LÉSIONS SUSPECTES DE BURULI ACTIF",
+            "theme":"b"
+         },
+         "footer":{
+            "theme":"c"
+         },
+         "content":{
+            "theme":"c",
+            "views":[
                {
                   "viewType":"radio",
                   "conceptId":"nombre_lesions",
@@ -524,6 +608,16 @@
                   "conceptId":"date_rdvz",
                   "label":"Date de rendez vous pour observations et inclusion à l’hôpital",
                   "required":false,
+                  "showIf":{
+                     "conceptIds":[
+                        "nombre_lesions"
+                     ],
+                     "condition":"parseInt(nombre_lesions) >= 1"
+                  }
+               },
+               {
+                  "viewType":"html",
+                  "htmlContent":"<hr><h2><u>Lesion 1</u></h2>",
                   "showIf":{
                      "conceptIds":[
                         "nombre_lesions"
@@ -636,6 +730,16 @@
                   }
                },
                {
+                  "viewType":"html",
+                  "htmlContent":"<hr><h2><u>Lesion 2</u></h2>",
+                  "showIf":{
+                     "conceptIds":[
+                        "nombre_lesions"
+                     ],
+                     "condition":"parseInt(nombre_lesions) >= 2"
+                  }
+               },
+               {
                   "viewType":"radio",
                   "conceptId":"lesion_desc_2",
                   "label":"Description de la lésion",
@@ -737,6 +841,16 @@
                         "nombre_lesions"
                      ],
                      "condition":"parseInt(nombre_lesions) >= 2"
+                  }
+               },
+               {
+                  "viewType":"html",
+                  "htmlContent":"<hr><h2><u>Lesion 3</u></h2>",
+                  "showIf":{
+                     "conceptIds":[
+                        "nombre_lesions"
+                     ],
+                     "condition":"parseInt(nombre_lesions) >= 3"
                   }
                },
                {
@@ -844,6 +958,16 @@
                   }
                },
                {
+                  "viewType":"html",
+                  "htmlContent":"<hr><h2><u>Lesion 4</u></h2>",
+                  "showIf":{
+                     "conceptIds":[
+                        "nombre_lesions"
+                     ],
+                     "condition":"parseInt(nombre_lesions) >= 4"
+                  }
+               },
+               {
                   "viewType":"radio",
                   "conceptId":"lesion_desc_4",
                   "label":"Description de la lésion",
@@ -945,6 +1069,16 @@
                         "nombre_lesions"
                      ],
                      "condition":"parseInt(nombre_lesions) >= 4"
+                  }
+               },
+               {
+                  "viewType":"html",
+                  "htmlContent":"<hr><h2><u>Lesion 5</u></h2>",
+                  "showIf":{
+                     "conceptIds":[
+                        "nombre_lesions"
+                     ],
+                     "condition":"parseInt(nombre_lesions) >= 5"
                   }
                },
                {
@@ -1056,7 +1190,7 @@
       },
       {
          "header":{
-            "title":"Lésions suspectes de Buruli cicatrisées ",
+            "title":"LÉSIONS SUSPECTES DE BURULI CICATRISÉES",
             "theme":"b"
          },
          "footer":{
@@ -1068,7 +1202,7 @@
                {
                   "viewType":"radio",
                   "conceptId":"exist_lesion_buruli",
-                  "label":"Existe il des lésions suspectes de Buruli cicatrisées ?",
+                  "label":"Existe il des lésions suspectes de Buruli cicatrisées?",
                   "options":[
                      {
                         "value":"1",
@@ -1108,58 +1242,141 @@
                   ]
                },
                {
+                  "viewType":"radio",
+                  "conceptId":"nombre_lesions_cicatrisees",
+                  "label":"Quel est le nombre de lésions suspectes de Buruli actif ?",
+                  "options":[
+                     {
+                        "value":"0",
+                        "label":"0"
+                     },
+                     {
+                        "value":"1",
+                        "label":"1"
+                     },
+                     {
+                        "value":"2",
+                        "label":"2"
+                     },
+                     {
+                        "value":"3",
+                        "label":"3"
+                     },
+                     {
+                        "value":"4",
+                        "label":"4"
+                     },
+                     {
+                        "value":"5",
+                        "label":"5"
+                     }
+                  ]
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"first_nom_patient",
+                  "label":"Premier nom du patient (obligatoire) :",
+                  "showIf":{
+                     "conceptIds":[
+                        "nombre_lesions_cicatrisees"
+                     ],
+                     "condition":"parseInt(nombre_lesions_cicatrisees) >= 1"
+                  }
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"second_nom_patient",
+                  "label":"Deuxième nom du patient (obligatoire) :",
+                  "showIf":{
+                     "conceptIds":[
+                        "nombre_lesions_cicatrisees"
+                     ],
+                     "condition":"parseInt(nombre_lesions_cicatrisees) >= 1"
+                  }
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"third_nom_patient",
+                  "label":"Troisième nom du patient",
+                  "required":false,
+                  "showIf":{
+                     "conceptIds":[
+                        "nombre_lesions_cicatrisees"
+                     ],
+                     "condition":"parseInt(nombre_lesions_cicatrisees) >= 1"
+                  }
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"adress_patient",
+                  "label":"Adresse :",
+                  "required":false,
+                  "showIf":{
+                     "conceptIds":[
+                        "nombre_lesions_cicatrisees"
+                     ],
+                     "condition":"parseInt(nombre_lesions_cicatrisees) >= 1"
+                  }
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"tel_patient",
+                  "label":"Numéro de téléphone",
+                  "required":false,
+                  "showIf":{
+                     "conceptIds":[
+                        "nombre_lesions_cicatrisees"
+                     ],
+                     "condition":"parseInt(nombre_lesions_cicatrisees) >= 1"
+                  }
+               },
+               {
+                  "viewType":"date",
+                  "conceptId":"date_rdvz",
+                  "label":"Date de rendez vous pour observations et inclusion à l’hôpital",
+                  "required":false,
+                  "showIf":{
+                     "conceptIds":[
+                        "nombre_lesions_cicatrisees"
+                     ],
+                     "condition":"parseInt(nombre_lesions_cicatrisees) >= 1"
+                  }
+               },
+               {
+                  "viewType":"html",
+                  "htmlContent":"<hr><h2><u>Lesion 1</u></h2>",
+                  "showIf":{
+                     "conceptIds":[
+                        "nombre_lesions"
+                     ],
+                     "condition":"parseInt(nombre_lesions_cicatrisees) >= 1"
+                  }
+               },
+               {
                   "viewType":"photo",
                   "conceptId":"photo_lesion_pres_2_1",
-                  "label":"Photo de la lésion 1 (vu de près) :"
+                  "label":"Photo de la lésion 1 (vu de près) :",
+                  "showIf":{
+                     "conceptIds":[
+                        "nombre_lesions"
+                     ],
+                     "condition":"parseInt(nombre_lesions_cicatrisees) >= 1"
+                  }
                },
                {
                   "viewType":"photo",
                   "conceptId":"photo_lesion_loin_2_1",
-                  "label":"Photo de la lésion 1 (vu de loin) :"
-               },
-               {
-                  "viewType":"photo",
-                  "conceptId":"photo_lesion_pres_2_2",
-                  "label":"Photo de la lésion 2 (vu de près) :"
-               },
-               {
-                  "viewType":"photo",
-                  "conceptId":"photo_lesion_loin_2_2",
-                  "label":"Photo de la lésion 2 (vu de loin) :"
-               },
-               {
-                  "viewType":"photo",
-                  "conceptId":"photo_lesion_pres_2_3",
-                  "label":"Photo de la lésion 3 (vu de près) :"
-               },
-               {
-                  "viewType":"photo",
-                  "conceptId":"photo_lesion_loin_2_3",
-                  "label":"Photo de la lésion 3 (vu de loin) :"
-               },
-               {
-                  "viewType":"photo",
-                  "conceptId":"photo_lesion_pres_2_4",
-                  "label":"Photo de la lésion 4 (vu de près) :"
-               },
-               {
-                  "viewType":"photo",
-                  "conceptId":"photo_lesion_loin_2_4",
-                  "label":"Photo de la lésion 4 (vu de loin) :"
-               },
-               {
-                  "viewType":"photo",
-                  "conceptId":"photo_lesion_loin_2_5",
-                  "label":"Photo de la lésion 5 (vu de loin) :"
-               },
-               {
-                  "viewType":"photo",
-                  "conceptId":"photo_lesion_loin_2_5",
-                  "label":"Photo de la lésion 5 (vu de loin) :"
+                  "label":"Photo de la lésion 1 (vu de loin) :",
+                  "showIf":{
+                     "conceptIds":[
+                        "nombre_lesions"
+                     ],
+                     "condition":"parseInt(nombre_lesions_cicatrisees) >= 1"
+                  }
                },
                {
                   "viewType":"radio",
-                  "conceptId":"lesion_siege_2",
+                  "conceptId":"lesion_siege_2_1",
                   "label":"Siège de la lésion",
                   "options":[
                      {
@@ -1190,41 +1407,305 @@
                         "value":"7",
                         "label":"Téte et cou"
                      }
-                  ]
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "nombre_lesions"
+                     ],
+                     "condition":"parseInt(nombre_lesions_cicatrisees) >= 1"
+                  }
                },
                {
-                  "viewType":"text",
-                  "conceptId":"first_nom_patient_2",
-                  "label":"Premier nom du patient (obligatoire) :"
+                  "viewType":"html",
+                  "htmlContent":"<hr><h2><u>Lesion 2</u></h2>",
+                  "showIf":{
+                     "conceptIds":[
+                        "nombre_lesions"
+                     ],
+                     "condition":"parseInt(nombre_lesions_cicatrisees) >= 2"
+                  }
                },
                {
-                  "viewType":"text",
-                  "conceptId":"second_nom_patient_2",
-                  "label":"Deuxième nom du patient (obligatoire) :"
+                  "viewType":"photo",
+                  "conceptId":"photo_lesion_pres_2_2",
+                  "label":"Photo de la lésion 2 (vu de près) :",
+                  "showIf":{
+                     "conceptIds":[
+                        "nombre_lesions"
+                     ],
+                     "condition":"parseInt(nombre_lesions_cicatrisees) >= 2"
+                  }
                },
                {
-                  "viewType":"text",
-                  "conceptId":"third_nom_patient_2",
-                  "label":"Troisième nom du patient",
-                  "required":false
+                  "viewType":"photo",
+                  "conceptId":"photo_lesion_loin_2_2",
+                  "label":"Photo de la lésion 2 (vu de loin) :",
+                  "showIf":{
+                     "conceptIds":[
+                        "nombre_lesions"
+                     ],
+                     "condition":"parseInt(nombre_lesions_cicatrisees) >= 2"
+                  }
                },
                {
-                  "viewType":"text",
-                  "conceptId":"adress_patient_2",
-                  "label":"Adresse :",
-                  "required":false
+                  "viewType":"radio",
+                  "conceptId":"lesion_siege_2_2",
+                  "label":"Siège de la lésion",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Membre supérieur"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Membre inférieur"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Abdomen"
+                     },
+                     {
+                        "value":"4",
+                        "label":"Dos"
+                     },
+                     {
+                        "value":"5",
+                        "label":"Fesses et périnée"
+                     },
+                     {
+                        "value":"6",
+                        "label":"Thorax"
+                     },
+                     {
+                        "value":"7",
+                        "label":"Téte et cou"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "nombre_lesions"
+                     ],
+                     "condition":"parseInt(nombre_lesions_cicatrisees) >= 2"
+                  }
                },
                {
-                  "viewType":"text",
-                  "conceptId":"tel_patient_2",
-                  "label":"Numéro de téléphone",
-                  "required":false
+                  "viewType":"html",
+                  "htmlContent":"<hr><h2><u>Lesion 3</u></h2>",
+                  "showIf":{
+                     "conceptIds":[
+                        "nombre_lesions"
+                     ],
+                     "condition":"parseInt(nombre_lesions_cicatrisees) >= 3"
+                  }
                },
                {
-                  "viewType":"date",
-                  "conceptId":"date_rdvz_2",
-                  "label":"Date de rendez vous pour observations et inclusion à l’hôpital avec le physiothérapeute:",
-                  "required":false
+                  "viewType":"photo",
+                  "conceptId":"photo_lesion_pres_2_3",
+                  "label":"Photo de la lésion 3 (vu de près) :",
+                  "showIf":{
+                     "conceptIds":[
+                        "nombre_lesions"
+                     ],
+                     "condition":"parseInt(nombre_lesions_cicatrisees) >= 3"
+                  }
+               },
+               {
+                  "viewType":"photo",
+                  "conceptId":"photo_lesion_loin_2_3",
+                  "label":"Photo de la lésion 3 (vu de loin) :",
+                  "showIf":{
+                     "conceptIds":[
+                        "nombre_lesions"
+                     ],
+                     "condition":"parseInt(nombre_lesions_cicatrisees) >= 3"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion_siege_3",
+                  "label":"Siège de la lésion",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Membre supérieur"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Membre inférieur"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Abdomen"
+                     },
+                     {
+                        "value":"4",
+                        "label":"Dos"
+                     },
+                     {
+                        "value":"5",
+                        "label":"Fesses et périnée"
+                     },
+                     {
+                        "value":"6",
+                        "label":"Thorax"
+                     },
+                     {
+                        "value":"7",
+                        "label":"Téte et cou"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "nombre_lesions"
+                     ],
+                     "condition":"parseInt(nombre_lesions_cicatrisees) >= 3"
+                  }
+               },
+               {
+                  "viewType":"html",
+                  "htmlContent":"<hr><h2><u>Lesion 4</u></h2>",
+                  "showIf":{
+                     "conceptIds":[
+                        "nombre_lesions"
+                     ],
+                     "condition":"parseInt(nombre_lesions_cicatrisees) >= 4"
+                  }
+               },
+               {
+                  "viewType":"photo",
+                  "conceptId":"photo_lesion_pres_2_4",
+                  "label":"Photo de la lésion 4 (vu de près) :",
+                  "showIf":{
+                     "conceptIds":[
+                        "nombre_lesions"
+                     ],
+                     "condition":"parseInt(nombre_lesions_cicatrisees) >= 4"
+                  }
+               },
+               {
+                  "viewType":"photo",
+                  "conceptId":"photo_lesion_loin_2_4",
+                  "label":"Photo de la lésion 4 (vu de loin) :",
+                  "showIf":{
+                     "conceptIds":[
+                        "nombre_lesions"
+                     ],
+                     "condition":"parseInt(nombre_lesions_cicatrisees) >= 4"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion_siege_4_4",
+                  "label":"Siège de la lésion",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Membre supérieur"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Membre inférieur"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Abdomen"
+                     },
+                     {
+                        "value":"4",
+                        "label":"Dos"
+                     },
+                     {
+                        "value":"5",
+                        "label":"Fesses et périnée"
+                     },
+                     {
+                        "value":"6",
+                        "label":"Thorax"
+                     },
+                     {
+                        "value":"7",
+                        "label":"Téte et cou"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "nombre_lesions"
+                     ],
+                     "condition":"parseInt(nombre_lesions_cicatrisees) >= 4"
+                  }
+               },
+               {
+                  "viewType":"html",
+                  "htmlContent":"<hr><h2><u>Lesion 5</u></h2>",
+                  "showIf":{
+                     "conceptIds":[
+                        "nombre_lesions"
+                     ],
+                     "condition":"parseInt(nombre_lesions_cicatrisees) >= 5"
+                  }
+               },
+               {
+                  "viewType":"photo",
+                  "conceptId":"photo_lesion_loin_2_5",
+                  "label":"Photo de la lésion 5 (vu de loin) :",
+                  "showIf":{
+                     "conceptIds":[
+                        "nombre_lesions"
+                     ],
+                     "condition":"parseInt(nombre_lesions_cicatrisees) >= 5"
+                  }
+               },
+               {
+                  "viewType":"photo",
+                  "conceptId":"photo_lesion_loin_2_5",
+                  "label":"Photo de la lésion 5 (vu de loin) :",
+                  "showIf":{
+                     "conceptIds":[
+                        "nombre_lesions"
+                     ],
+                     "condition":"parseInt(nombre_lesions_cicatrisees) >= 5"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion_siege_2_5",
+                  "label":"Siège de la lésion",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Membre supérieur"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Membre inférieur"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Abdomen"
+                     },
+                     {
+                        "value":"4",
+                        "label":"Dos"
+                     },
+                     {
+                        "value":"5",
+                        "label":"Fesses et périnée"
+                     },
+                     {
+                        "value":"6",
+                        "label":"Thorax"
+                     },
+                     {
+                        "value":"7",
+                        "label":"Téte et cou"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "nombre_lesions"
+                     ],
+                     "condition":"parseInt(nombre_lesions_cicatrisees) >= 5"
+                  }
                }
             ]
          }
