@@ -638,14 +638,41 @@ PhotoView = FormItemView.extend({
 	
 	takePicture : function() {
 		var $this = this;
+    	console.error("takePicure is run");
 		
 		navigator.camera.getPicture(function(imageURI) {
 			//onSuccess
-			$this.setValue(imageURI);
-			$this.defaultValueChanged();
-		}, function() {
+		    var n = new Date().getTime();
+		    var newFileName = n + ".jpg";
+		    var myFolderApp = "msfImages";
+			
+		    var onError = function(error) {
+		    	console.error("Error moving image... " + JSON.stringify(error));
+		    };
+		    
+		    console.log("about to try resolving local file system");
+		    
+		    window.resolveLocalFileSystemURI(imageURI, function(entry) {
+		    	console.log("Resolving local file: " + JSON.stringify(entry));
+			    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSys) {      
+			    //The folder is created if doesn't exist
+			    fileSys.root.getDirectory( myFolderApp,
+			                    {create:true, exclusive: false},
+			                    function(directory) {
+		                        	console.log("Directory is: " + JSON.stringify(directory));
+			                        entry.moveTo(directory, newFileName,  function(entry) {
+			                        	console.log("Entry is: " + JSON.stringify(entry));
+				                        $this.setValue(entry.fullPath)
+				                		$this.defaultValueChanged();
+			                        }, onError);
+			                    },
+			                    onError);
+			                    },
+			    onError);
+		    }, onError);
+		}, function(error) {
 			//onFail
-			//error dialog?
+	    	console.error("Error taking picture... " + JSON.stringify(error));
 		}, this.cameraOptions); 
 	},
 	
@@ -715,7 +742,6 @@ GPSAcquireView = FormItemView.extend({
 //		ObsService.setObs(conceptId + "_errorcode", "");
 //		ObsService.setObs(conceptId + "_errormessage", "");
 		
-		this.defaultValueChanged();
 	},
 	
 	acquireFail : function(error) {

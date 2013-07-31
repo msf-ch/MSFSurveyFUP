@@ -54,7 +54,6 @@
         android:targetSdkVersion="17" />
 
     <uses-feature android:name="android.hardware.CAMERA" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     
     <application
         android:hardwareAccelerated="true"
