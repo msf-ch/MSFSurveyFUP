@@ -28,10 +28,37 @@
             "theme":"c",
             "views":[
                {
+                  "viewType":"radio",
+                  "conceptId":"zonenum",
+                  "label":"Numéro de l'enquêteur",
+                  "horizontalMode":"true",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"1"
+                     },
+                     {
+                        "value":"2",
+                        "label":"2"
+                     },
+                     {
+                        "value":"3",
+                        "label":"3"
+                     },
+                     {
+                        "value":"4",
+                        "label":"4"
+                     },
+                     {
+                        "value":"5",
+                        "label":"5"
+                     }
+                  ]
+               },
+               {
                   "viewType":"text",
-                  "conceptId":"id_patient",
-                  "label":"Numéro d'identification",
-                  "required":false
+                  "conceptId":"id_num",
+                  "label":"Numéro d'identification"
                },
                {
                   "viewType":"select",
@@ -217,6 +244,17 @@
                   }
                },
                {
+                  "viewType":"text",
+                  "conceptId":"ecole_nom",
+                  "label":"Nom de l'école",
+                  "showIf":{
+                     "conceptIds":[
+                        "scolarise"
+                     ],
+                     "condition":"scolarise == '1'"
+                  }
+               },
+               {
                   "viewType":"radio",
                   "conceptId":"non_scolarise_raison",
                   "label":"Pourquoi n'est-il pas scolarisé?:",
@@ -239,8 +277,8 @@
                },
                {
                   "viewType":"text",
-                  "conceptId":"non_scolarise_raison_autre",
-                  "label":"Pourquoi pas?",
+                  "conceptId":"scol_non_raison_autre",
+                  "label":"Préciser:",
                   "showIf":{
                      "conceptIds":[
                         "non_scolarise_raison"
@@ -296,14 +334,72 @@
                         "conceptId":"teigne"
                      },
                      {
-                        "label":"Dermatose",
-                        "conceptId":"dermatose"
+                        "label":"Pityriasis versicolor",
+                        "conceptId":"pityriasis"
+                     },
+                     {
+                        "label":"Autre dermatose",
+                        "conceptId":"dermatose_autre"
                      },
                      {
                         "label":"Hernie",
                         "conceptId":"hernie"
+                     },
+                     {
+                        "label":"Suspicion d'ulcère de Buruli",
+                        "conceptId":"buruli_susp"
+                     },
+                     {
+                        "label":"Autre",
+                        "conceptId":"morb_autre"
                      }
                   ]
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"morb_autre_detail",
+                  "label":"Préciser:",
+                  "showIf":{
+                     "conceptIds":[
+                        "morb_autre"
+                     ],
+                     "condition":"morb_autre == true"
+                  },
+                  "hideIf":{
+                     "conceptIds":[
+                        "pas_problem_medical"
+                     ],
+                     "condition":"pas_problem_medical == true"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"dermatose_autre_detail",
+                  "label":"Autre dermatose: préciser",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Staphylococcie cutanée"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Ectyma"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Dermohypodermite"
+                     },
+                     {
+                        "value":"4",
+                        "label":"Abcès"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "dermatose_autre"
+                     ],
+                     "condition":"dermatose_autre == true"
+                  }
                },
                {
                   "viewType":"radio",
@@ -321,6 +417,10 @@
                      {
                         "value":"3",
                         "label":"Négatif"
+                     },
+                     {
+                        "value":"4",
+                        "label":"Pas interprétable"
                      }
                   ],
                   "showIf":{
@@ -328,15 +428,26 @@
                         "paludisme_simp",
                         "paludisme_grave"
                      ],
-                     "condition":"paludisme_simp == true || paludisme_grave == true"
+                     "condition":"paludisme_simp == true || paludisme_grave ==true"
                   }
                },
                {
                   "viewType":"number",
                   "conceptId":"muac",
-                  "label":"MUAC (cm)",
                   "bounds":{
                      "maxLength":3
+                  },
+                  "label":"MUAC (mm)",
+                  "showIf":{
+                     "conceptIds":[
+                        "age_ans",
+                        "age_ans",
+                        "age_ans",
+                        "age_ans",
+                        "age_ans",
+                        "age_ans"
+                     ],
+                     "condition":"age_ans == '0' || age_ans == '1' || age_ans == '2' || age_ans == '3' || age_ans == '4' || age_ans == '5'"
                   }
                },
                {
@@ -480,14 +591,14 @@
                {
                   "viewType":"number",
                   "conceptId":"med_benzoate",
-                  "label":"Benzoate de benzyle",
                   "required":false,
                   "showIf":{
                      "conceptIds":[
                         "medicament_prescrit"
                      ],
                      "condition":"medicament_prescrit == '1'"
-                  }
+                  },
+                  "label":"Benzoate de benzyle (ou autre)"
                },
                {
                   "viewType":"number",
@@ -499,6 +610,29 @@
                         "medicament_prescrit"
                      ],
                      "condition":"medicament_prescrit == '1'"
+                  }
+               },
+               {
+                  "viewType":"number",
+                  "conceptId":"med_fer",
+                  "label":"Fer",
+                  "required":false,
+                  "showIf":{
+                     "conceptIds":[
+                        "medicament_prescrit"
+                     ],
+                     "condition":"medicament_prescrit == '1'"
+                  }
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"med_autre_detail",
+                  "label":"Préciser:",
+                  "showIf":{
+                     "conceptIds":[
+                        "med_autre"
+                     ],
+                     "condition":"med_autre == true"
                   }
                }
             ]
@@ -517,8 +651,8 @@
             "views":[
                {
                   "viewType":"radio",
-                  "conceptId":"nombre_lesions",
-                  "label":"Quel est le nombre de lésions suspectes de Buruli actif ?",
+                  "conceptId":"lesion_nb",
+                  "label":"Quel est le nombre de lésions ?",
                   "options":[
                      {
                         "value":"0",
@@ -543,97 +677,72 @@
                      {
                         "value":"5",
                         "label":"5"
+                     },
+                     {
+                        "value":"6",
+                        "label":"6"
+                     },
+                     {
+                        "value":"7",
+                        "label":"7"
+                     },
+                     {
+                        "value":"8",
+                        "label":"8"
+                     },
+                     {
+                        "value":"9",
+                        "label":"9"
+                     },
+                     {
+                        "value":"10",
+                        "label":"10"
                      }
                   ]
-               },
-               {
-                  "viewType":"text",
-                  "conceptId":"first_nom_patient",
-                  "label":"Premier nom du patient (obligatoire) :",
-                  "showIf":{
-                     "conceptIds":[
-                        "nombre_lesions"
-                     ],
-                     "condition":"parseInt(nombre_lesions) >= 1"
-                  }
-               },
-               {
-                  "viewType":"text",
-                  "conceptId":"second_nom_patient",
-                  "label":"Deuxième nom du patient (obligatoire) :",
-                  "showIf":{
-                     "conceptIds":[
-                        "nombre_lesions"
-                     ],
-                     "condition":"parseInt(nombre_lesions) >= 1"
-                  }
-               },
-               {
-                  "viewType":"text",
-                  "conceptId":"third_nom_patient",
-                  "label":"Troisième nom du patient",
-                  "required":false,
-                  "showIf":{
-                     "conceptIds":[
-                        "nombre_lesions"
-                     ],
-                     "condition":"parseInt(nombre_lesions) >= 1"
-                  }
-               },
-               {
-                  "viewType":"text",
-                  "conceptId":"adress_patient",
-                  "label":"Adresse :",
-                  "required":false,
-                  "showIf":{
-                     "conceptIds":[
-                        "nombre_lesions"
-                     ],
-                     "condition":"parseInt(nombre_lesions) >= 1"
-                  }
-               },
-               {
-                  "viewType":"text",
-                  "conceptId":"tel_patient",
-                  "label":"Numéro de téléphone",
-                  "required":false,
-                  "showIf":{
-                     "conceptIds":[
-                        "nombre_lesions"
-                     ],
-                     "condition":"parseInt(nombre_lesions) >= 1"
-                  }
-               },
-               {
-                  "viewType":"date",
-                  "conceptId":"date_rdvz",
-                  "label":"Date de rendez vous pour observations et inclusion à l’hôpital",
-                  "required":false,
-                  "showIf":{
-                     "conceptIds":[
-                        "nombre_lesions"
-                     ],
-                     "condition":"parseInt(nombre_lesions) >= 1"
-                  }
                },
                {
                   "viewType":"html",
                   "htmlContent":"<hr><h2><u>Lesion 1</u></h2>",
                   "showIf":{
                      "conceptIds":[
-                        "nombre_lesions"
+                        "lesion_nb"
                      ],
-                     "condition":"parseInt(nombre_lesions) >= 1"
+                     "condition":"parseInt(lesion_nb) >= 1"
                   }
                },
                {
                   "viewType":"radio",
-                  "conceptId":"lesion_desc_1",
-                  "label":"Description de la lésion",
+                  "conceptId":"lesion1_type",
+                  "label":"Catégorie de lésion",
                   "options":[
                      {
                         "value":"1",
-                        "label":"Pas de lésion suspecte de Buruli"
+                        "label":"Lésion suspecte de Buruli actif"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Lésion suspecte de Buruli cicatrisée"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Lésion non suspecte de Buruli"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion_nb"
+                     ],
+                     "condition":"lesion_nb == '1' || lesion_nb == '2' || lesion_nb == '3' || lesion_nb == '4' || lesion_nb == '5' || lesion_nb == '6' || lesion_nb == '7' || lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion1_actif_desc",
+                  "label":"Type / forme de la lésion",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Plaie/ulcère"
                      },
                      {
                         "value":"2",
@@ -653,767 +762,254 @@
                      },
                      {
                         "value":"6",
-                        "label":"Plaie"
-                     },
-                     {
-                        "value":"7",
                         "label":"Ostéomyélite"
                      }
                   ],
                   "showIf":{
                      "conceptIds":[
-                        "nombre_lesions"
+                        "lesion1_type"
                      ],
-                     "condition":"parseInt(nombre_lesions) >= 1"
-                  }
-               },
-               {
-                  "viewType":"photo",
-                  "conceptId":"lesion_photo_pres_1",
-                  "label":"Photo de la lésion (vu de près):",
-                  "showIf":{
-                     "conceptIds":[
-                        "nombre_lesions"
-                     ],
-                     "condition":"parseInt(nombre_lesions) >= 1"
-                  }
-               },
-               {
-                  "viewType":"photo",
-                  "conceptId":"blesion_photo_loin_1",
-                  "label":"Photo de la lésion (vu de loin):",
-                  "showIf":{
-                     "conceptIds":[
-                        "nombre_lesions"
-                     ],
-                     "condition":"parseInt(nombre_lesions) >= 1"
+                     "condition":"lesion1_type == '1'"
                   }
                },
                {
                   "viewType":"radio",
-                  "conceptId":"lesion_siege_1",
-                  "label":"Siège de la lésion",
+                  "conceptId":"lesion1_actif_plaie",
+                  "label":"Type de plaie",
                   "options":[
                      {
                         "value":"1",
-                        "label":"Membre supérieur"
+                        "label":"Plaie aigue traumatique"
                      },
                      {
                         "value":"2",
-                        "label":"Membre inférieur"
+                        "label":"Plaie aigue non traumatique"
                      },
                      {
                         "value":"3",
-                        "label":"Abdomen"
+                        "label":"Plaie chronique traumatique"
                      },
                      {
                         "value":"4",
-                        "label":"Dos"
-                     },
-                     {
-                        "value":"5",
-                        "label":"Fesses et périnée"
-                     },
-                     {
-                        "value":"6",
-                        "label":"Thorax"
-                     },
-                     {
-                        "value":"7",
-                        "label":"Téte et cou"
+                        "label":"Plaie chronique non traumatique"
                      }
                   ],
                   "showIf":{
                      "conceptIds":[
-                        "nombre_lesions"
+                        "lesion1_actif_desc"
                      ],
-                     "condition":"parseInt(nombre_lesions) >= 1"
-                  }
-               },
-               {
-                  "viewType":"html",
-                  "htmlContent":"<hr><h2><u>Lesion 2</u></h2>",
-                  "showIf":{
-                     "conceptIds":[
-                        "nombre_lesions"
-                     ],
-                     "condition":"parseInt(nombre_lesions) >= 2"
+                     "condition":"lesion1_actif_desc == '1'"
                   }
                },
                {
                   "viewType":"radio",
-                  "conceptId":"lesion_desc_2",
-                  "label":"Description de la lésion",
+                  "conceptId":"lesion1_cicatrisation",
+                  "label":"Cicatrisation",
                   "options":[
                      {
                         "value":"1",
-                        "label":"Pas de lésion suspecte de Buruli"
-                     },
-                     {
-                        "value":"2",
-                        "label":"Papule"
-                     },
-                     {
-                        "value":"3",
-                        "label":"Plaque"
-                     },
-                     {
-                        "value":"4",
-                        "label":"Nodule"
-                     },
-                     {
-                        "value":"5",
-                        "label":"Oedeme"
-                     },
-                     {
-                        "value":"6",
-                        "label":"Plaie"
-                     },
-                     {
-                        "value":"7",
-                        "label":"Ostéomyélite"
-                     }
-                  ],
-                  "showIf":{
-                     "conceptIds":[
-                        "nombre_lesions"
-                     ],
-                     "condition":"parseInt(nombre_lesions) >= 2"
-                  }
-               },
-               {
-                  "viewType":"photo",
-                  "conceptId":"lesion_photo_pres_2",
-                  "label":"Photo de la lésion (vu de près):",
-                  "showIf":{
-                     "conceptIds":[
-                        "nombre_lesions"
-                     ],
-                     "condition":"parseInt(nombre_lesions) >= 2"
-                  }
-               },
-               {
-                  "viewType":"photo",
-                  "conceptId":"blesion_photo_loin_2",
-                  "label":"Photo de la lésion (vu de loin):",
-                  "showIf":{
-                     "conceptIds":[
-                        "nombre_lesions"
-                     ],
-                     "condition":"parseInt(nombre_lesions) >= 2"
-                  }
-               },
-               {
-                  "viewType":"radio",
-                  "conceptId":"lesion_siege_2",
-                  "label":"Siège de la lésion",
-                  "options":[
-                     {
-                        "value":"1",
-                        "label":"Membre supérieur"
-                     },
-                     {
-                        "value":"2",
-                        "label":"Membre inférieur"
-                     },
-                     {
-                        "value":"3",
-                        "label":"Abdomen"
-                     },
-                     {
-                        "value":"4",
-                        "label":"Dos"
-                     },
-                     {
-                        "value":"5",
-                        "label":"Fesses et périnée"
-                     },
-                     {
-                        "value":"6",
-                        "label":"Thorax"
-                     },
-                     {
-                        "value":"7",
-                        "label":"Téte et cou"
-                     }
-                  ],
-                  "showIf":{
-                     "conceptIds":[
-                        "nombre_lesions"
-                     ],
-                     "condition":"parseInt(nombre_lesions) >= 2"
-                  }
-               },
-               {
-                  "viewType":"html",
-                  "htmlContent":"<hr><h2><u>Lesion 3</u></h2>",
-                  "showIf":{
-                     "conceptIds":[
-                        "nombre_lesions"
-                     ],
-                     "condition":"parseInt(nombre_lesions) >= 3"
-                  }
-               },
-               {
-                  "viewType":"radio",
-                  "conceptId":"lesion_desc_3",
-                  "label":"Description de la lésion",
-                  "options":[
-                     {
-                        "value":"1",
-                        "label":"Pas de lésion suspecte de Buruli"
-                     },
-                     {
-                        "value":"2",
-                        "label":"Papule"
-                     },
-                     {
-                        "value":"3",
-                        "label":"Plaque"
-                     },
-                     {
-                        "value":"4",
-                        "label":"Nodule"
-                     },
-                     {
-                        "value":"5",
-                        "label":"Oedeme"
-                     },
-                     {
-                        "value":"6",
-                        "label":"Plaie"
-                     },
-                     {
-                        "value":"7",
-                        "label":"Ostéomyélite"
-                     }
-                  ],
-                  "showIf":{
-                     "conceptIds":[
-                        "nombre_lesions"
-                     ],
-                     "condition":"parseInt(nombre_lesions) >= 3"
-                  }
-               },
-               {
-                  "viewType":"photo",
-                  "conceptId":"lesion_photo_pres_3",
-                  "label":"Photo de la lésion (vu de près):",
-                  "showIf":{
-                     "conceptIds":[
-                        "nombre_lesions"
-                     ],
-                     "condition":"parseInt(nombre_lesions) >= 3"
-                  }
-               },
-               {
-                  "viewType":"photo",
-                  "conceptId":"blesion_photo_loin_3",
-                  "label":"Photo de la lésion (vu de loin):",
-                  "showIf":{
-                     "conceptIds":[
-                        "nombre_lesions"
-                     ],
-                     "condition":"parseInt(nombre_lesions) >= 3"
-                  }
-               },
-               {
-                  "viewType":"radio",
-                  "conceptId":"lesion_siege_3",
-                  "label":"Siège de la lésion",
-                  "options":[
-                     {
-                        "value":"1",
-                        "label":"Membre supérieur"
-                     },
-                     {
-                        "value":"2",
-                        "label":"Membre inférieur"
-                     },
-                     {
-                        "value":"3",
-                        "label":"Abdomen"
-                     },
-                     {
-                        "value":"4",
-                        "label":"Dos"
-                     },
-                     {
-                        "value":"5",
-                        "label":"Fesses et périnée"
-                     },
-                     {
-                        "value":"6",
-                        "label":"Thorax"
-                     },
-                     {
-                        "value":"7",
-                        "label":"Téte et cou"
-                     }
-                  ],
-                  "showIf":{
-                     "conceptIds":[
-                        "nombre_lesions"
-                     ],
-                     "condition":"parseInt(nombre_lesions) >= 3"
-                  }
-               },
-               {
-                  "viewType":"html",
-                  "htmlContent":"<hr><h2><u>Lesion 4</u></h2>",
-                  "showIf":{
-                     "conceptIds":[
-                        "nombre_lesions"
-                     ],
-                     "condition":"parseInt(nombre_lesions) >= 4"
-                  }
-               },
-               {
-                  "viewType":"radio",
-                  "conceptId":"lesion_desc_4",
-                  "label":"Description de la lésion",
-                  "options":[
-                     {
-                        "value":"1",
-                        "label":"Pas de lésion suspecte de Buruli"
-                     },
-                     {
-                        "value":"2",
-                        "label":"Papule"
-                     },
-                     {
-                        "value":"3",
-                        "label":"Plaque"
-                     },
-                     {
-                        "value":"4",
-                        "label":"Nodule"
-                     },
-                     {
-                        "value":"5",
-                        "label":"Oedeme"
-                     },
-                     {
-                        "value":"6",
-                        "label":"Plaie"
-                     },
-                     {
-                        "value":"7",
-                        "label":"Ostéomyélite"
-                     }
-                  ],
-                  "showIf":{
-                     "conceptIds":[
-                        "nombre_lesions"
-                     ],
-                     "condition":"parseInt(nombre_lesions) >= 4"
-                  }
-               },
-               {
-                  "viewType":"photo",
-                  "conceptId":"lesion_photo_pres_4",
-                  "label":"Photo de la lésion (vu de près):",
-                  "showIf":{
-                     "conceptIds":[
-                        "nombre_lesions"
-                     ],
-                     "condition":"parseInt(nombre_lesions) >= 4"
-                  }
-               },
-               {
-                  "viewType":"photo",
-                  "conceptId":"blesion_photo_loin_4",
-                  "label":"Photo de la lésion (vu de loin):",
-                  "showIf":{
-                     "conceptIds":[
-                        "nombre_lesions"
-                     ],
-                     "condition":"parseInt(nombre_lesions) >= 4"
-                  }
-               },
-               {
-                  "viewType":"radio",
-                  "conceptId":"lesion_siege_4",
-                  "label":"Siège de la lésion",
-                  "options":[
-                     {
-                        "value":"1",
-                        "label":"Membre supérieur"
-                     },
-                     {
-                        "value":"2",
-                        "label":"Membre inférieur"
-                     },
-                     {
-                        "value":"3",
-                        "label":"Abdomen"
-                     },
-                     {
-                        "value":"4",
-                        "label":"Dos"
-                     },
-                     {
-                        "value":"5",
-                        "label":"Fesses et périnée"
-                     },
-                     {
-                        "value":"6",
-                        "label":"Thorax"
-                     },
-                     {
-                        "value":"7",
-                        "label":"Téte et cou"
-                     }
-                  ],
-                  "showIf":{
-                     "conceptIds":[
-                        "nombre_lesions"
-                     ],
-                     "condition":"parseInt(nombre_lesions) >= 4"
-                  }
-               },
-               {
-                  "viewType":"html",
-                  "htmlContent":"<hr><h2><u>Lesion 5</u></h2>",
-                  "showIf":{
-                     "conceptIds":[
-                        "nombre_lesions"
-                     ],
-                     "condition":"parseInt(nombre_lesions) >= 5"
-                  }
-               },
-               {
-                  "viewType":"radio",
-                  "conceptId":"lesion_desc_5",
-                  "label":"Description de la lésion",
-                  "options":[
-                     {
-                        "value":"1",
-                        "label":"Pas de lésion suspecte de Buruli"
-                     },
-                     {
-                        "value":"2",
-                        "label":"Papule"
-                     },
-                     {
-                        "value":"3",
-                        "label":"Plaque"
-                     },
-                     {
-                        "value":"4",
-                        "label":"Nodule"
-                     },
-                     {
-                        "value":"5",
-                        "label":"Oedeme"
-                     },
-                     {
-                        "value":"6",
-                        "label":"Plaie"
-                     },
-                     {
-                        "value":"7",
-                        "label":"Ostéomyélite"
-                     }
-                  ],
-                  "showIf":{
-                     "conceptIds":[
-                        "nombre_lesions"
-                     ],
-                     "condition":"parseInt(nombre_lesions) >= 5"
-                  }
-               },
-               {
-                  "viewType":"photo",
-                  "conceptId":"lesion_photo_pres_5",
-                  "label":"Photo de la lésion (vu de près):",
-                  "showIf":{
-                     "conceptIds":[
-                        "nombre_lesions"
-                     ],
-                     "condition":"parseInt(nombre_lesions) >= 5"
-                  }
-               },
-               {
-                  "viewType":"photo",
-                  "conceptId":"blesion_photo_loin_5",
-                  "label":"Photo de la lésion (vu de loin):",
-                  "showIf":{
-                     "conceptIds":[
-                        "nombre_lesions"
-                     ],
-                     "condition":"parseInt(nombre_lesions) >= 5"
-                  }
-               },
-               {
-                  "viewType":"radio",
-                  "conceptId":"lesion_siege_5",
-                  "label":"Siège de la lésion",
-                  "options":[
-                     {
-                        "value":"1",
-                        "label":"Membre supérieur"
-                     },
-                     {
-                        "value":"2",
-                        "label":"Membre inférieur"
-                     },
-                     {
-                        "value":"3",
-                        "label":"Abdomen"
-                     },
-                     {
-                        "value":"4",
-                        "label":"Dos"
-                     },
-                     {
-                        "value":"5",
-                        "label":"Fesses et périnée"
-                     },
-                     {
-                        "value":"6",
-                        "label":"Thorax"
-                     },
-                     {
-                        "value":"7",
-                        "label":"Téte et cou"
-                     }
-                  ],
-                  "showIf":{
-                     "conceptIds":[
-                        "nombre_lesions"
-                     ],
-                     "condition":"parseInt(nombre_lesions) >= 5"
-                  }
-               }
-            ]
-         }
-      },
-      {
-         "header":{
-            "title":"Page 5 : LÉSIONS SUSPECTES DE BURULI CICATRISÉES",
-            "theme":"b"
-         },
-         "footer":{
-            "theme":"c"
-         },
-         "content":{
-            "theme":"c",
-            "views":[
-               {
-                  "viewType":"radio",
-                  "conceptId":"exist_lesion_buruli",
-                  "label":"Existe il des lésions suspectes de Buruli cicatrisées?",
-                  "options":[
-                     {
-                        "value":"1",
-                        "label":"Pas de lésoin"
-                     },
-                     {
-                        "value":"2",
                         "label":"Cicatrisée sans séquelle"
                      },
                      {
-                        "value":"3",
+                        "value":"2",
                         "label":"Cicatrisée avec séquelle"
                      }
-                  ]
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion1_type"
+                     ],
+                     "condition":"lesion1_type == '2'"
+                  }
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"lesion1_desc_text",
+                  "label":"Descriptif de la plaie",
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion1_type"
+                     ],
+                     "condition":"lesion1_type == '2'"
+                  }
                },
                {
                   "viewType":"radio",
-                  "conceptId":"ou_traite_lesion",
-                  "label":"Oû la lésion a-t-elle traité",
+                  "conceptId":"lesion1_cic_trait_lieu",
+                  "label":"Où la lésion a-t-elle été traité?",
                   "options":[
                      {
                         "value":"1",
-                        "label":"Lésion traité par un tradipraticien"
+                        "label":"Lésion traitée par un tradipraticien"
                      },
                      {
                         "value":"2",
-                        "label":"Lésion traité par le programme Buruli"
+                        "label":"Lésion traitée par le programme Buruli"
                      },
                      {
                         "value":"3",
-                        "label":"Lésion traité par un autre centre de médecine"
+                        "label":"Lésion traitée par un autre centre de médecine"
                      },
                      {
                         "value":"4",
                         "label":"Cicatrisation sans soins"
                      }
-                  ]
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion1_type"
+                     ],
+                     "condition":"lesion1_type == '2'"
+                  }
                },
                {
                   "viewType":"radio",
-                  "conceptId":"nombre_lesions_cicatrisees",
-                  "label":"Quel est le nombre de lésions suspectes de Buruli actif ?",
+                  "conceptId":"lesion1_non_BU_origine",
+                  "label":"Origine possible de la lésion",
                   "options":[
                      {
-                        "value":"0",
-                        "label":"0"
-                     },
-                     {
                         "value":"1",
-                        "label":"1"
+                        "label":"Inconnue"
                      },
                      {
                         "value":"2",
-                        "label":"2"
+                        "label":"Traumatique"
                      },
                      {
                         "value":"3",
-                        "label":"3"
+                        "label":"Morsure de serpent"
                      },
                      {
                         "value":"4",
-                        "label":"4"
+                        "label":"Diabétique"
                      },
                      {
                         "value":"5",
-                        "label":"5"
+                        "label":"Vasculaire"
+                     },
+                     {
+                        "value":"6",
+                        "label":"Cancer"
+                     },
+                     {
+                        "value":"7",
+                        "label":"Autre"
                      }
-                  ]
-               },
-               {
-                  "viewType":"text",
-                  "conceptId":"first_nom_patient_cicatrisees",
-                  "label":"Premier nom du patient (obligatoire) :",
+                  ],
                   "showIf":{
                      "conceptIds":[
-                        "nombre_lesions_cicatrisees"
+                        "lesion1_type"
                      ],
-                     "condition":"parseInt(nombre_lesions_cicatrisees) >= 1"
+                     "condition":"lesion1_type == '3'"
                   }
                },
                {
                   "viewType":"text",
-                  "conceptId":"second_nom_patient_cicatrisees",
-                  "label":"Deuxième nom du patient (obligatoire) :",
+                  "conceptId":"lesion1_non_BU_origine_detail",
+                  "label":"Préciser:",
                   "showIf":{
                      "conceptIds":[
-                        "nombre_lesions_cicatrisees"
+                        "lesion1_non_BU_origine"
                      ],
-                     "condition":"parseInt(nombre_lesions_cicatrisees) >= 1"
-                  }
-               },
-               {
-                  "viewType":"text",
-                  "conceptId":"third_nom_patient_cicatrisees",
-                  "label":"Troisième nom du patient",
-                  "required":false,
-                  "showIf":{
-                     "conceptIds":[
-                        "nombre_lesions_cicatrisees"
-                     ],
-                     "condition":"parseInt(nombre_lesions_cicatrisees) >= 1"
-                  }
-               },
-               {
-                  "viewType":"text",
-                  "conceptId":"adress_patient_cicatrisees",
-                  "label":"Adresse :",
-                  "required":false,
-                  "showIf":{
-                     "conceptIds":[
-                        "nombre_lesions_cicatrisees"
-                     ],
-                     "condition":"parseInt(nombre_lesions_cicatrisees) >= 1"
-                  }
-               },
-               {
-                  "viewType":"text",
-                  "conceptId":"tel_patient_cicatrisees",
-                  "label":"Numéro de téléphone",
-                  "required":false,
-                  "showIf":{
-                     "conceptIds":[
-                        "nombre_lesions_cicatrisees"
-                     ],
-                     "condition":"parseInt(nombre_lesions_cicatrisees) >= 1"
-                  }
-               },
-               {
-                  "viewType":"date",
-                  "conceptId":"date_rdvz_cicatrisees",
-                  "label":"Date de rendez vous pour observations et inclusion à l’hôpital",
-                  "required":false,
-                  "showIf":{
-                     "conceptIds":[
-                        "nombre_lesions_cicatrisees"
-                     ],
-                     "condition":"parseInt(nombre_lesions_cicatrisees) >= 1"
-                  }
-               },
-               {
-                  "viewType":"html",
-                  "htmlContent":"<hr><h2><u>Lesion 1</u></h2>",
-                  "showIf":{
-                     "conceptIds":[
-                        "nombre_lesions_cicatrisees"
-                     ],
-                     "condition":"parseInt(nombre_lesions_cicatrisees) >= 1"
+                     "condition":"lesion1_non_BU_origine == '7'"
                   }
                },
                {
                   "viewType":"photo",
-                  "conceptId":"photo_lesion_pres_cicatrisees_1",
-                  "label":"Photo de la lésion 1 (vu de près) :",
+                  "conceptId":"lesion1_photo_pres",
+                  "label":"Photo de la lésion (vue de près):",
                   "showIf":{
                      "conceptIds":[
-                        "nombre_lesions_cicatrisees"
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb"
                      ],
-                     "condition":"parseInt(nombre_lesions_cicatrisees) >= 1"
+                     "condition":"lesion_nb == '1' || lesion_nb == '2' || lesion_nb == '3' || lesion_nb == '4' || lesion_nb == '5' || lesion_nb == '6' || lesion_nb == '7' || lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
                   }
                },
                {
                   "viewType":"photo",
-                  "conceptId":"photo_lesion_loin_cicatrisees_1",
-                  "label":"Photo de la lésion 1 (vu de loin) :",
+                  "conceptId":"lesion1_photo_loin",
+                  "label":"Photo de la lésion (vue de loin):",
                   "showIf":{
                      "conceptIds":[
-                        "nombre_lesions_cicatrisees"
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb"
                      ],
-                     "condition":"parseInt(nombre_lesions_cicatrisees) >= 1"
+                     "condition":"lesion_nb == '1' || lesion_nb == '2' || lesion_nb == '3' || lesion_nb == '4' || lesion_nb == '5' || lesion_nb == '6' || lesion_nb == '7' || lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
                   }
                },
                {
                   "viewType":"radio",
-                  "conceptId":"lesion_siege_cicatrisees_1",
+                  "conceptId":"lesionf1_photo_siege",
                   "label":"Siège de la lésion",
                   "options":[
                      {
                         "value":"1",
-                        "label":"Membre supérieur"
+                        "label":"Membre supérieur gauche"
                      },
                      {
                         "value":"2",
-                        "label":"Membre inférieur"
+                        "label":"Membre supérieur droit"
                      },
                      {
                         "value":"3",
-                        "label":"Abdomen"
+                        "label":"Membre inférieur gauche"
                      },
                      {
                         "value":"4",
-                        "label":"Dos"
+                        "label":"Membre inférieur droit"
                      },
                      {
                         "value":"5",
-                        "label":"Fesses et périnée"
+                        "label":"Abdomen"
                      },
                      {
                         "value":"6",
-                        "label":"Thorax"
+                        "label":"Dos"
                      },
                      {
                         "value":"7",
+                        "label":"Fesses et périnée"
+                     },
+                     {
+                        "value":"8",
+                        "label":"Thorax"
+                     },
+                     {
+                        "value":"9",
                         "label":"Téte et cou"
                      }
                   ],
                   "showIf":{
                      "conceptIds":[
-                        "nombre_lesions_cicatrisees"
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb"
                      ],
-                     "condition":"parseInt(nombre_lesions_cicatrisees) >= 1"
+                     "condition":"lesion_nb == '1' || lesion_nb == '2' || lesion_nb == '3' || lesion_nb == '4' || lesion_nb == '5' || lesion_nb == '6' || lesion_nb == '7' || lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
                   }
                },
                {
@@ -1421,72 +1017,316 @@
                   "htmlContent":"<hr><h2><u>Lesion 2</u></h2>",
                   "showIf":{
                      "conceptIds":[
-                        "nombre_lesions_cicatrisees"
+                        "lesion_nb"
                      ],
-                     "condition":"parseInt(nombre_lesions_cicatrisees) >= 2"
-                  }
-               },
-               {
-                  "viewType":"photo",
-                  "conceptId":"photo_lesion_pres_cicatrisees_2",
-                  "label":"Photo de la lésion 2 (vu de près) :",
-                  "showIf":{
-                     "conceptIds":[
-                        "nombre_lesions_cicatrisees"
-                     ],
-                     "condition":"parseInt(nombre_lesions_cicatrisees) >= 2"
-                  }
-               },
-               {
-                  "viewType":"photo",
-                  "conceptId":"photo_lesion_loin_cicatrisees_2",
-                  "label":"Photo de la lésion 2 (vu de loin) :",
-                  "showIf":{
-                     "conceptIds":[
-                        "nombre_lesions_cicatrisees"
-                     ],
-                     "condition":"parseInt(nombre_lesions_cicatrisees) >= 2"
+                     "condition":"parseInt(lesion_nb) >= 2"
                   }
                },
                {
                   "viewType":"radio",
-                  "conceptId":"lesion_siege_cicatrisees_cicatrisees_2",
+                  "conceptId":"lesion2_type",
+                  "label":"Catégorie de lésion",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Lésion suspecte de Buruli actif"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Lésion suspecte de Buruli cicatrisée"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Lésion non suspecte de Buruli"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb"
+                     ],
+                     "condition":"lesion_nb == '2' || lesion_nb == '3' || lesion_nb == '4' || lesion_nb == '5' || lesion_nb == '6' || lesion_nb == '7' || lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion2_actif_desc",
+                  "label":"Type / forme de la lésion",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Plaie/ulcère"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Papule"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Plaque"
+                     },
+                     {
+                        "value":"4",
+                        "label":"Nodule"
+                     },
+                     {
+                        "value":"5",
+                        "label":"Oedeme"
+                     },
+                     {
+                        "value":"6",
+                        "label":"Ostéomyélite"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion2_type"
+                     ],
+                     "condition":"lesion2_type == '1'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion2_actif_plaie",
+                  "label":"Type de plaie",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Plaie aigue traumatique"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Plaie aigue non traumatique"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Plaie chronique traumatique"
+                     },
+                     {
+                        "value":"4",
+                        "label":"Plaie chronique non traumatique"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion2_actif_desc"
+                     ],
+                     "condition":"lesion2_actif_desc == '1'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion2_cicatrisation",
+                  "label":"Cicatrisation",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Cicatrisée sans séquelle"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Cicatrisée avec séquelle"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion2_type"
+                     ],
+                     "condition":"lesion2_type == '2'"
+                  }
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"lesion2_desc_text",
+                  "label":"Descriptif de la plaie",
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion2_type"
+                     ],
+                     "condition":"lesion2_type == '2'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion2_cic_trait_lieu",
+                  "label":"Où la lésion a-t-elle été traité?",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Lésion traitée par un tradipraticien"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Lésion traitée par le programme Buruli"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Lésion traitée par un autre centre de médecine"
+                     },
+                     {
+                        "value":"4",
+                        "label":"Cicatrisation sans soins"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion2_type"
+                     ],
+                     "condition":"lesion2_type == '2'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion2_non_BU_origine",
+                  "label":"Origine possible de la lésion",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Inconnue"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Traumatique"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Morsure de serpent"
+                     },
+                     {
+                        "value":"4",
+                        "label":"Diabétique"
+                     },
+                     {
+                        "value":"5",
+                        "label":"Vasculaire"
+                     },
+                     {
+                        "value":"6",
+                        "label":"Cancer"
+                     },
+                     {
+                        "value":"7",
+                        "label":"Autre"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion2_type"
+                     ],
+                     "condition":"lesion2_type == '3'"
+                  }
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"lesion2_non_BU_origine_detail",
+                  "label":"Préciser:",
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion2_non_BU_origine"
+                     ],
+                     "condition":"lesion2_non_BU_origine == '7'"
+                  }
+               },
+               {
+                  "viewType":"photo",
+                  "conceptId":"lesion2_photo_pres",
+                  "label":"Photo de la lésion (vue de près):",
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb"
+                     ],
+                     "condition":"lesion_nb == '2' || lesion_nb == '3' || lesion_nb == '4' || lesion_nb == '5' || lesion_nb == '6' || lesion_nb == '7' || lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
+                  }
+               },
+               {
+                  "viewType":"photo",
+                  "conceptId":"lesion2_photo_loin",
+                  "label":"Photo de la lésion (vue de loin):",
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb"
+                     ],
+                     "condition":"lesion_nb == '2' || lesion_nb == '3' || lesion_nb == '4' || lesion_nb == '5' || lesion_nb == '6' || lesion_nb == '7' || lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesionf2_photo_siege",
                   "label":"Siège de la lésion",
                   "options":[
                      {
                         "value":"1",
-                        "label":"Membre supérieur"
+                        "label":"Membre supérieur gauche"
                      },
                      {
                         "value":"2",
-                        "label":"Membre inférieur"
+                        "label":"Membre supérieur droit"
                      },
                      {
                         "value":"3",
-                        "label":"Abdomen"
+                        "label":"Membre inférieur gauche"
                      },
                      {
                         "value":"4",
-                        "label":"Dos"
+                        "label":"Membre inférieur droit"
                      },
                      {
                         "value":"5",
-                        "label":"Fesses et périnée"
+                        "label":"Abdomen"
                      },
                      {
                         "value":"6",
-                        "label":"Thorax"
+                        "label":"Dos"
                      },
                      {
                         "value":"7",
+                        "label":"Fesses et périnée"
+                     },
+                     {
+                        "value":"8",
+                        "label":"Thorax"
+                     },
+                     {
+                        "value":"9",
                         "label":"Téte et cou"
                      }
                   ],
                   "showIf":{
                      "conceptIds":[
-                        "nombre_lesions_cicatrisees"
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb"
                      ],
-                     "condition":"parseInt(nombre_lesions_cicatrisees) >= 2"
+                     "condition":"lesion_nb == '2' || lesion_nb == '3' || lesion_nb == '4' || lesion_nb == '5' || lesion_nb == '6' || lesion_nb == '7' || lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
                   }
                },
                {
@@ -1494,72 +1334,312 @@
                   "htmlContent":"<hr><h2><u>Lesion 3</u></h2>",
                   "showIf":{
                      "conceptIds":[
-                        "nombre_lesions_cicatrisees"
+                        "lesion_nb"
                      ],
-                     "condition":"parseInt(nombre_lesions_cicatrisees) >= 3"
-                  }
-               },
-               {
-                  "viewType":"photo",
-                  "conceptId":"photo_lesion_pres_cicatrisees_3",
-                  "label":"Photo de la lésion 3 (vu de près) :",
-                  "showIf":{
-                     "conceptIds":[
-                        "nombre_lesions_cicatrisees"
-                     ],
-                     "condition":"parseInt(nombre_lesions_cicatrisees) >= 3"
-                  }
-               },
-               {
-                  "viewType":"photo",
-                  "conceptId":"photo_lesion_loin_cicatrisees_3",
-                  "label":"Photo de la lésion 3 (vu de loin) :",
-                  "showIf":{
-                     "conceptIds":[
-                        "nombre_lesions_cicatrisees"
-                     ],
-                     "condition":"parseInt(nombre_lesions_cicatrisees) >= 3"
+                     "condition":"parseInt(lesion_nb) >= 3"
                   }
                },
                {
                   "viewType":"radio",
-                  "conceptId":"lesion_siege_cicatrisees_cicatrisees_3",
+                  "conceptId":"lesion3_type",
+                  "label":"Catégorie de lésion",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Lésion suspecte de Buruli actif"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Lésion suspecte de Buruli cicatrisée"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Lésion non suspecte de Buruli"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb"
+                     ],
+                     "condition":"lesion_nb == '3' || lesion_nb == '4' || lesion_nb == '5' || lesion_nb == '6' || lesion_nb == '7' || lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion3_actif_desc",
+                  "label":"Type / forme de la lésion",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Plaie/ulcère"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Papule"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Plaque"
+                     },
+                     {
+                        "value":"4",
+                        "label":"Nodule"
+                     },
+                     {
+                        "value":"5",
+                        "label":"Oedeme"
+                     },
+                     {
+                        "value":"6",
+                        "label":"Ostéomyélite"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion3_type"
+                     ],
+                     "condition":"lesion3_type == '1'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion3_actif_plaie",
+                  "label":"Type de plaie",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Plaie aigue traumatique"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Plaie aigue non traumatique"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Plaie chronique traumatique"
+                     },
+                     {
+                        "value":"4",
+                        "label":"Plaie chronique non traumatique"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion3_actif_desc"
+                     ],
+                     "condition":"lesion3_actif_desc == '1'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion3_cicatrisation",
+                  "label":"Cicatrisation",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Cicatrisée sans séquelle"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Cicatrisée avec séquelle"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion3_type"
+                     ],
+                     "condition":"lesion3_type == '2'"
+                  }
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"lesion3_desc_text",
+                  "label":"Descriptif de la plaie",
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion3_type"
+                     ],
+                     "condition":"lesion3_type == '2'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion3_cic_trait_lieu",
+                  "label":"Où la lésion a-t-elle été traité?",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Lésion traitée par un tradipraticien"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Lésion traitée par le programme Buruli"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Lésion traitée par un autre centre de médecine"
+                     },
+                     {
+                        "value":"4",
+                        "label":"Cicatrisation sans soins"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion3_type"
+                     ],
+                     "condition":"lesion3_type == '2'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion3_non_BU_origine",
+                  "label":"Origine possible de la lésion",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Inconnue"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Traumatique"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Morsure de serpent"
+                     },
+                     {
+                        "value":"4",
+                        "label":"Diabétique"
+                     },
+                     {
+                        "value":"5",
+                        "label":"Vasculaire"
+                     },
+                     {
+                        "value":"6",
+                        "label":"Cancer"
+                     },
+                     {
+                        "value":"7",
+                        "label":"Autre"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion3_type"
+                     ],
+                     "condition":"lesion3_type == '3'"
+                  }
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"lesion3_non_BU_origine_detail",
+                  "label":"Préciser:",
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion3_non_BU_origine"
+                     ],
+                     "condition":"lesion3_non_BU_origine == '7'"
+                  }
+               },
+               {
+                  "viewType":"photo",
+                  "conceptId":"lesion3_photo_pres",
+                  "label":"Photo de la lésion (vue de près):",
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb"
+                     ],
+                     "condition":"lesion_nb == '3' || lesion_nb == '4' || lesion_nb == '5' || lesion_nb == '6' || lesion_nb == '7' || lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
+                  }
+               },
+               {
+                  "viewType":"photo",
+                  "conceptId":"lesion3_photo_loin",
+                  "label":"Photo de la lésion (vue de loin):",
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb"
+                     ],
+                     "condition":"lesion_nb == '3' || lesion_nb == '4' || lesion_nb == '5' || lesion_nb == '6' || lesion_nb == '7' || lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion3_photo_siege",
                   "label":"Siège de la lésion",
                   "options":[
                      {
                         "value":"1",
-                        "label":"Membre supérieur"
+                        "label":"Membre supérieur gauche"
                      },
                      {
                         "value":"2",
-                        "label":"Membre inférieur"
+                        "label":"Membre supérieur droit"
                      },
                      {
                         "value":"3",
-                        "label":"Abdomen"
+                        "label":"Membre inférieur gauche"
                      },
                      {
                         "value":"4",
-                        "label":"Dos"
+                        "label":"Membre inférieur droit"
                      },
                      {
                         "value":"5",
-                        "label":"Fesses et périnée"
+                        "label":"Abdomen"
                      },
                      {
                         "value":"6",
-                        "label":"Thorax"
+                        "label":"Dos"
                      },
                      {
                         "value":"7",
+                        "label":"Fesses et périnée"
+                     },
+                     {
+                        "value":"8",
+                        "label":"Thorax"
+                     },
+                     {
+                        "value":"9",
                         "label":"Téte et cou"
                      }
                   ],
                   "showIf":{
                      "conceptIds":[
-                        "nombre_lesions_cicatrisees"
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb"
                      ],
-                     "condition":"parseInt(nombre_lesions_cicatrisees) >= 3"
+                     "condition":"lesion_nb == '3' || lesion_nb == '4' || lesion_nb == '5' || lesion_nb == '6' || lesion_nb == '7' || lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
                   }
                },
                {
@@ -1567,72 +1647,308 @@
                   "htmlContent":"<hr><h2><u>Lesion 4</u></h2>",
                   "showIf":{
                      "conceptIds":[
-                        "nombre_lesions_cicatrisees"
+                        "lesion_nb"
                      ],
-                     "condition":"parseInt(nombre_lesions_cicatrisees) >= 4"
-                  }
-               },
-               {
-                  "viewType":"photo",
-                  "conceptId":"photo_lesion_pres_cicatrisees_4",
-                  "label":"Photo de la lésion 4 (vu de près) :",
-                  "showIf":{
-                     "conceptIds":[
-                        "nombre_lesions_cicatrisees"
-                     ],
-                     "condition":"parseInt(nombre_lesions_cicatrisees) >= 4"
-                  }
-               },
-               {
-                  "viewType":"photo",
-                  "conceptId":"photo_lesion_loin_cicatrisees_4",
-                  "label":"Photo de la lésion 4 (vu de loin) :",
-                  "showIf":{
-                     "conceptIds":[
-                        "nombre_lesions_cicatrisees"
-                     ],
-                     "condition":"parseInt(nombre_lesions_cicatrisees) >= 4"
+                     "condition":"parseInt(lesion_nb) >= 4"
                   }
                },
                {
                   "viewType":"radio",
-                  "conceptId":"lesion_siege_cicatrisees_4",
+                  "conceptId":"lesion4_type",
+                  "label":"Catégorie de lésion",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Lésion suspecte de Buruli actif"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Lésion suspecte de Buruli cicatrisée"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Lésion non suspecte de Buruli"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb"
+                     ],
+                     "condition":"lesion_nb == '4' || lesion_nb == '5' || lesion_nb == '6' || lesion_nb == '7' || lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion4_actif_desc",
+                  "label":"Type / forme de la lésion",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Plaie/ulcère"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Papule"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Plaque"
+                     },
+                     {
+                        "value":"4",
+                        "label":"Nodule"
+                     },
+                     {
+                        "value":"5",
+                        "label":"Oedeme"
+                     },
+                     {
+                        "value":"6",
+                        "label":"Ostéomyélite"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion4_type"
+                     ],
+                     "condition":"lesion4_type == '1'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion4_actif_plaie",
+                  "label":"Type de plaie",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Plaie aigue traumatique"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Plaie aigue non traumatique"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Plaie chronique traumatique"
+                     },
+                     {
+                        "value":"4",
+                        "label":"Plaie chronique non traumatique"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion4_actif_desc"
+                     ],
+                     "condition":"lesion4_actif_desc == '1'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion4_cicatrisation",
+                  "label":"Cicatrisation",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Cicatrisée sans séquelle"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Cicatrisée avec séquelle"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion4_type"
+                     ],
+                     "condition":"lesion4_type == '2'"
+                  }
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"lesion4_desc_text",
+                  "label":"Descriptif de la plaie",
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion4_type"
+                     ],
+                     "condition":"lesion4_type == '2'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion4_cic_trait_lieu",
+                  "label":"Où la lésion a-t-elle été traité?",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Lésion traitée par un tradipraticien"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Lésion traitée par le programme Buruli"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Lésion traitée par un autre centre de médecine"
+                     },
+                     {
+                        "value":"4",
+                        "label":"Cicatrisation sans soins"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion4_type"
+                     ],
+                     "condition":"lesion4_type == '2'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion4_non_BU_origine",
+                  "label":"Origine possible de la lésion",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Inconnue"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Traumatique"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Morsure de serpent"
+                     },
+                     {
+                        "value":"4",
+                        "label":"Diabétique"
+                     },
+                     {
+                        "value":"5",
+                        "label":"Vasculaire"
+                     },
+                     {
+                        "value":"6",
+                        "label":"Cancer"
+                     },
+                     {
+                        "value":"7",
+                        "label":"Autre"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion4_type"
+                     ],
+                     "condition":"lesion4_type == '3'"
+                  }
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"lesion4_non_BU_origine_detail",
+                  "label":"Préciser:",
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion4_non_BU_origine"
+                     ],
+                     "condition":"lesion4_non_BU_origine == '7'"
+                  }
+               },
+               {
+                  "viewType":"photo",
+                  "conceptId":"lesion4_photo_pres",
+                  "label":"Photo de la lésion (vue de près):",
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb"
+                     ],
+                     "condition":"lesion_nb == '4' || lesion_nb == '5' || lesion_nb == '6' || lesion_nb == '7' || lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
+                  }
+               },
+               {
+                  "viewType":"photo",
+                  "conceptId":"lesion4_photo_loin",
+                  "label":"Photo de la lésion (vue de loin):",
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb"
+                     ],
+                     "condition":"lesion_nb == '4' || lesion_nb == '5' || lesion_nb == '6' || lesion_nb == '7' || lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion4_photo_siege",
                   "label":"Siège de la lésion",
                   "options":[
                      {
                         "value":"1",
-                        "label":"Membre supérieur"
+                        "label":"Membre supérieur gauche"
                      },
                      {
                         "value":"2",
-                        "label":"Membre inférieur"
+                        "label":"Membre supérieur droit"
                      },
                      {
                         "value":"3",
-                        "label":"Abdomen"
+                        "label":"Membre inférieur gauche"
                      },
                      {
                         "value":"4",
-                        "label":"Dos"
+                        "label":"Membre inférieur droit"
                      },
                      {
                         "value":"5",
-                        "label":"Fesses et périnée"
+                        "label":"Abdomen"
                      },
                      {
                         "value":"6",
-                        "label":"Thorax"
+                        "label":"Dos"
                      },
                      {
                         "value":"7",
+                        "label":"Fesses et périnée"
+                     },
+                     {
+                        "value":"8",
+                        "label":"Thorax"
+                     },
+                     {
+                        "value":"9",
                         "label":"Téte et cou"
                      }
                   ],
                   "showIf":{
                      "conceptIds":[
-                        "nombre_lesions_cicatrisees"
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb"
                      ],
-                     "condition":"parseInt(nombre_lesions_cicatrisees) >= 4"
+                     "condition":"lesion_nb == '4' || lesion_nb == '5' || lesion_nb == '6' || lesion_nb == '7' || lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
                   }
                },
                {
@@ -1640,72 +1956,1970 @@
                   "htmlContent":"<hr><h2><u>Lesion 5</u></h2>",
                   "showIf":{
                      "conceptIds":[
-                        "nombre_lesions_cicatrisees"
+                        "lesion_nb"
                      ],
-                     "condition":"parseInt(nombre_lesions_cicatrisees) >= 5"
-                  }
-               },
-               {
-                  "viewType":"photo",
-                  "conceptId":"photo_lesion_loin_cicatrisees_5",
-                  "label":"Photo de la lésion 5 (vu de loin) :",
-                  "showIf":{
-                     "conceptIds":[
-                        "nombre_lesions_cicatrisees"
-                     ],
-                     "condition":"parseInt(nombre_lesions_cicatrisees) >= 5"
-                  }
-               },
-               {
-                  "viewType":"photo",
-                  "conceptId":"photo_lesion_loin_cicatrisees_5",
-                  "label":"Photo de la lésion 5 (vu de loin) :",
-                  "showIf":{
-                     "conceptIds":[
-                        "nombre_lesions_cicatrisees"
-                     ],
-                     "condition":"parseInt(nombre_lesions_cicatrisees) >= 5"
+                     "condition":"parseInt(lesion_nb) >= 5"
                   }
                },
                {
                   "viewType":"radio",
-                  "conceptId":"lesion_siege_cicatrisees_5",
+                  "conceptId":"lesion5_type",
+                  "label":"Catégorie de lésion",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Lésion suspecte de Buruli actif"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Lésion suspecte de Buruli cicatrisée"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Lésion non suspecte de Buruli"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb"
+                     ],
+                     "condition":"lesion_nb == '5' || lesion_nb == '6' || lesion_nb == '7' || lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion5_actif_desc",
+                  "label":"Type / forme de la lésion",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Plaie/ulcère"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Papule"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Plaque"
+                     },
+                     {
+                        "value":"4",
+                        "label":"Nodule"
+                     },
+                     {
+                        "value":"5",
+                        "label":"Oedeme"
+                     },
+                     {
+                        "value":"6",
+                        "label":"Ostéomyélite"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion5_type"
+                     ],
+                     "condition":"lesion5_type == '1'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion5_actif_plaie",
+                  "label":"Type de plaie",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Plaie aigue traumatique"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Plaie aigue non traumatique"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Plaie chronique traumatique"
+                     },
+                     {
+                        "value":"4",
+                        "label":"Plaie chronique non traumatique"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion5_actif_desc"
+                     ],
+                     "condition":"lesion5_actif_desc == '1'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion5_cicatrisation",
+                  "label":"Cicatrisation",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Cicatrisée sans séquelle"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Cicatrisée avec séquelle"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion5_type"
+                     ],
+                     "condition":"lesion5_type == '2'"
+                  }
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"lesion5_desc_text",
+                  "label":"Descriptif de la plaie",
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion5_type"
+                     ],
+                     "condition":"lesion5_type == '2'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion5_cic_trait_lieu",
+                  "label":"Où la lésion a-t-elle été traité?",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Lésion traitée par un tradipraticien"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Lésion traitée par le programme Buruli"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Lésion traitée par un autre centre de médecine"
+                     },
+                     {
+                        "value":"4",
+                        "label":"Cicatrisation sans soins"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion5_type"
+                     ],
+                     "condition":"lesion5_type == '2'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion5_non_BU_origine",
+                  "label":"Origine possible de la lésion",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Inconnue"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Traumatique"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Morsure de serpent"
+                     },
+                     {
+                        "value":"4",
+                        "label":"Diabétique"
+                     },
+                     {
+                        "value":"5",
+                        "label":"Vasculaire"
+                     },
+                     {
+                        "value":"6",
+                        "label":"Cancer"
+                     },
+                     {
+                        "value":"7",
+                        "label":"Autre"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion5_type"
+                     ],
+                     "condition":"lesion5_type == '3'"
+                  }
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"lesion5_non_BU_origine_detail",
+                  "label":"Préciser:",
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion5_non_BU_origine"
+                     ],
+                     "condition":"lesion5_non_BU_origine == '7'"
+                  }
+               },
+               {
+                  "viewType":"photo",
+                  "conceptId":"lesion5_photo_pres",
+                  "label":"Photo de la lésion (vue de près):",
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb"
+                     ],
+                     "condition":"lesion_nb == '5' || lesion_nb == '6' || lesion_nb == '7' || lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
+                  }
+               },
+               {
+                  "viewType":"photo",
+                  "conceptId":"lesion5_photo_loin",
+                  "label":"Photo de la lésion (vue de loin):",
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb"
+                     ],
+                     "condition":"lesion_nb == '5' || lesion_nb == '6' || lesion_nb == '7' || lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion5_photo_siege",
                   "label":"Siège de la lésion",
                   "options":[
                      {
                         "value":"1",
-                        "label":"Membre supérieur"
+                        "label":"Membre supérieur gauche"
                      },
                      {
                         "value":"2",
-                        "label":"Membre inférieur"
+                        "label":"Membre supérieur droit"
                      },
                      {
                         "value":"3",
-                        "label":"Abdomen"
+                        "label":"Membre inférieur gauche"
                      },
                      {
                         "value":"4",
-                        "label":"Dos"
+                        "label":"Membre inférieur droit"
                      },
                      {
                         "value":"5",
-                        "label":"Fesses et périnée"
+                        "label":"Abdomen"
                      },
                      {
                         "value":"6",
-                        "label":"Thorax"
+                        "label":"Dos"
                      },
                      {
                         "value":"7",
+                        "label":"Fesses et périnée"
+                     },
+                     {
+                        "value":"8",
+                        "label":"Thorax"
+                     },
+                     {
+                        "value":"9",
                         "label":"Téte et cou"
                      }
                   ],
                   "showIf":{
                      "conceptIds":[
-                        "nombre_lesions_cicatrisees"
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb"
                      ],
-                     "condition":"parseInt(nombre_lesions_cicatrisees) >= 5"
+                     "condition":"lesion_nb == '5' || lesion_nb == '6' || lesion_nb == '7' || lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
+                  }
+               },
+               {
+                  "viewType":"html",
+                  "htmlContent":"<hr><h2><u>Lesion 6</u></h2>",
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion_nb"
+                     ],
+                     "condition":"parseInt(lesion_nb) >= 6"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion6_type",
+                  "label":"Catégorie de lésion",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Lésion suspecte de Buruli actif"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Lésion suspecte de Buruli cicatrisée"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Lésion non suspecte de Buruli"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb"
+                     ],
+                     "condition":"lesion_nb == '6' || lesion_nb == '7' || lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion6_actif_desc",
+                  "label":"Type / forme de la lésion",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Plaie/ulcère"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Papule"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Plaque"
+                     },
+                     {
+                        "value":"4",
+                        "label":"Nodule"
+                     },
+                     {
+                        "value":"5",
+                        "label":"Oedeme"
+                     },
+                     {
+                        "value":"6",
+                        "label":"Ostéomyélite"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion6_type"
+                     ],
+                     "condition":"lesion6_type == '1'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion6_actif_plaie",
+                  "label":"Type de plaie",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Plaie aigue traumatique"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Plaie aigue non traumatique"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Plaie chronique traumatique"
+                     },
+                     {
+                        "value":"4",
+                        "label":"Plaie chronique non traumatique"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion6_actif_desc"
+                     ],
+                     "condition":"lesion6_actif_desc == '1'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion6_cicatrisation",
+                  "label":"Cicatrisation",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Cicatrisée sans séquelle"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Cicatrisée avec séquelle"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion6_type"
+                     ],
+                     "condition":"lesion6_type == '2'"
+                  }
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"lesion6_desc_text",
+                  "label":"Descriptif de la plaie",
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion6_type"
+                     ],
+                     "condition":"lesion6_type == '2'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion6_cic_trait_lieu",
+                  "label":"Où la lésion a-t-elle été traité?",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Lésion traitée par un tradipraticien"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Lésion traitée par le programme Buruli"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Lésion traitée par un autre centre de médecine"
+                     },
+                     {
+                        "value":"4",
+                        "label":"Cicatrisation sans soins"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion6_type"
+                     ],
+                     "condition":"lesion6_type == '2'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion6_non_BU_origine",
+                  "label":"Origine possible de la lésion",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Inconnue"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Traumatique"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Morsure de serpent"
+                     },
+                     {
+                        "value":"4",
+                        "label":"Diabétique"
+                     },
+                     {
+                        "value":"5",
+                        "label":"Vasculaire"
+                     },
+                     {
+                        "value":"6",
+                        "label":"Cancer"
+                     },
+                     {
+                        "value":"7",
+                        "label":"Autre"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion6_type"
+                     ],
+                     "condition":"lesion6_type == '3'"
+                  }
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"lesion6_non_BU_origine_detail",
+                  "label":"Préciser:",
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion6_non_BU_origine"
+                     ],
+                     "condition":"lesion6_non_BU_origine == '7'"
+                  }
+               },
+               {
+                  "viewType":"photo",
+                  "conceptId":"lesion6_photo_pres",
+                  "label":"Photo de la lésion (vue de près):",
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb"
+                     ],
+                     "condition":"lesion_nb == '6' || lesion_nb == '7' || lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
+                  }
+               },
+               {
+                  "viewType":"photo",
+                  "conceptId":"lesion6_photo_loin",
+                  "label":"Photo de la lésion (vue de loin):",
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb"
+                     ],
+                     "condition":"lesion_nb == '6' || lesion_nb == '7' || lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion6_photo_siege",
+                  "label":"Siège de la lésion",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Membre supérieur gauche"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Membre supérieur droit"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Membre inférieur gauche"
+                     },
+                     {
+                        "value":"4",
+                        "label":"Membre inférieur droit"
+                     },
+                     {
+                        "value":"5",
+                        "label":"Abdomen"
+                     },
+                     {
+                        "value":"6",
+                        "label":"Dos"
+                     },
+                     {
+                        "value":"7",
+                        "label":"Fesses et périnée"
+                     },
+                     {
+                        "value":"8",
+                        "label":"Thorax"
+                     },
+                     {
+                        "value":"9",
+                        "label":"Téte et cou"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb"
+                     ],
+                     "condition":"lesion_nb == '6' || lesion_nb == '7' || lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
+                  }
+               },
+               {
+                  "viewType":"html",
+                  "htmlContent":"<hr><h2><u>Lesion 7</u></h2>",
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion_nb"
+                     ],
+                     "condition":"parseInt(lesion_nb) >= 7"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion7_type",
+                  "label":"Catégorie de lésion",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Lésion suspecte de Buruli actif"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Lésion suspecte de Buruli cicatrisée"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Lésion non suspecte de Buruli"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb"
+                     ],
+                     "condition":"lesion_nb == '7' || lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion7_actif_desc",
+                  "label":"Type / forme de la lésion",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Plaie/ulcère"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Papule"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Plaque"
+                     },
+                     {
+                        "value":"4",
+                        "label":"Nodule"
+                     },
+                     {
+                        "value":"5",
+                        "label":"Oedeme"
+                     },
+                     {
+                        "value":"6",
+                        "label":"Ostéomyélite"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion7_type"
+                     ],
+                     "condition":"lesion7_type == '1'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion7_actif_plaie",
+                  "label":"Type de plaie",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Plaie aigue traumatique"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Plaie aigue non traumatique"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Plaie chronique traumatique"
+                     },
+                     {
+                        "value":"4",
+                        "label":"Plaie chronique non traumatique"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion7_actif_desc"
+                     ],
+                     "condition":"lesion7_actif_desc == '1'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion7_cicatrisation",
+                  "label":"Cicatrisation",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Cicatrisée sans séquelle"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Cicatrisée avec séquelle"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion7_type"
+                     ],
+                     "condition":"lesion7_type == '2'"
+                  }
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"lesion7_desc_text",
+                  "label":"Descriptif de la plaie",
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion7_type"
+                     ],
+                     "condition":"lesion7_type == '2'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion7_cic_trait_lieu",
+                  "label":"Où la lésion a-t-elle été traité?",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Lésion traitée par un tradipraticien"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Lésion traitée par le programme Buruli"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Lésion traitée par un autre centre de médecine"
+                     },
+                     {
+                        "value":"4",
+                        "label":"Cicatrisation sans soins"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion7_type"
+                     ],
+                     "condition":"lesion7_type == '2'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion7_non_BU_origine",
+                  "label":"Origine possible de la lésion",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Inconnue"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Traumatique"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Morsure de serpent"
+                     },
+                     {
+                        "value":"4",
+                        "label":"Diabétique"
+                     },
+                     {
+                        "value":"5",
+                        "label":"Vasculaire"
+                     },
+                     {
+                        "value":"6",
+                        "label":"Cancer"
+                     },
+                     {
+                        "value":"7",
+                        "label":"Autre"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion7_type"
+                     ],
+                     "condition":"lesion7_type == '3'"
+                  }
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"lesion7_non_BU_origine_detail",
+                  "label":"Préciser:",
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion7_non_BU_origine"
+                     ],
+                     "condition":"lesion7_non_BU_origine == '7'"
+                  }
+               },
+               {
+                  "viewType":"photo",
+                  "conceptId":"lesion7_photo_pres",
+                  "label":"Photo de la lésion (vue de près):",
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb"
+                     ],
+                     "condition":"lesion_nb == '7' || lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
+                  }
+               },
+               {
+                  "viewType":"photo",
+                  "conceptId":"lesion7_photo_loin",
+                  "label":"Photo de la lésion (vue de loin):",
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb"
+                     ],
+                     "condition":"lesion_nb == '7' || lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion7_photo_siege",
+                  "label":"Siège de la lésion",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Membre supérieur gauche"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Membre supérieur droit"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Membre inférieur gauche"
+                     },
+                     {
+                        "value":"4",
+                        "label":"Membre inférieur droit"
+                     },
+                     {
+                        "value":"5",
+                        "label":"Abdomen"
+                     },
+                     {
+                        "value":"6",
+                        "label":"Dos"
+                     },
+                     {
+                        "value":"7",
+                        "label":"Fesses et périnée"
+                     },
+                     {
+                        "value":"8",
+                        "label":"Thorax"
+                     },
+                     {
+                        "value":"9",
+                        "label":"Téte et cou"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb"
+                     ],
+                     "condition":"lesion_nb == '7' || lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
+                  }
+               },
+               {
+                  "viewType":"html",
+                  "htmlContent":"<hr><h2><u>Lesion 8</u></h2>",
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion_nb"
+                     ],
+                     "condition":"parseInt(lesion_nb) >= 8"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion8_type",
+                  "label":"Catégorie de lésion",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Lésion suspecte de Buruli actif"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Lésion suspecte de Buruli cicatrisée"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Lésion non suspecte de Buruli"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb"
+                     ],
+                     "condition":"lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion8_actif_desc",
+                  "label":"Type / forme de la lésion",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Plaie/ulcère"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Papule"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Plaque"
+                     },
+                     {
+                        "value":"4",
+                        "label":"Nodule"
+                     },
+                     {
+                        "value":"5",
+                        "label":"Oedeme"
+                     },
+                     {
+                        "value":"6",
+                        "label":"Ostéomyélite"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion8_type"
+                     ],
+                     "condition":"lesion8_type == '1'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion8_actif_plaie",
+                  "label":"Type de plaie",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Plaie aigue traumatique"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Plaie aigue non traumatique"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Plaie chronique traumatique"
+                     },
+                     {
+                        "value":"4",
+                        "label":"Plaie chronique non traumatique"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion8_actif_desc"
+                     ],
+                     "condition":"lesion8_actif_desc == '1'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion8_cicatrisation",
+                  "label":"Cicatrisation",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Cicatrisée sans séquelle"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Cicatrisée avec séquelle"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion8_type"
+                     ],
+                     "condition":"lesion8_type == '2'"
+                  }
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"lesion8_desc_text",
+                  "label":"Descriptif de la plaie",
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion8_type"
+                     ],
+                     "condition":"lesion8_type == '2'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion8_cic_trait_lieu",
+                  "label":"Où la lésion a-t-elle été traité?",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Lésion traitée par un tradipraticien"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Lésion traitée par le programme Buruli"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Lésion traitée par un autre centre de médecine"
+                     },
+                     {
+                        "value":"4",
+                        "label":"Cicatrisation sans soins"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion8_type"
+                     ],
+                     "condition":"lesion8_type == '2'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion8_non_BU_origine",
+                  "label":"Origine possible de la lésion",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Inconnue"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Traumatique"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Morsure de serpent"
+                     },
+                     {
+                        "value":"4",
+                        "label":"Diabétique"
+                     },
+                     {
+                        "value":"5",
+                        "label":"Vasculaire"
+                     },
+                     {
+                        "value":"6",
+                        "label":"Cancer"
+                     },
+                     {
+                        "value":"7",
+                        "label":"Autre"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion8_type"
+                     ],
+                     "condition":"lesion8_type == '3'"
+                  }
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"lesion8_non_BU_origine_detail",
+                  "label":"Préciser:",
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion8_non_BU_origine"
+                     ],
+                     "condition":"lesion8_non_BU_origine == '7'"
+                  }
+               },
+               {
+                  "viewType":"photo",
+                  "conceptId":"lesion8_photo_pres",
+                  "label":"Photo de la lésion (vue de près):",
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb"
+                     ],
+                     "condition":"lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
+                  }
+               },
+               {
+                  "viewType":"photo",
+                  "conceptId":"lesion8_photo_loin",
+                  "label":"Photo de la lésion (vue de loin):",
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb"
+                     ],
+                     "condition":"lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion8_photo_siege",
+                  "label":"Siège de la lésion",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Membre supérieur gauche"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Membre supérieur droit"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Membre inférieur gauche"
+                     },
+                     {
+                        "value":"4",
+                        "label":"Membre inférieur droit"
+                     },
+                     {
+                        "value":"5",
+                        "label":"Abdomen"
+                     },
+                     {
+                        "value":"6",
+                        "label":"Dos"
+                     },
+                     {
+                        "value":"7",
+                        "label":"Fesses et périnée"
+                     },
+                     {
+                        "value":"8",
+                        "label":"Thorax"
+                     },
+                     {
+                        "value":"9",
+                        "label":"Téte et cou"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion_nb",
+                        "lesion_nb",
+                        "lesion_nb"
+                     ],
+                     "condition":"lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
+                  }
+               },
+               {
+                  "viewType":"html",
+                  "htmlContent":"<hr><h2><u>Lesion 9</u></h2>",
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion_nb"
+                     ],
+                     "condition":"parseInt(lesion_nb) >= 9"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion9_type",
+                  "label":"Catégorie de lésion",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Lésion suspecte de Buruli actif"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Lésion suspecte de Buruli cicatrisée"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Lésion non suspecte de Buruli"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion_nb",
+                        "lesion_nb"
+                     ],
+                     "condition":"lesion_nb == '9' || lesion_nb == '10'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion9_actif_desc",
+                  "label":"Type / forme de la lésion",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Plaie/ulcère"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Papule"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Plaque"
+                     },
+                     {
+                        "value":"4",
+                        "label":"Nodule"
+                     },
+                     {
+                        "value":"5",
+                        "label":"Oedeme"
+                     },
+                     {
+                        "value":"6",
+                        "label":"Ostéomyélite"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion9_type"
+                     ],
+                     "condition":"lesion9_type == '1'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion9_actif_plaie",
+                  "label":"Type de plaie",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Plaie aigue traumatique"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Plaie aigue non traumatique"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Plaie chronique traumatique"
+                     },
+                     {
+                        "value":"4",
+                        "label":"Plaie chronique non traumatique"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion9_actif_desc"
+                     ],
+                     "condition":"lesion9_actif_desc == '1'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion9_cicatrisation",
+                  "label":"Cicatrisation",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Cicatrisée sans séquelle"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Cicatrisée avec séquelle"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion9_type"
+                     ],
+                     "condition":"lesion9_type == '2'"
+                  }
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"lesion9_desc_text",
+                  "label":"Descriptif de la plaie",
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion9_type"
+                     ],
+                     "condition":"lesion9_type == '2'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion9_cic_trait_lieu",
+                  "label":"Où la lésion a-t-elle été traité?",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Lésion traitée par un tradipraticien"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Lésion traitée par le programme Buruli"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Lésion traitée par un autre centre de médecine"
+                     },
+                     {
+                        "value":"4",
+                        "label":"Cicatrisation sans soins"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion9_type"
+                     ],
+                     "condition":"lesion9_type == '2'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion9_non_BU_origine",
+                  "label":"Origine possible de la lésion",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Inconnue"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Traumatique"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Morsure de serpent"
+                     },
+                     {
+                        "value":"4",
+                        "label":"Diabétique"
+                     },
+                     {
+                        "value":"5",
+                        "label":"Vasculaire"
+                     },
+                     {
+                        "value":"6",
+                        "label":"Cancer"
+                     },
+                     {
+                        "value":"7",
+                        "label":"Autre"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion9_type"
+                     ],
+                     "condition":"lesion9_type == '3'"
+                  }
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"lesion9_non_BU_origine_detail",
+                  "label":"Préciser:",
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion9_non_BU_origine"
+                     ],
+                     "condition":"lesion9_non_BU_origine == '7'"
+                  }
+               },
+               {
+                  "viewType":"photo",
+                  "conceptId":"lesion9_photo_pres",
+                  "label":"Photo de la lésion (vue de près):",
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion_nb",
+                        "lesion_nb"
+                     ],
+                     "condition":"lesion_nb == '9' || lesion_nb == '10'"
+                  }
+               },
+               {
+                  "viewType":"photo",
+                  "conceptId":"lesion9_photo_loin",
+                  "label":"Photo de la lésion (vue de loin):",
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion_nb",
+                        "lesion_nb"
+                     ],
+                     "condition":"lesion_nb == '9' || lesion_nb == '10'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion9_photo_siege",
+                  "label":"Siège de la lésion",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Membre supérieur gauche"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Membre supérieur droit"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Membre inférieur gauche"
+                     },
+                     {
+                        "value":"4",
+                        "label":"Membre inférieur droit"
+                     },
+                     {
+                        "value":"5",
+                        "label":"Abdomen"
+                     },
+                     {
+                        "value":"6",
+                        "label":"Dos"
+                     },
+                     {
+                        "value":"7",
+                        "label":"Fesses et périnée"
+                     },
+                     {
+                        "value":"8",
+                        "label":"Thorax"
+                     },
+                     {
+                        "value":"9",
+                        "label":"Téte et cou"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion_nb",
+                        "lesion_nb"
+                     ],
+                     "condition":"lesion_nb == '9' || lesion_nb == '10'"
+                  }
+               },
+               {
+                  "viewType":"html",
+                  "htmlContent":"<hr><h2><u>Lesion 10</u></h2>",
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion_nb"
+                     ],
+                     "condition":"parseInt(lesion_nb) >= 10"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion10_type",
+                  "label":"Catégorie de lésion",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Lésion suspecte de Buruli actif"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Lésion suspecte de Buruli cicatrisée"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Lésion non suspecte de Buruli"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion_nb"
+                     ],
+                     "condition":"lesion_nb == '10'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion10_actif_desc",
+                  "label":"Type / forme de la lésion",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Plaie/ulcère"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Papule"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Plaque"
+                     },
+                     {
+                        "value":"4",
+                        "label":"Nodule"
+                     },
+                     {
+                        "value":"5",
+                        "label":"Oedeme"
+                     },
+                     {
+                        "value":"6",
+                        "label":"Ostéomyélite"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion10_type"
+                     ],
+                     "condition":"lesion10_type == '1'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion10_actif_plaie",
+                  "label":"Type de plaie",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Plaie aigue traumatique"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Plaie aigue non traumatique"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Plaie chronique traumatique"
+                     },
+                     {
+                        "value":"4",
+                        "label":"Plaie chronique non traumatique"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion10_actif_desc"
+                     ],
+                     "condition":"lesion10_actif_desc == '1'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion10_cicatrisation",
+                  "label":"Cicatrisation",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Cicatrisée sans séquelle"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Cicatrisée avec séquelle"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion10_type"
+                     ],
+                     "condition":"lesion10_type == '2'"
+                  }
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"lesion10_desc_text",
+                  "label":"Descriptif de la plaie",
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion10_type"
+                     ],
+                     "condition":"lesion10_type == '2'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion10_cic_trait_lieu",
+                  "label":"Où la lésion a-t-elle été traité?",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Lésion traitée par un tradipraticien"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Lésion traitée par le programme Buruli"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Lésion traitée par un autre centre de médecine"
+                     },
+                     {
+                        "value":"4",
+                        "label":"Cicatrisation sans soins"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion10_type"
+                     ],
+                     "condition":"lesion10_type == '2'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion10_non_BU_origine",
+                  "label":"Origine possible de la lésion",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Inconnue"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Traumatique"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Morsure de serpent"
+                     },
+                     {
+                        "value":"4",
+                        "label":"Diabétique"
+                     },
+                     {
+                        "value":"5",
+                        "label":"Vasculaire"
+                     },
+                     {
+                        "value":"6",
+                        "label":"Cancer"
+                     },
+                     {
+                        "value":"7",
+                        "label":"Autre"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion10_type"
+                     ],
+                     "condition":"lesion10_type == '3'"
+                  }
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"lesion10_non_BU_origine_detail",
+                  "label":"Préciser:",
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion10_non_BU_origine"
+                     ],
+                     "condition":"lesion10_non_BU_origine == '7'"
+                  }
+               },
+               {
+                  "viewType":"photo",
+                  "conceptId":"lesion10_photo_pres",
+                  "label":"Photo de la lésion (vue de près):",
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion_nb"
+                     ],
+                     "condition":"lesion_nb == '10'"
+                  }
+               },
+               {
+                  "viewType":"photo",
+                  "conceptId":"lesion10_photo_loin",
+                  "label":"Photo de la lésion (vue de loin):",
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion_nb"
+                     ],
+                     "condition":"lesion_nb == '10'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"lesion10_photo_siege",
+                  "label":"Siège de la lésion",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Membre supérieur gauche"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Membre supérieur droit"
+                     },
+                     {
+                        "value":"3",
+                        "label":"Membre inférieur gauche"
+                     },
+                     {
+                        "value":"4",
+                        "label":"Membre inférieur droit"
+                     },
+                     {
+                        "value":"5",
+                        "label":"Abdomen"
+                     },
+                     {
+                        "value":"6",
+                        "label":"Dos"
+                     },
+                     {
+                        "value":"7",
+                        "label":"Fesses et périnée"
+                     },
+                     {
+                        "value":"8",
+                        "label":"Thorax"
+                     },
+                     {
+                        "value":"9",
+                        "label":"Téte et cou"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion_nb"
+                     ],
+                     "condition":"lesion_nb == '10'"
+                  }
+               },
+               {
+                  "viewType":"html",
+                  "htmlContent":"<hr><h2><u>Informations de Contact</u></h2>",
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion1_type",
+                        "lesion1_type",
+                        "lesion2_type",
+                        "lesion2_type",
+                        "lesion3_type",
+                        "lesion3_type",
+                        "lesion4_type",
+                        "lesion4_type",
+                        "lesion5_type",
+                        "lesion5_type",
+                        "lesion6_type",
+                        "lesion7_type",
+                        "lesion8_type",
+                        "lesion9_type",
+                        "lesion10_type"
+                     ],
+                     "condition":"lesion1_type == '1' || lesion1_type == '2' || lesion2_type == '1' || lesion2_type == '2' || lesion3_type == '1' || lesion3_type == '2' || lesion4_type == '1' || lesion4_type == '2' || lesion5_type == '1' || lesion5_type == '2' || lesion6_type == '1' || lesion6_type == '2' || lesion7_type == '1' || lesion7_type == '2' || lesion8_type == '1' || lesion8_type == '2' || lesion9_type == '1' || lesion9_type == '2' || lesion10_type == '1' || lesion10_type == '2'"
+                  }
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"patient_nom1",
+                  "label":"Premier nom du patient (obligatoire) :",
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion1_type",
+                        "lesion1_type",
+                        "lesion2_type",
+                        "lesion2_type",
+                        "lesion3_type",
+                        "lesion3_type",
+                        "lesion4_type",
+                        "lesion4_type",
+                        "lesion5_type",
+                        "lesion5_type",
+                        "lesion6_type",
+                        "lesion7_type",
+                        "lesion8_type",
+                        "lesion9_type",
+                        "lesion10_type"
+                     ],
+                     "condition":"lesion1_type == '1' || lesion1_type == '2' || lesion2_type == '1' || lesion2_type == '2' || lesion3_type == '1' || lesion3_type == '2' || lesion4_type == '1' || lesion4_type == '2' || lesion5_type == '1' || lesion5_type == '2' || lesion6_type == '1' || lesion6_type == '2' || lesion7_type == '1' || lesion7_type == '2' || lesion8_type == '1' || lesion8_type == '2' || lesion9_type == '1' || lesion9_type == '2' || lesion10_type == '1' || lesion10_type == '2'"
+                  }
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"patient_nom2",
+                  "label":"Deuxième nom du patient (obligatoire) :",
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion1_type",
+                        "lesion1_type",
+                        "lesion2_type",
+                        "lesion2_type",
+                        "lesion3_type",
+                        "lesion3_type",
+                        "lesion4_type",
+                        "lesion4_type",
+                        "lesion5_type",
+                        "lesion5_type",
+                        "lesion6_type",
+                        "lesion7_type",
+                        "lesion8_type",
+                        "lesion9_type",
+                        "lesion10_type"
+                     ],
+                     "condition":"lesion1_type == '1' || lesion1_type == '2' || lesion2_type == '1' || lesion2_type == '2' || lesion3_type == '1' || lesion3_type == '2' || lesion4_type == '1' || lesion4_type == '2' || lesion5_type == '1' || lesion5_type == '2' || lesion6_type == '1' || lesion6_type == '2' || lesion7_type == '1' || lesion7_type == '2' || lesion8_type == '1' || lesion8_type == '2' || lesion9_type == '1' || lesion9_type == '2' || lesion10_type == '1' || lesion10_type == '2'"
+                  }
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"patient_nom3",
+                  "label":"Troisième nom du patient (facultatif)",
+                  "required":false,
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion1_type",
+                        "lesion1_type",
+                        "lesion2_type",
+                        "lesion2_type",
+                        "lesion3_type",
+                        "lesion3_type",
+                        "lesion4_type",
+                        "lesion4_type",
+                        "lesion5_type",
+                        "lesion5_type",
+                        "lesion6_type",
+                        "lesion7_type",
+                        "lesion8_type",
+                        "lesion9_type",
+                        "lesion10_type"
+                     ],
+                     "condition":"lesion1_type == '1' || lesion1_type == '2' || lesion2_type == '1' || lesion2_type == '2' || lesion3_type == '1' || lesion3_type == '2' || lesion4_type == '1' || lesion4_type == '2' || lesion5_type == '1' || lesion5_type == '2' || lesion6_type == '1' || lesion6_type == '2' || lesion7_type == '1' || lesion7_type == '2' || lesion8_type == '1' || lesion8_type == '2' || lesion9_type == '1' || lesion9_type == '2' || lesion10_type == '1' || lesion10_type == '2'"
+                  }
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"patient_adresse",
+                  "label":"Adresse",
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion1_type",
+                        "lesion1_type",
+                        "lesion2_type",
+                        "lesion2_type",
+                        "lesion3_type",
+                        "lesion3_type",
+                        "lesion4_type",
+                        "lesion4_type",
+                        "lesion5_type",
+                        "lesion5_type",
+                        "lesion6_type",
+                        "lesion7_type",
+                        "lesion8_type",
+                        "lesion9_type",
+                        "lesion10_type"
+                     ],
+                     "condition":"lesion1_type == '1' || lesion1_type == '2' || lesion2_type == '1' || lesion2_type == '2' || lesion3_type == '1' || lesion3_type == '2' || lesion4_type == '1' || lesion4_type == '2' || lesion5_type == '1' || lesion5_type == '2' || lesion6_type == '1' || lesion6_type == '2' || lesion7_type == '1' || lesion7_type == '2' || lesion8_type == '1' || lesion8_type == '2' || lesion9_type == '1' || lesion9_type == '2' || lesion10_type == '1' || lesion10_type == '2'"
+                  }
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"patient_telephone",
+                  "label":"Numéro de téléphone",
+                  "required":false,
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion1_type",
+                        "lesion1_type",
+                        "lesion2_type",
+                        "lesion2_type",
+                        "lesion3_type",
+                        "lesion3_type",
+                        "lesion4_type",
+                        "lesion4_type",
+                        "lesion5_type",
+                        "lesion5_type",
+                        "lesion6_type",
+                        "lesion7_type",
+                        "lesion8_type",
+                        "lesion9_type",
+                        "lesion10_type"
+                     ],
+                     "condition":"lesion1_type == '1' || lesion1_type == '2' || lesion2_type == '1' || lesion2_type == '2' || lesion3_type == '1' || lesion3_type == '2' || lesion4_type == '1' || lesion4_type == '2' || lesion5_type == '1' || lesion5_type == '2' || lesion6_type == '1' || lesion6_type == '2' || lesion7_type == '1' || lesion7_type == '2' || lesion8_type == '1' || lesion8_type == '2' || lesion9_type == '1' || lesion9_type == '2' || lesion10_type == '1' || lesion10_type == '2'"
+                  }
+               },
+               {
+                  "viewType":"date",
+                  "conceptId":"reference_date_RDV",
+                  "label":"Date de rendez vous à l'hôpital / en décentralisation",
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion1_type",
+                        "lesion1_type",
+                        "lesion2_type",
+                        "lesion2_type",
+                        "lesion3_type",
+                        "lesion3_type",
+                        "lesion4_type",
+                        "lesion4_type",
+                        "lesion5_type",
+                        "lesion5_type",
+                        "lesion6_type",
+                        "lesion7_type",
+                        "lesion8_type",
+                        "lesion9_type",
+                        "lesion10_type"
+                     ],
+                     "condition":"lesion1_type == '1' || lesion1_type == '2' || lesion2_type == '1' || lesion2_type == '2' || lesion3_type == '1' || lesion3_type == '2' || lesion4_type == '1' || lesion4_type == '2' || lesion5_type == '1' || lesion5_type == '2' || lesion6_type == '1' || lesion6_type == '2' || lesion7_type == '1' || lesion7_type == '2' || lesion8_type == '1' || lesion8_type == '2' || lesion9_type == '1' || lesion9_type == '2' || lesion10_type == '1' || lesion10_type == '2'"
+                  }
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"reference_remarques",
+                  "label":"Remarques (transport offert...)",
+                  "showIf":{
+                     "conceptIds":[
+                        "lesion1_type",
+                        "lesion1_type",
+                        "lesion2_type",
+                        "lesion2_type",
+                        "lesion3_type",
+                        "lesion3_type",
+                        "lesion4_type",
+                        "lesion4_type",
+                        "lesion5_type",
+                        "lesion5_type",
+                        "lesion6_type",
+                        "lesion7_type",
+                        "lesion8_type",
+                        "lesion9_type",
+                        "lesion10_type"
+                     ],
+                     "condition":"lesion1_type == '1' || lesion1_type == '2' || lesion2_type == '1' || lesion2_type == '2' || lesion3_type == '1' || lesion3_type == '2' || lesion4_type == '1' || lesion4_type == '2' || lesion5_type == '1' || lesion5_type == '2' || lesion6_type == '1' || lesion6_type == '2' || lesion7_type == '1' || lesion7_type == '2' || lesion8_type == '1' || lesion8_type == '2' || lesion9_type == '1' || lesion9_type == '2' || lesion10_type == '1' || lesion10_type == '2'"
                   }
                }
             ]
