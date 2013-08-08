@@ -21,7 +21,7 @@
     package="org.msf.survey.monthly.fup"
     android:hardwareAccelerated="true"
     android:versionCode="7"
-    android:versionName="1.0.1"
+    android:versionName="0.7"
     android:windowSoftInputMode="adjustPan" >
 
     <supports-screens
