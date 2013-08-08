@@ -37,6 +37,8 @@ public class MSFSurveyFUP extends DroidGap implements View.OnTouchListener {
 	protected void onResume() {
 		super.onResume();
 		appView.setOnTouchListener(this);
+
+		FileUtilities.ensureDirectoriesExist();
 	}
 
 	/*
