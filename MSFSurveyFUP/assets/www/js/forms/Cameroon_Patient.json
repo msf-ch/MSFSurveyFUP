@@ -517,7 +517,7 @@
                         "morb_autre",
                         "pas_problem_medical"
                      ],
-                     "condition":"morb_autre == true && pas_problem_medical == false"
+                     "condition":"morb_autre == true"
                   }
                },
                {
