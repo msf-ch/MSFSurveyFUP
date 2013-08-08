@@ -691,10 +691,11 @@ PhotoView = FormItemView.extend({
 	},
 	
 	setValue : function(imageName) {
-		var $this = this;
-		var photoFolder = this.photoFolder;
 		this.$el.find("input.imageuri").val(imageName);
 
+		var img = this.$el.find("img.photo");
+		var photoFolder = this.photoFolder;
+		var $this = this;
 		if (imageName) {
 			img.show();
 			//resolve the folder
@@ -705,7 +706,7 @@ PhotoView = FormItemView.extend({
 	                    function(directory) {
 	                    	var path = directory.fullPath + "/" + imageName;
 	                    	console.log("Photo path: " + path);
-	                		var img = $this.$el.find("img.photo").attr("src", path);
+	                		img.attr("src", path);
 	                    },
 	                    function(error) {}
 	                );
