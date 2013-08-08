@@ -18,7 +18,7 @@
    "pages":[
       {
          "header":{
-            "title":"Page 1 : L'INFORMATION DES PATIENTS",
+            "title":"Page 1 : INFORMATION SUR LE PATIENT",
             "theme":"b"
          },
          "footer":{
@@ -41,11 +41,11 @@
                   "viewType":"text",
                   "conceptId":"gps_long",
                   "label":"Longitude",
-                  "calculatedValue": {
-                     "conceptIds" : [
+                  "calculatedValue":{
+                     "conceptIds":[
                         "gps"
                      ],
-                     "functionCode" : "if (gps) {var $gps = JSON.parse(gps); if ($gps.coords) {return $gps.coords.longitude;}} return '';"
+                     "functionCode":"if (gps) {var $gps = JSON.parse(gps); if ($gps.coords) {return $gps.coords.longitude;}} return '';"
                   },
                   "hiddenMode":true
                },
@@ -53,11 +53,11 @@
                   "viewType":"text",
                   "conceptId":"gps_lat",
                   "label":"Latitude",
-                  "calculatedValue": {
-                     "conceptIds" : [
+                  "calculatedValue":{
+                     "conceptIds":[
                         "gps"
                      ],
-                     "functionCode" : "if (gps) {var $gps = JSON.parse(gps); if ($gps.coords) {return $gps.coords.latitude;}} return '';"
+                     "functionCode":"if (gps) {var $gps = JSON.parse(gps); if ($gps.coords) {return $gps.coords.latitude;}} return '';"
                   },
                   "hiddenMode":true
                },
@@ -65,11 +65,11 @@
                   "viewType":"text",
                   "conceptId":"gps_accuracy",
                   "label":"Accuracy",
-                  "calculatedValue": {
-                     "conceptIds" : [
+                  "calculatedValue":{
+                     "conceptIds":[
                         "gps"
                      ],
-                     "functionCode" : "if (gps) {var $gps = JSON.parse(gps); if ($gps.coords) {return $gps.coords.accuracy;}} return '';"
+                     "functionCode":"if (gps) {var $gps = JSON.parse(gps); if ($gps.coords) {return $gps.coords.accuracy;}} return '';"
                   },
                   "hiddenMode":true
                },
@@ -77,11 +77,11 @@
                   "viewType":"text",
                   "conceptId":"gps_altitude",
                   "label":"Altitude",
-                  "calculatedValue": {
-                     "conceptIds" : [
+                  "calculatedValue":{
+                     "conceptIds":[
                         "gps"
                      ],
-                     "functionCode" : "if (gps) {var $gps = JSON.parse(gps); if ($gps.coords) {return $gps.coords.altitude;}} return '';"
+                     "functionCode":"if (gps) {var $gps = JSON.parse(gps); if ($gps.coords) {return $gps.coords.altitude;}} return '';"
                   },
                   "hiddenMode":true
                },
@@ -89,11 +89,11 @@
                   "viewType":"text",
                   "conceptId":"gps_altaccuracy",
                   "label":"Altitude accuracy",
-                  "calculatedValue": {
-                     "conceptIds" : [
+                  "calculatedValue":{
+                     "conceptIds":[
                         "gps"
                      ],
-                     "functionCode" : "if (gps) {var $gps = JSON.parse(gps); if ($gps.coords) {return $gps.coords.altitudeAccuracy;}} return '';"
+                     "functionCode":"if (gps) {var $gps = JSON.parse(gps); if ($gps.coords) {return $gps.coords.altitudeAccuracy;}} return '';"
                   },
                   "hiddenMode":true
                },
@@ -101,11 +101,11 @@
                   "viewType":"text",
                   "conceptId":"gps_timestamp",
                   "label":"Timestamp",
-                  "calculatedValue": {
-                     "conceptIds" : [
+                  "calculatedValue":{
+                     "conceptIds":[
                         "gps"
                      ],
-                     "functionCode" : "if (gps) {var $gps = JSON.parse(gps); if ($gps.coords) {return $gps.timestamp;}} return '';"
+                     "functionCode":"if (gps) {var $gps = JSON.parse(gps); if ($gps.coords) {return $gps.timestamp;}} return '';"
                   },
                   "hiddenMode":true
                },
@@ -398,47 +398,113 @@
                      },
                      {
                         "label":"Paludisme simple",
-                        "conceptId":"paludisme_simp"
+                        "conceptId":"paludisme_simp",
+                        "hideIf":{
+                           "conceptIds":[
+                              "pas_problem_medical"
+                           ],
+                           "condition":"pas_problem_medical == true"
+                        }
                      },
                      {
                         "label":"Paludisme grave",
-                        "conceptId":"paludisme_grave"
+                        "conceptId":"paludisme_grave",
+                        "hideIf":{
+                           "conceptIds":[
+                              "pas_problem_medical"
+                           ],
+                           "condition":"pas_problem_medical == true"
+                        }
                      },
                      {
                         "label":"Diarrhée aigue",
-                        "conceptId":"diarrhee_aigue"
+                        "conceptId":"diarrhee_aigue",
+                        "hideIf":{
+                           "conceptIds":[
+                              "pas_problem_medical"
+                           ],
+                           "condition":"pas_problem_medical == true"
+                        }
                      },
                      {
                         "label":"Infection respiratoire aigue",
-                        "conceptId":"infect_resp_aigue"
+                        "conceptId":"infect_resp_aigue",
+                        "hideIf":{
+                           "conceptIds":[
+                              "pas_problem_medical"
+                           ],
+                           "condition":"pas_problem_medical == true"
+                        }
                      },
                      {
                         "label":"Gale (Scabiose)",
-                        "conceptId":"gale"
+                        "conceptId":"gale",
+                        "hideIf":{
+                           "conceptIds":[
+                              "pas_problem_medical"
+                           ],
+                           "condition":"pas_problem_medical == true"
+                        }
                      },
                      {
                         "label":"Teigne",
-                        "conceptId":"teigne"
+                        "conceptId":"teigne",
+                        "hideIf":{
+                           "conceptIds":[
+                              "pas_problem_medical"
+                           ],
+                           "condition":"pas_problem_medical == true"
+                        }
                      },
                      {
                         "label":"Pityriasis versicolor",
-                        "conceptId":"pityriasis"
+                        "conceptId":"pityriasis",
+                        "hideIf":{
+                           "conceptIds":[
+                              "pas_problem_medical"
+                           ],
+                           "condition":"pas_problem_medical == true"
+                        }
                      },
                      {
                         "label":"Autre dermatose",
-                        "conceptId":"dermatose_autre"
+                        "conceptId":"dermatose_autre",
+                        "hideIf":{
+                           "conceptIds":[
+                              "pas_problem_medical"
+                           ],
+                           "condition":"pas_problem_medical == true"
+                        }
                      },
                      {
                         "label":"Hernie",
-                        "conceptId":"hernie"
+                        "conceptId":"hernie",
+                        "hideIf":{
+                           "conceptIds":[
+                              "pas_problem_medical"
+                           ],
+                           "condition":"pas_problem_medical == true"
+                        }
                      },
                      {
                         "label":"Suspicion d'ulcère de Buruli",
-                        "conceptId":"buruli_susp"
+                        "conceptId":"buruli_susp",
+                        "hideIf":{
+                           "conceptIds":[
+                              "pas_problem_medical"
+                           ],
+                           "condition":"pas_problem_medical == true"
+                        }
                      },
                      {
                         "label":"Autre",
-                        "conceptId":"morb_autre"
+                        "conceptId":"morb_autre",
+                        "hideIf":{
+                           "conceptIds":[
+                              "pas_problem_medical"
+                           ],
+                           "condition":"pas_problem_medical == true"
+                        }
                      }
                   ]
                },
@@ -450,13 +516,7 @@
                      "conceptIds":[
                         "morb_autre"
                      ],
-                     "condition":"morb_autre == true"
-                  },
-                  "hideIf":{
-                     "conceptIds":[
-                        "pas_problem_medical"
-                     ],
-                     "condition":"pas_problem_medical == true"
+                     "condition":"morb_autre == true && pas_problem_medical == false"
                   }
                },
                {
@@ -522,16 +582,13 @@
                   "viewType":"number",
                   "conceptId":"muac",
                   "bounds":{
-                     "maxLength":3
+                     "minValue":50,
+                     "maxValue":200,
+                     "precisionExact":0
                   },
                   "label":"MUAC (mm)",
                   "showIf":{
                      "conceptIds":[
-                        "age_ans",
-                        "age_ans",
-                        "age_ans",
-                        "age_ans",
-                        "age_ans",
                         "age_ans"
                      ],
                      "condition":"age_ans == '0' || age_ans == '1' || age_ans == '2' || age_ans == '3' || age_ans == '4' || age_ans == '5'"
@@ -542,13 +599,20 @@
                   "conceptId":"poids",
                   "label":"Poids (kg)",
                   "bounds":{
-                     "maxLength":2
+                     "minValue":1,
+                     "maxValue":60,
+                     "precisionExact":1
                   }
                },
                {
                   "viewType":"number",
                   "conceptId":"temp_axil",
-                  "label":"Température axillaire"
+                  "label":"Température axillaire",
+                  "bounds":{
+                     "minValue":33,
+                     "maxValue":45,
+                     "precisionExact":1
+                  }
                }
             ]
          }
@@ -580,7 +644,7 @@
                   ]
                },
                {
-                  "viewType":"number",
+                  "viewType":"text",
                   "conceptId":"med_paracetamol_100",
                   "label":"Paracétamol 100mg",
                   "required":false,
@@ -592,7 +656,7 @@
                   }
                },
                {
-                  "viewType":"number",
+                  "viewType":"text",
                   "conceptId":"med_paracetamol_500",
                   "label":"Paracétamol 500mg",
                   "required":false,
@@ -604,7 +668,7 @@
                   }
                },
                {
-                  "viewType":"number",
+                  "viewType":"text",
                   "conceptId":"med_sro",
                   "label":"SRO",
                   "required":false,
@@ -616,7 +680,7 @@
                   }
                },
                {
-                  "viewType":"number",
+                  "viewType":"text",
                   "conceptId":"med_zinc",
                   "label":"Zinc",
                   "required":false,
@@ -628,7 +692,7 @@
                   }
                },
                {
-                  "viewType":"number",
+                  "viewType":"text",
                   "conceptId":"med_coartem",
                   "label":"Coartem",
                   "required":false,
@@ -640,7 +704,7 @@
                   }
                },
                {
-                  "viewType":"number",
+                  "viewType":"text",
                   "conceptId":"med_amox",
                   "label":"Amoxicilline",
                   "required":false,
@@ -652,7 +716,7 @@
                   }
                },
                {
-                  "viewType":"number",
+                  "viewType":"text",
                   "conceptId":"med_gris",
                   "label":"Griséofulvine",
                   "required":false,
@@ -664,7 +728,7 @@
                   }
                },
                {
-                  "viewType":"number",
+                  "viewType":"text",
                   "conceptId":"med_gris_pom",
                   "label":"Griséofulvine pommade",
                   "required":false,
@@ -676,7 +740,7 @@
                   }
                },
                {
-                  "viewType":"number",
+                  "viewType":"text",
                   "conceptId":"med_benzoate",
                   "required":false,
                   "showIf":{
@@ -688,7 +752,7 @@
                   "label":"Benzoate de benzyle (ou autre)"
                },
                {
-                  "viewType":"number",
+                  "viewType":"text",
                   "conceptId":"med_plumpy",
                   "label":"Plumpy nut",
                   "required":false,
@@ -700,7 +764,7 @@
                   }
                },
                {
-                  "viewType":"number",
+                  "viewType":"text",
                   "conceptId":"med_fer",
                   "label":"Fer",
                   "required":false,
@@ -712,6 +776,36 @@
                   }
                },
                {
+                  "viewType":"radio",
+                  "conceptId":"med_reference",
+                  "label":"Référence au centre de santé ou à l’hôpital de district",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Oui"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Non"
+                     }
+                  ]
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"med_autre",
+                  "label":"Autre",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Oui"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Non"
+                     }
+                  ]
+               },
+               {
                   "viewType":"text",
                   "conceptId":"med_autre_detail",
                   "label":"Préciser:",
@@ -719,7 +813,7 @@
                      "conceptIds":[
                         "med_autre"
                      ],
-                     "condition":"med_autre == true"
+                     "condition":"med_autre == '1'"
                   }
                }
             ]
@@ -3963,6 +4057,7 @@
                   "viewType":"date",
                   "conceptId":"reference_date_RDV",
                   "label":"Date de rendez vous à l'hôpital / en décentralisation",
+                  "required":false,
                   "showIf":{
                      "conceptIds":[
                         "lesion1_type",
@@ -3988,6 +4083,7 @@
                   "viewType":"text",
                   "conceptId":"reference_remarques",
                   "label":"Remarques (transport offert...)",
+                  "required":false,
                   "showIf":{
                      "conceptIds":[
                         "lesion1_type",
