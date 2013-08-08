@@ -108,7 +108,7 @@ PageView = Backbone.View.extend({
 	
 	beforeShow : function() {
 		this.footer.refresh();
-		$.mobile.silentScroll(0);
+//		$.mobile.silentScroll(0);
 		
 		this.trigger('pagebeforeshow', this);
 	},

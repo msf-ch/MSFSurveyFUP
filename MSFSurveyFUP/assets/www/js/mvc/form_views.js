@@ -21,6 +21,7 @@ FormItemViewModel = Backbone.Model.extend({
 		checkboxgroupBounds : undefined, //{minSelections: 0}
 		calculatedValue : undefined, //{conceptIds : ["conceptId1"], functionCode : "return conceptId1 + ', and detail'"}
 		horizontalMode : false,
+		hiddenMode : false,
 		required : true
 	},
 	
@@ -109,6 +110,10 @@ FormItemView = Backbone.View.extend({
 	
 	renderDefault : function() {
 		this.$el.attr('id', this.id).attr('formview', this.model.get('viewType')).data('form-item-view', this).addClass('formview');
+		
+		if (this.model.get('hiddenMode')) {
+			this.$el.hide();
+		}
 		
 		this.$el.html(this.template({model : this.model, view : this}));
 		if (this.registered) {
@@ -627,7 +632,7 @@ PhotoView = FormItemView.extend({
 		this.$el.find("img.photo").hide();
 	},
 	
-	photoFolder : "msfImages",
+	photoFolder : "msf-images",
 	
 	cameraOptions : { 
 		quality : 100,
@@ -727,7 +732,10 @@ GPSAcquireView = FormItemView.extend({
 	},
 	
 	initialize2 : function() {
-		this.acquireGPS();
+		var $this = this;
+		FormApp.on("initializeObs", function() {
+			$this.acquireGPS.apply($this, []);
+		});
 	},
 	
 	render : function() {
@@ -751,6 +759,7 @@ GPSAcquireView = FormItemView.extend({
 	
 	acquireSuccess : function(position) {
 		this.value = position;
+		this.defaultValueChanged();
 		
 //		var conceptId = this.model.get("conceptId");
 //		ObsService.setObs(conceptId + "_longitude", position.coords.longitude);
@@ -769,6 +778,7 @@ GPSAcquireView = FormItemView.extend({
 	
 	acquireFail : function(error) {
 		this.value = error;
+		this.defaultValueChanged();
 
 //		var conceptId = this.model.get("conceptId");
 //		ObsService.setObs(conceptId + "_longitude", "");
@@ -783,7 +793,6 @@ GPSAcquireView = FormItemView.extend({
 //		ObsService.setObs(conceptId + "_errorcode", error.code);
 //		ObsService.setObs(conceptId + "_errormessage", error.message);
 		
-		this.defaultValueChanged();
 	},
 	
 	getValue : function() {

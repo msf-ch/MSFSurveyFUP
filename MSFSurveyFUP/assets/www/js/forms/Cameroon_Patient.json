@@ -29,12 +29,13 @@
             "views":[
                {
                   "viewType":"html",
-                  "htmlContent":"<script>function generateId() {var d = new Date();var date = \"0\" + d.getDate();date = date.substr(date.length - 2);var month = \"0\" + (d.getMonth() + 1);month = month.substr(month.length - 2);var year = \"\" + d.getFullYear();year = year.substr(year.length - 2);var surveyorId = ObsService.getObs(\"numenq\");var numberOfIdDigits = 5;var idIterator = window.localStorage.getItem(\"idIterator\");if (!idIterator) {idIterator = 1;}var formattedIdIterator = idIterator + \"\";while (formattedIdIterator.length < numberOfIdDigits) {formattedIdIterator = \"0\" + formattedIdIterator }var idCompiled = year + month + date + \"-\" + surveyorId + \"-\" + formattedIdIterator;return idCompiled;}FormApp.on(\"registerViews\",function(){var surveyor = window.localStorage.getItem(\"surveyor\");if(surveyor){ObsService.setObs(\"numenq\", surveyor)} if(!ObsService.getObs(\"id_num\")){var idCompiled = generateId();ObsService.setObs(\"id_num\", idCompiled);var idIterator = window.localStorage.getItem(\"idIterator\");window.localStorage.setItem(\"idIterator\", idIterator + 1)}}); obsList.on(\"changeObsValue:numenq\", function(model, value, options) {var idCompiled = generateId();ObsService.setObs(\"id_num\", idCompiled);});</script>"
+                  "htmlContent":"<script>function generateId() {var d = new Date();var date = \"0\" + d.getDate();date = date.substr(date.length - 2);var month = \"0\" + (d.getMonth() + 1);month = month.substr(month.length - 2);var year = \"\" + d.getFullYear();year = year.substr(year.length - 2);var surveyorId = ObsService.getObs(\"numenq\");var numberOfIdDigits = 5;var idIterator = window.localStorage.getItem(\"idIterator\");if (!idIterator) {idIterator = 1;}var formattedIdIterator = idIterator + \"\";while (formattedIdIterator.length < numberOfIdDigits) {formattedIdIterator = \"0\" + formattedIdIterator }var idCompiled = year + month + date + \"-\" + surveyorId + \"-\" + formattedIdIterator;return idCompiled;}FormApp.on(\"initializeObs\",function(){var surveyor = window.localStorage.getItem(\"surveyor\");if(surveyor){ObsService.setObs(\"numenq\", surveyor)} if(!ObsService.getObs(\"id_num\")){var idIterator = window.localStorage.getItem(\"idIterator\"); if(!idIterator) {idIterator = 0} window.localStorage.setItem(\"idIterator\", parseInt(idIterator) + 1);var idCompiled = generateId();ObsService.setObs(\"id_num\", idCompiled);}}); obsList.on(\"changeObsValue:numenq\", function(model, value, options) {var idCompiled = generateId();ObsService.setObs(\"id_num\", idCompiled);});</script>"
                },
                {
                   "viewType":"gps",
                   "conceptId":"gps",
-                  "label":"GPS"
+                  "label":"GPS",
+                  "hiddenMode":true
                },
                {
                   "viewType":"text",
@@ -46,11 +47,7 @@
                      ],
                      "functionCode" : "if (gps) {var $gps = JSON.parse(gps); if ($gps.coords) {return $gps.coords.longitude;}} return '';"
                   },
-                  "showIf":{
-                     "conceptIds":[
-                     ],
-                     "condition":"false"
-                  }
+                  "hiddenMode":true
                },
                {
                   "viewType":"text",
@@ -62,11 +59,7 @@
                      ],
                      "functionCode" : "if (gps) {var $gps = JSON.parse(gps); if ($gps.coords) {return $gps.coords.latitude;}} return '';"
                   },
-                  "showIf":{
-                     "conceptIds":[
-                     ],
-                     "condition":"false"
-                  }
+                  "hiddenMode":true
                },
                {
                   "viewType":"text",
@@ -78,11 +71,7 @@
                      ],
                      "functionCode" : "if (gps) {var $gps = JSON.parse(gps); if ($gps.coords) {return $gps.coords.accuracy;}} return '';"
                   },
-                  "showIf":{
-                     "conceptIds":[
-                     ],
-                     "condition":"false"
-                  }
+                  "hiddenMode":true
                },
                {
                   "viewType":"text",
@@ -94,11 +83,7 @@
                      ],
                      "functionCode" : "if (gps) {var $gps = JSON.parse(gps); if ($gps.coords) {return $gps.coords.altitude;}} return '';"
                   },
-                  "showIf":{
-                     "conceptIds":[
-                     ],
-                     "condition":"false"
-                  }
+                  "hiddenMode":true
                },
                {
                   "viewType":"text",
@@ -110,11 +95,7 @@
                      ],
                      "functionCode" : "if (gps) {var $gps = JSON.parse(gps); if ($gps.coords) {return $gps.coords.altitudeAccuracy;}} return '';"
                   },
-                  "showIf":{
-                     "conceptIds":[
-                     ],
-                     "condition":"false"
-                  }
+                  "hiddenMode":true
                },
                {
                   "viewType":"text",
@@ -126,11 +107,13 @@
                      ],
                      "functionCode" : "if (gps) {var $gps = JSON.parse(gps); if ($gps.coords) {return $gps.timestamp;}} return '';"
                   },
-                  "showIf":{
-                     "conceptIds":[
-                     ],
-                     "condition":"false"
-                  }
+                  "hiddenMode":true
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"id_num",
+                  "label":"Patient ID num",
+                  "hiddenMode":true
                },
                {
                   "viewType":"radio",

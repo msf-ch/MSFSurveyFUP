@@ -26,14 +26,14 @@ FormService = _.extend({
 		this.views.push(view);
 		this.addListeners(view);
 		
-		var conceptId = view.model.get('conceptId');
-		if (conceptId && view.hasValue) {
-			var value = ObsService.getObs(conceptId);
-			
-			if (value) {
-				view.setValue(value);
-			}
-		}
+//		var conceptId = view.model.get('conceptId');
+//		if (conceptId && view.hasValue) {
+//			var value = ObsService.getObs(conceptId);
+//			
+//			if (value) {
+//				view.setValue(value);
+//			}
+//		}
 	},
 	
 	unregisterView : function(view) {
@@ -46,6 +46,17 @@ FormService = _.extend({
 	addListeners : function(view) {
 		if(view.hasValue) {
 			view.on('viewValueChange', FormService.viewValueChange);
+		}
+		
+		var conceptId = view.model.get("conceptId");
+		if (conceptId) {
+			view.listenTo(obsList, "initialize changeObsValue:" + view.model.get("conceptId"), function() {
+				var viewValue = view.getValue();
+				var modelValue = ObsService.getObs(view.model.get("conceptId"));
+				if (viewValue != modelValue) {
+					view.setValue(modelValue);
+				}
+			});
 		}
 
 		var hideIf = view.model.get('hideIf');
