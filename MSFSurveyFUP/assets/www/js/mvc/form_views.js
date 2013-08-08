@@ -627,6 +627,8 @@ PhotoView = FormItemView.extend({
 		this.$el.find("img.photo").hide();
 	},
 	
+	photoFolder : "msfImages",
+	
 	cameraOptions : { 
 		quality : 100,
 		sourceType : Camera.PictureSourceType.CAMERA,
@@ -643,8 +645,12 @@ PhotoView = FormItemView.extend({
 		navigator.camera.getPicture(function(imageURI) {
 			//onSuccess
 		    var n = new Date().getTime();
+		    var idNum = ObsService.getObs("id_num");
+		    if (idNum) {
+		    	n = idNum + "-" + n;
+		    }
 		    var newFileName = n + ".jpg";
-		    var myFolderApp = "msfImages";
+		    var myFolderApp = $this.photoFolder;
 			
 		    var onError = function(error) {
 		    	console.error("Error moving image... " + JSON.stringify(error));
@@ -662,7 +668,7 @@ PhotoView = FormItemView.extend({
 		                        	console.log("Directory is: " + JSON.stringify(directory));
 			                        entry.moveTo(directory, newFileName,  function(entry) {
 			                        	console.log("Entry is: " + JSON.stringify(entry));
-				                        $this.setValue(entry.fullPath)
+				                        $this.setValue(entry.name)
 				                		$this.defaultValueChanged();
 			                        }, onError);
 			                    },
@@ -681,15 +687,31 @@ PhotoView = FormItemView.extend({
 	},
 	
 	getValue : function() {
-		return this.$el.find("input.image-uri").val();
+		return this.$el.find("input.imageuri").val();
 	},
 	
-	setValue : function(imageURI) {
-		this.$el.find("input.imageuri").val(imageURI);
-		var img = this.$el.find("img.photo").attr("src", imageURI);
-		
-		if (imageURI) {
+	setValue : function(imageName) {
+		var $this = this;
+		var photoFolder = this.photoFolder;
+		this.$el.find("input.imageuri").val(imageName);
+
+		if (imageName) {
 			img.show();
+			//resolve the folder
+			window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, 
+				function(fileSys) {
+			    	fileSys.root.getDirectory( photoFolder,
+	                    {create:true, exclusive: false},
+	                    function(directory) {
+	                    	var path = directory.fullPath + "/" + imageName;
+	                    	console.log("Photo path: " + path);
+	                		var img = $this.$el.find("img.photo").attr("src", path);
+	                    },
+	                    function(error) {}
+	                );
+				},
+				function(error){}
+			);
 		} else {
 			img.hide();
 		}
