@@ -525,7 +525,7 @@ ValidationService = _.extend({
 		var value = view.getValue();
 		var errors = [];
 		
-		if (view.model.get('required') && view.hasValue && (value === undefined || value === '')) {
+		if (view.model.get('required') && view.hasValue && !view.model.get('hiddenMode') && (value === undefined || value === '')) {
 			errors.push("La réponse à cette question est obligatoire."); //This field is required, please enter a value.
 		}
 		return errors;
