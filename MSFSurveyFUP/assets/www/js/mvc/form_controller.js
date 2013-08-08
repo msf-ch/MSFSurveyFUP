@@ -85,6 +85,8 @@ FormService = _.extend({
 	},
 	
 	submit : function(complete) {
+		FormApp.trigger("formSubmit", {"complete":complete});
+		
 		var encounterToSave = {};
 		if (encounter) {
 			encounterToSave = encounter;
@@ -125,6 +127,7 @@ FormService = _.extend({
 	},
 	
 	submitSuccessCallback : function(args) {
+		FormApp.trigger("formSubmitComplete");
 		document.location.href = "home.html";
 	},
 	

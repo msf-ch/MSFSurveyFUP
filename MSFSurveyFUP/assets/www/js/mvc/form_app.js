@@ -10,29 +10,32 @@
  * Initialize services
  * 	initServices
  * 	initServicesComplete
+ * 
  * 	initViewClasses
  * 	initViewClassesComplete
  * 	
  * Load data
  * 	loadData
- * 	loadDataStart
  * 	loadDataComplete
  * 
  * Form creation
- * 	setFormModelStart
+ * 	setFormModel
  * 	setFormModelComplete
  * 	
  * 	setPageModels
- * 	setPageModelsStart
  * 	setPageModelsComplete
  * 
  * 	renderPages
- * 	renderPagesStart
  * 	renderPagesComplete
  * 
  * 	enterForm
- * 	enterFormStart
  * 	enterFormComplete
+ * 
+ * 
+ * 
+ * Form submission
+ *  formSubmit
+ *  formSubmitComplete
  */	
 FormApp = _.extend({
 	start : function() {
@@ -187,7 +190,8 @@ FormApp = _.extend({
 				console.log("Time for load form: " + loadFormTime);
 			})
 			.fail(function(jqXHR, textStatus, errorThrown) {
-				console.error(textStatus + ":\n" + jqXHR.responseText)
+				console.error("Error with ajax for form file: " + formFilePath);
+				console.error(textStatus + ":\n" + jqXHR.responseText);
 			});
 	}
 }, Backbone.Events);
