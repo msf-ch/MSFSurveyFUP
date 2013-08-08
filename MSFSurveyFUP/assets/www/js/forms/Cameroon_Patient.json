@@ -514,7 +514,8 @@
                   "label":"Préciser:",
                   "showIf":{
                      "conceptIds":[
-                        "morb_autre"
+                        "morb_autre",
+                        "pas_problem_medical"
                      ],
                      "condition":"morb_autre == true && pas_problem_medical == false"
                   }
@@ -628,6 +629,21 @@
          "content":{
             "theme":"c",
             "views":[
+               {
+                  "viewType":"radio",
+                  "conceptId":"med_reference",
+                  "label":"Référence au centre de santé ou à l’hôpital de district",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Oui"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Non"
+                     }
+                  ]
+               },
                {
                   "viewType":"radio",
                   "conceptId":"medicament_prescrit",
@@ -777,21 +793,6 @@
                },
                {
                   "viewType":"radio",
-                  "conceptId":"med_reference",
-                  "label":"Référence au centre de santé ou à l’hôpital de district",
-                  "options":[
-                     {
-                        "value":"1",
-                        "label":"Oui"
-                     },
-                     {
-                        "value":"2",
-                        "label":"Non"
-                     }
-                  ]
-               },
-               {
-                  "viewType":"radio",
                   "conceptId":"med_autre",
                   "label":"Autre",
                   "options":[
@@ -803,7 +804,13 @@
                         "value":"2",
                         "label":"Non"
                      }
-                  ]
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "medicament_prescrit"
+                     ],
+                     "condition":"medicament_prescrit == '1'"
+                  }
                },
                {
                   "viewType":"text",
