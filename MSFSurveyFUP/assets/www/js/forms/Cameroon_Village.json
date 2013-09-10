@@ -36,14 +36,15 @@
                   "viewType":"text",
                   "conceptId":"gps_long",
                   "label":"Longitude",
-                  "calculatedValue": {
-                     "conceptIds" : [
+                  "calculatedValue":{
+                     "conceptIds":[
                         "gps"
                      ],
-                     "functionCode" : "if (gps) {var $gps = JSON.parse(gps); if ($gps.coords) {return $gps.coords.longitude;}} return '';"
+                     "functionCode":"if (gps) {var $gps = JSON.parse(gps); if ($gps.coords) {return $gps.coords.longitude;}} return '';"
                   },
                   "showIf":{
                      "conceptIds":[
+
                      ],
                      "condition":"false"
                   }
@@ -52,14 +53,15 @@
                   "viewType":"text",
                   "conceptId":"gps_lat",
                   "label":"Latitude",
-                  "calculatedValue": {
-                     "conceptIds" : [
+                  "calculatedValue":{
+                     "conceptIds":[
                         "gps"
                      ],
-                     "functionCode" : "if (gps) {var $gps = JSON.parse(gps); if ($gps.coords) {return $gps.coords.latitude;}} return '';"
+                     "functionCode":"if (gps) {var $gps = JSON.parse(gps); if ($gps.coords) {return $gps.coords.latitude;}} return '';"
                   },
                   "showIf":{
                      "conceptIds":[
+
                      ],
                      "condition":"false"
                   }
@@ -68,14 +70,15 @@
                   "viewType":"text",
                   "conceptId":"gps_accuracy",
                   "label":"Accuracy",
-                  "calculatedValue": {
-                     "conceptIds" : [
+                  "calculatedValue":{
+                     "conceptIds":[
                         "gps"
                      ],
-                     "functionCode" : "if (gps) {var $gps = JSON.parse(gps); if ($gps.coords) {return $gps.coords.accuracy;}} return '';"
+                     "functionCode":"if (gps) {var $gps = JSON.parse(gps); if ($gps.coords) {return $gps.coords.accuracy;}} return '';"
                   },
                   "showIf":{
                      "conceptIds":[
+
                      ],
                      "condition":"false"
                   }
@@ -84,14 +87,15 @@
                   "viewType":"text",
                   "conceptId":"gps_altitude",
                   "label":"Altitude",
-                  "calculatedValue": {
-                     "conceptIds" : [
+                  "calculatedValue":{
+                     "conceptIds":[
                         "gps"
                      ],
-                     "functionCode" : "if (gps) {var $gps = JSON.parse(gps); if ($gps.coords) {return $gps.coords.altitude;}} return '';"
+                     "functionCode":"if (gps) {var $gps = JSON.parse(gps); if ($gps.coords) {return $gps.coords.altitude;}} return '';"
                   },
                   "showIf":{
                      "conceptIds":[
+
                      ],
                      "condition":"false"
                   }
@@ -100,14 +104,15 @@
                   "viewType":"text",
                   "conceptId":"gps_altaccuracy",
                   "label":"Altitude accuracy",
-                  "calculatedValue": {
-                     "conceptIds" : [
+                  "calculatedValue":{
+                     "conceptIds":[
                         "gps"
                      ],
-                     "functionCode" : "if (gps) {var $gps = JSON.parse(gps); if ($gps.coords) {return $gps.coords.altitudeAccuracy;}} return '';"
+                     "functionCode":"if (gps) {var $gps = JSON.parse(gps); if ($gps.coords) {return $gps.coords.altitudeAccuracy;}} return '';"
                   },
                   "showIf":{
                      "conceptIds":[
+
                      ],
                      "condition":"false"
                   }
@@ -116,14 +121,15 @@
                   "viewType":"text",
                   "conceptId":"gps_timestamp",
                   "label":"Timestamp",
-                  "calculatedValue": {
-                     "conceptIds" : [
+                  "calculatedValue":{
+                     "conceptIds":[
                         "gps"
                      ],
-                     "functionCode" : "if (gps) {var $gps = JSON.parse(gps); if ($gps.coords) {return $gps.timestamp;}} return '';"
+                     "functionCode":"if (gps) {var $gps = JSON.parse(gps); if ($gps.coords) {return $gps.timestamp;}} return '';"
                   },
                   "showIf":{
                      "conceptIds":[
+
                      ],
                      "condition":"false"
                   }
@@ -131,68 +137,61 @@
                {
                   "viewType":"select",
                   "conceptId":"nom_lieu",
+                  "label":"Nom du lieu:"
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"aire_sante",
+                  "label":"Aire de santé",
                   "options":[
-					{"value":"CM1","label":"Abangadjap"},
-					{"value":"CM2","label":"Assom"},
-					{"value":"CM3","label":"Atsamane"},
-					{"value":"CM4","label":"Bala"},
-					{"value":"CM5","label":"Bidjong"},
-					{"value":"CM6","label":"Bissobinam"},
-					{"value":"CM7","label":"Bitsokadjap"},
-					{"value":"CM8","label":"Bombo"},
-					{"value":"CM9","label":"Bong"},
-					{"value":"CM10","label":"Djeng"},
-					{"value":"CM11","label":"Dou"},
-					{"value":"CM12","label":"Doumou"},
-					{"value":"CM13","label":"Ebodoumon"},
-					{"value":"CM14","label":"Ekombitié"},
-					{"value":"CM15","label":"Ekoudou"},
-					{"value":"CM16","label":"Ekoumdoum"},
-					{"value":"CM17","label":"Elombo"},
-					{"value":"CM18","label":"Engongo"},
-					{"value":"CM19","label":"EP Zanda"},
-					{"value":"CM20","label":"Eyakeme 1"},
-					{"value":"CM21","label":"Eyandi"},
-					{"value":"CM22","label":"Eyeck 1"},
-					{"value":"CM23","label":"Eyeck 2"},
-					{"value":"CM24","label":"Eyende"},
-					{"value":"CM25","label":"Fone"},
-					{"value":"CM26","label":"Kane"},
-					{"value":"CM27","label":"Ken"},
-					{"value":"CM28","label":"Kondane"},
-					{"value":"CM29","label":"Kop"},
-					{"value":"CM30","label":"Koum"},
-					{"value":"CM31","label":"Lala"},
-					{"value":"CM32","label":"Lembe"},
-					{"value":"CM33","label":"Mba'a"},
-					{"value":"CM34","label":"Mbaldjap"},
-					{"value":"CM35","label":"Medjap"},
-					{"value":"CM36","label":"Medzek"},
-					{"value":"CM37","label":"Melen"},
-					{"value":"CM38","label":"Mengana"},
-					{"value":"CM39","label":"Meyamaya"},
-					{"value":"CM40","label":"Meyos 1"},
-					{"value":"CM41","label":"Mingueme"},
-					{"value":"CM42","label":"Minlop"},
-					{"value":"CM43","label":"Mouma"},
-					{"value":"CM44","label":"Mvane"},
-					{"value":"CM45","label":"Ndibidjeng"},
-					{"value":"CM46","label":"Ndjong Medzap"},
-					{"value":"CM47","label":"Ndoundou"},
-					{"value":"CM48","label":"Ngoa Edjogo"},
-					{"value":"CM49","label":"Ngonanga"},
-					{"value":"CM50","label":"Ngoulemekong"},
-					{"value":"CM51","label":"Nkoambang"},
-					{"value":"CM52","label":"Nkoumbadjap"},
-					{"value":"CM53","label":"Nkout"},
-					{"value":"CM54","label":"Oveng"},
-					{"value":"CM55","label":"Sam"},
-					{"value":"CM56","label":"Sess"},
-					{"value":"CM57","label":"Tap"},
-					{"value":"CM58","label":"Todo"},
-					{"value":"CM59","label":"Yeme"},
-					{"value":"CM60","label":"Yeme Yeme"},
-					{"value":"CM61","label":"Yil"}
+                     {
+                        "value":"Akonolinga Ville",
+                        "label":"Akonolinga Ville"
+                     },
+                     {
+                        "value":"Abem",
+                        "label":"Abem"
+                     },
+                     {
+                        "value":"Akak",
+                        "label":"Akak"
+                     },
+                     {
+                        "value":"Djoudjoua",
+                        "label":"Djoudjoua"
+                     },
+                     {
+                        "value":"Edjom",
+                        "label":"Edjom"
+                     },
+                     {
+                        "value":"Ekoudou",
+                        "label":"Ekoudou"
+                     },
+                     {
+                        "value":"Envane Sso",
+                        "label":"Envane Sso"
+                     },
+                     {
+                        "value":"Endom",
+                        "label":"Endom"
+                     },
+                     {
+                        "value":"Mengang",
+                        "label":"Mengang"
+                     },
+                     {
+                        "value":"Mengueme Ssi",
+                        "label":"Mengueme Ssi"
+                     },
+                     {
+                        "value":"Zalom",
+                        "label":"Zalom"
+                     },
+                     {
+                        "value":"Yeme Yeme",
+                        "label":"Yeme Yeme"
+                     }
                   ]
                },
                {

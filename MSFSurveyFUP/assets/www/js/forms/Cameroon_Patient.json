@@ -29,7 +29,7 @@
             "views":[
                {
                   "viewType":"html",
-                  "htmlContent":"<script>function generateId() {var d = new Date();var date = \"0\" + d.getDate();date = date.substr(date.length - 2);var month = \"0\" + (d.getMonth() + 1);month = month.substr(month.length - 2);var year = \"\" + d.getFullYear();year = year.substr(year.length - 2);var surveyorId = ObsService.getObs(\"numenq\");var numberOfIdDigits = 5;var idIterator = window.localStorage.getItem(\"idIterator\");if (!idIterator) {idIterator = 1;}var formattedIdIterator = idIterator + \"\";while (formattedIdIterator.length < numberOfIdDigits) {formattedIdIterator = \"0\" + formattedIdIterator }var idCompiled = year + month + date + \"-\" + surveyorId + \"-\" + formattedIdIterator;return idCompiled;}FormApp.on(\"initializeObs\",function(){var surveyor = window.localStorage.getItem(\"surveyor\");if(surveyor){ObsService.setObs(\"numenq\", surveyor)} if(!ObsService.getObs(\"id_num\")){var idIterator = window.localStorage.getItem(\"idIterator\"); if(!idIterator) {idIterator = 0} window.localStorage.setItem(\"idIterator\", parseInt(idIterator) + 1);var idCompiled = generateId();ObsService.setObs(\"id_num\", idCompiled);}}); obsList.on(\"changeObsValue:numenq\", function(model, value, options) {var idCompiled = generateId();ObsService.setObs(\"id_num\", idCompiled);});</script>"
+                  "htmlContent":"<script>function generateId() {var d = new Date();var date = \"0\" + d.getDate();date = date.substr(date.length - 2);var month = \"0\" + (d.getMonth() + 1);month = month.substr(month.length - 2);var year = \"\" + d.getFullYear();year = year.substr(year.length - 2);var surveyorId = ObsService.getObs(\"num_enq\");var numberOfIdDigits = 5;var idIterator = window.localStorage.getItem(\"idIterator\");if (!idIterator) {idIterator = 1;}var formattedIdIterator = idIterator + \"\";while (formattedIdIterator.length < numberOfIdDigits) {formattedIdIterator = \"0\" + formattedIdIterator }var idCompiled = year + month + date + \"-\" + surveyorId + \"-\" + formattedIdIterator;return idCompiled;}FormApp.on(\"initializeObs\",function(){var surveyor = window.localStorage.getItem(\"surveyor\");if(surveyor){ObsService.setObs(\"num_enq\", surveyor)} if(!ObsService.getObs(\"id_num\")){var idIterator = window.localStorage.getItem(\"idIterator\"); if(!idIterator) {idIterator = 0} window.localStorage.setItem(\"idIterator\", parseInt(idIterator) + 1);var idCompiled = generateId();ObsService.setObs(\"id_num\", idCompiled);}}); obsList.on(\"changeObsValue:num_enq\", function(model, value, options) {var idCompiled = generateId();ObsService.setObs(\"id_num\", idCompiled);});</script>"
                },
                {
                   "viewType":"gps",
@@ -113,11 +113,23 @@
                   "viewType":"text",
                   "conceptId":"id_num",
                   "label":"Patient ID num",
-                  "hiddenMode":true
+                  "disabled":true
+               },
+               {
+                  "viewType":"date",
+                  "conceptId":"screening_date",
+                  "label":"Date du screening",
+                  "disabled":true,
+                  "calculatedValue":{
+                     "conceptIds":[
+
+                     ],
+                     "functionCode":"_view.$el.find('input').mobiscroll('setDate', new Date(), true);"
+                  }
                },
                {
                   "viewType":"radio",
-                  "conceptId":"numenq",
+                  "conceptId":"num_enq",
                   "label":"Numéro de l'enquêteur",
                   "horizontalMode":"true",
                   "options":[
@@ -296,16 +308,42 @@
                },
                {
                   "viewType":"radio",
+                  "conceptId":"patient_accompagne",
+                  "label":"Accompagné par les parents",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Oui"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Non"
+                     }
+                  ]
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"accompagne_nom",
+                  "label":"Nom de l'accompagnant",
+                  "showIf":{
+                     "conceptIds":[
+                        "patient_accompagne"
+                     ],
+                     "condition":"patient_accompagne == '1'"
+                  }
+               },
+               {
+                  "viewType":"radio",
                   "conceptId":"scolarise",
                   "label":"Est-ce que l'enfant est scolarisé?",
                   "options":[
                      {
                         "value":"1",
-                        "label":"oui"
+                        "label":"Oui"
                      },
                      {
                         "value":"2",
-                        "label":"non"
+                        "label":"Non"
                      }
                   ]
                },
@@ -631,21 +669,6 @@
             "views":[
                {
                   "viewType":"radio",
-                  "conceptId":"med_reference",
-                  "label":"Référence au centre de santé ou à l’hôpital de district",
-                  "options":[
-                     {
-                        "value":"1",
-                        "label":"Oui"
-                     },
-                     {
-                        "value":"2",
-                        "label":"Non"
-                     }
-                  ]
-               },
-               {
-                  "viewType":"radio",
                   "conceptId":"medicament_prescrit",
                   "label":"Un médicament a-t-il été prescrit ?",
                   "options":[
@@ -709,8 +732,44 @@
                },
                {
                   "viewType":"text",
+                  "conceptId":"med_artesunate",
+                  "label":"Artesunate",
+                  "required":false,
+                  "showIf":{
+                     "conceptIds":[
+                        "medicament_prescrit"
+                     ],
+                     "condition":"medicament_prescrit == '1'"
+                  }
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"med_artemether",
+                  "label":"Artemether",
+                  "required":false,
+                  "showIf":{
+                     "conceptIds":[
+                        "medicament_prescrit"
+                     ],
+                     "condition":"medicament_prescrit == '1'"
+                  }
+               },
+               {
+                  "viewType":"text",
                   "conceptId":"med_coartem",
                   "label":"Coartem",
+                  "required":false,
+                  "showIf":{
+                     "conceptIds":[
+                        "medicament_prescrit"
+                     ],
+                     "condition":"medicament_prescrit == '1'"
+                  }
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"med_quinine",
+                  "label":"Quinine",
                   "required":false,
                   "showIf":{
                      "conceptIds":[
@@ -769,6 +828,30 @@
                },
                {
                   "viewType":"text",
+                  "conceptId":"med_metronidazol",
+                  "label":"Metronidazole",
+                  "required":false,
+                  "showIf":{
+                     "conceptIds":[
+                        "medicament_prescrit"
+                     ],
+                     "condition":"medicament_prescrit == '1'"
+                  }
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"med_albendazol",
+                  "label":"Albendazole",
+                  "required":false,
+                  "showIf":{
+                     "conceptIds":[
+                        "medicament_prescrit"
+                     ],
+                     "condition":"medicament_prescrit == '1'"
+                  }
+               },
+               {
+                  "viewType":"text",
                   "conceptId":"med_plumpy",
                   "label":"Plumpy nut",
                   "required":false,
@@ -821,6 +904,38 @@
                         "med_autre"
                      ],
                      "condition":"med_autre == '1'"
+                  }
+               },
+               {
+                  "viewType":"radio",
+                  "conceptId":"med_reference",
+                  "label":"Référence au centre de santé ou à l’hôpital de district",
+                  "options":[
+                     {
+                        "value":"1",
+                        "label":"Oui"
+                     },
+                     {
+                        "value":"2",
+                        "label":"Non"
+                     }
+                  ],
+                  "showIf":{
+                     "conceptIds":[
+                        "medicament_prescrit"
+                     ],
+                     "condition":"medicament_prescrit == '1'"
+                  }
+               },
+               {
+                  "viewType":"text",
+                  "conceptId":"med_lieu_reference",
+                  "label":"Lieu de référence",
+                  "showIf":{
+                     "conceptIds":[
+                        "med_reference"
+                     ],
+                     "condition":"med_reference == '1'"
                   }
                }
             ]
@@ -1108,15 +1223,6 @@
                   "label":"Photo de la lésion (vue de près):",
                   "showIf":{
                      "conceptIds":[
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
                         "lesion_nb"
                      ],
                      "condition":"lesion_nb == '1' || lesion_nb == '2' || lesion_nb == '3' || lesion_nb == '4' || lesion_nb == '5' || lesion_nb == '6' || lesion_nb == '7' || lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
@@ -1128,15 +1234,6 @@
                   "label":"Photo de la lésion (vue de loin):",
                   "showIf":{
                      "conceptIds":[
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
                         "lesion_nb"
                      ],
                      "condition":"lesion_nb == '1' || lesion_nb == '2' || lesion_nb == '3' || lesion_nb == '4' || lesion_nb == '5' || lesion_nb == '6' || lesion_nb == '7' || lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
@@ -1181,20 +1278,11 @@
                      },
                      {
                         "value":"9",
-                        "label":"Téte et cou"
+                        "label":"Tête et cou"
                      }
                   ],
                   "showIf":{
                      "conceptIds":[
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
                         "lesion_nb"
                      ],
                      "condition":"lesion_nb == '1' || lesion_nb == '2' || lesion_nb == '3' || lesion_nb == '4' || lesion_nb == '5' || lesion_nb == '6' || lesion_nb == '7' || lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
@@ -1230,14 +1318,6 @@
                   ],
                   "showIf":{
                      "conceptIds":[
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
                         "lesion_nb"
                      ],
                      "condition":"lesion_nb == '2' || lesion_nb == '3' || lesion_nb == '4' || lesion_nb == '5' || lesion_nb == '6' || lesion_nb == '7' || lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
@@ -1428,14 +1508,6 @@
                   "label":"Photo de la lésion (vue de près):",
                   "showIf":{
                      "conceptIds":[
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
                         "lesion_nb"
                      ],
                      "condition":"lesion_nb == '2' || lesion_nb == '3' || lesion_nb == '4' || lesion_nb == '5' || lesion_nb == '6' || lesion_nb == '7' || lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
@@ -1447,14 +1519,6 @@
                   "label":"Photo de la lésion (vue de loin):",
                   "showIf":{
                      "conceptIds":[
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
                         "lesion_nb"
                      ],
                      "condition":"lesion_nb == '2' || lesion_nb == '3' || lesion_nb == '4' || lesion_nb == '5' || lesion_nb == '6' || lesion_nb == '7' || lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
@@ -1499,19 +1563,11 @@
                      },
                      {
                         "value":"9",
-                        "label":"Téte et cou"
+                        "label":"Tête et cou"
                      }
                   ],
                   "showIf":{
                      "conceptIds":[
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
                         "lesion_nb"
                      ],
                      "condition":"lesion_nb == '2' || lesion_nb == '3' || lesion_nb == '4' || lesion_nb == '5' || lesion_nb == '6' || lesion_nb == '7' || lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
@@ -1547,13 +1603,6 @@
                   ],
                   "showIf":{
                      "conceptIds":[
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
                         "lesion_nb"
                      ],
                      "condition":"lesion_nb == '3' || lesion_nb == '4' || lesion_nb == '5' || lesion_nb == '6' || lesion_nb == '7' || lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
@@ -1744,13 +1793,6 @@
                   "label":"Photo de la lésion (vue de près):",
                   "showIf":{
                      "conceptIds":[
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
                         "lesion_nb"
                      ],
                      "condition":"lesion_nb == '3' || lesion_nb == '4' || lesion_nb == '5' || lesion_nb == '6' || lesion_nb == '7' || lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
@@ -1762,13 +1804,6 @@
                   "label":"Photo de la lésion (vue de loin):",
                   "showIf":{
                      "conceptIds":[
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
                         "lesion_nb"
                      ],
                      "condition":"lesion_nb == '3' || lesion_nb == '4' || lesion_nb == '5' || lesion_nb == '6' || lesion_nb == '7' || lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
@@ -1813,18 +1848,11 @@
                      },
                      {
                         "value":"9",
-                        "label":"Téte et cou"
+                        "label":"Tête et cou"
                      }
                   ],
                   "showIf":{
                      "conceptIds":[
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
                         "lesion_nb"
                      ],
                      "condition":"lesion_nb == '3' || lesion_nb == '4' || lesion_nb == '5' || lesion_nb == '6' || lesion_nb == '7' || lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
@@ -1860,12 +1888,6 @@
                   ],
                   "showIf":{
                      "conceptIds":[
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
                         "lesion_nb"
                      ],
                      "condition":"lesion_nb == '4' || lesion_nb == '5' || lesion_nb == '6' || lesion_nb == '7' || lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
@@ -2056,12 +2078,6 @@
                   "label":"Photo de la lésion (vue de près):",
                   "showIf":{
                      "conceptIds":[
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
                         "lesion_nb"
                      ],
                      "condition":"lesion_nb == '4' || lesion_nb == '5' || lesion_nb == '6' || lesion_nb == '7' || lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
@@ -2073,12 +2089,6 @@
                   "label":"Photo de la lésion (vue de loin):",
                   "showIf":{
                      "conceptIds":[
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
                         "lesion_nb"
                      ],
                      "condition":"lesion_nb == '4' || lesion_nb == '5' || lesion_nb == '6' || lesion_nb == '7' || lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
@@ -2123,17 +2133,11 @@
                      },
                      {
                         "value":"9",
-                        "label":"Téte et cou"
+                        "label":"Tête et cou"
                      }
                   ],
                   "showIf":{
                      "conceptIds":[
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
                         "lesion_nb"
                      ],
                      "condition":"lesion_nb == '4' || lesion_nb == '5' || lesion_nb == '6' || lesion_nb == '7' || lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
@@ -2169,11 +2173,6 @@
                   ],
                   "showIf":{
                      "conceptIds":[
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
                         "lesion_nb"
                      ],
                      "condition":"lesion_nb == '5' || lesion_nb == '6' || lesion_nb == '7' || lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
@@ -2364,11 +2363,6 @@
                   "label":"Photo de la lésion (vue de près):",
                   "showIf":{
                      "conceptIds":[
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
                         "lesion_nb"
                      ],
                      "condition":"lesion_nb == '5' || lesion_nb == '6' || lesion_nb == '7' || lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
@@ -2380,11 +2374,6 @@
                   "label":"Photo de la lésion (vue de loin):",
                   "showIf":{
                      "conceptIds":[
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
                         "lesion_nb"
                      ],
                      "condition":"lesion_nb == '5' || lesion_nb == '6' || lesion_nb == '7' || lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
@@ -2429,16 +2418,11 @@
                      },
                      {
                         "value":"9",
-                        "label":"Téte et cou"
+                        "label":"Tête et cou"
                      }
                   ],
                   "showIf":{
                      "conceptIds":[
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
                         "lesion_nb"
                      ],
                      "condition":"lesion_nb == '5' || lesion_nb == '6' || lesion_nb == '7' || lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
@@ -2474,10 +2458,6 @@
                   ],
                   "showIf":{
                      "conceptIds":[
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
                         "lesion_nb"
                      ],
                      "condition":"lesion_nb == '6' || lesion_nb == '7' || lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
@@ -2668,10 +2648,6 @@
                   "label":"Photo de la lésion (vue de près):",
                   "showIf":{
                      "conceptIds":[
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
                         "lesion_nb"
                      ],
                      "condition":"lesion_nb == '6' || lesion_nb == '7' || lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
@@ -2683,10 +2659,6 @@
                   "label":"Photo de la lésion (vue de loin):",
                   "showIf":{
                      "conceptIds":[
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
                         "lesion_nb"
                      ],
                      "condition":"lesion_nb == '6' || lesion_nb == '7' || lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
@@ -2731,15 +2703,11 @@
                      },
                      {
                         "value":"9",
-                        "label":"Téte et cou"
+                        "label":"Tête et cou"
                      }
                   ],
                   "showIf":{
                      "conceptIds":[
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
                         "lesion_nb"
                      ],
                      "condition":"lesion_nb == '6' || lesion_nb == '7' || lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
@@ -2775,9 +2743,6 @@
                   ],
                   "showIf":{
                      "conceptIds":[
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
                         "lesion_nb"
                      ],
                      "condition":"lesion_nb == '7' || lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
@@ -2968,9 +2933,6 @@
                   "label":"Photo de la lésion (vue de près):",
                   "showIf":{
                      "conceptIds":[
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
                         "lesion_nb"
                      ],
                      "condition":"lesion_nb == '7' || lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
@@ -2982,9 +2944,6 @@
                   "label":"Photo de la lésion (vue de loin):",
                   "showIf":{
                      "conceptIds":[
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
                         "lesion_nb"
                      ],
                      "condition":"lesion_nb == '7' || lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
@@ -3029,14 +2988,11 @@
                      },
                      {
                         "value":"9",
-                        "label":"Téte et cou"
+                        "label":"Tête et cou"
                      }
                   ],
                   "showIf":{
                      "conceptIds":[
-                        "lesion_nb",
-                        "lesion_nb",
-                        "lesion_nb",
                         "lesion_nb"
                      ],
                      "condition":"lesion_nb == '7' || lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
@@ -3072,8 +3028,6 @@
                   ],
                   "showIf":{
                      "conceptIds":[
-                        "lesion_nb",
-                        "lesion_nb",
                         "lesion_nb"
                      ],
                      "condition":"lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
@@ -3264,8 +3218,6 @@
                   "label":"Photo de la lésion (vue de près):",
                   "showIf":{
                      "conceptIds":[
-                        "lesion_nb",
-                        "lesion_nb",
                         "lesion_nb"
                      ],
                      "condition":"lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
@@ -3277,8 +3229,6 @@
                   "label":"Photo de la lésion (vue de loin):",
                   "showIf":{
                      "conceptIds":[
-                        "lesion_nb",
-                        "lesion_nb",
                         "lesion_nb"
                      ],
                      "condition":"lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
@@ -3323,13 +3273,11 @@
                      },
                      {
                         "value":"9",
-                        "label":"Téte et cou"
+                        "label":"Tête et cou"
                      }
                   ],
                   "showIf":{
                      "conceptIds":[
-                        "lesion_nb",
-                        "lesion_nb",
                         "lesion_nb"
                      ],
                      "condition":"lesion_nb == '8' || lesion_nb == '9' || lesion_nb == '10'"
@@ -3365,7 +3313,6 @@
                   ],
                   "showIf":{
                      "conceptIds":[
-                        "lesion_nb",
                         "lesion_nb"
                      ],
                      "condition":"lesion_nb == '9' || lesion_nb == '10'"
@@ -3556,7 +3503,6 @@
                   "label":"Photo de la lésion (vue de près):",
                   "showIf":{
                      "conceptIds":[
-                        "lesion_nb",
                         "lesion_nb"
                      ],
                      "condition":"lesion_nb == '9' || lesion_nb == '10'"
@@ -3568,7 +3514,6 @@
                   "label":"Photo de la lésion (vue de loin):",
                   "showIf":{
                      "conceptIds":[
-                        "lesion_nb",
                         "lesion_nb"
                      ],
                      "condition":"lesion_nb == '9' || lesion_nb == '10'"
@@ -3613,12 +3558,11 @@
                      },
                      {
                         "value":"9",
-                        "label":"Téte et cou"
+                        "label":"Tête et cou"
                      }
                   ],
                   "showIf":{
                      "conceptIds":[
-                        "lesion_nb",
                         "lesion_nb"
                      ],
                      "condition":"lesion_nb == '9' || lesion_nb == '10'"
@@ -3899,7 +3843,7 @@
                      },
                      {
                         "value":"9",
-                        "label":"Téte et cou"
+                        "label":"Tête et cou"
                      }
                   ],
                   "showIf":{
