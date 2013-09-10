@@ -135,7 +135,7 @@
                   }
                },
                {
-                  "viewType":"select",
+                  "viewType":"text",
                   "conceptId":"nom_lieu",
                   "label":"Nom du lieu:"
                },
