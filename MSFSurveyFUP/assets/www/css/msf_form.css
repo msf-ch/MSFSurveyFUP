@@ -84,6 +84,17 @@
     div.photoview a.removepic {
     	float: right;
     }
+    
+    /*JSON Select View*/
+    div.selectjsonformview div.ui-select {
+    	display : block;
+    	overflow : hidden;
+    	width : auto;
+    }
+    
+    a.edit-json-select-button {
+    	float : right;
+    }
 }
 
 

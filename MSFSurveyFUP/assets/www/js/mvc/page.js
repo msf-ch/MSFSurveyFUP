@@ -106,6 +106,19 @@ PageView = Backbone.View.extend({
 		this.trigger('pageDecorated', this);
 	},
 	
+	afterDecorate : function() {
+		var formItems = this.$el.find(":form-item");
+		var itemView;
+		for (var i = 0; i < formItems.length; i++) {
+			itemView = $(formItems[i]).data("form-item-view");
+			if (itemView && itemView.afterDecorate) {
+				itemView.afterDecorate();
+			}
+		}
+		
+		this.trigger('pageAfterDecorated', this);
+	},
+	
 	beforeShow : function() {
 		this.footer.refresh();
 //		$.mobile.silentScroll(0);

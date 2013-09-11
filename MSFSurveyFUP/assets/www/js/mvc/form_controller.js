@@ -85,7 +85,7 @@ FormService = _.extend({
 		if (calculatedValueSerialized && calculatedValueSerialized.functionCode) {
 			view.listenTo(obsList, "initialize changeObsValue:" + calculatedValueSerialized.conceptIds.join(" changeObsValue:"), function(model, value, options) {
 				console.log('Point 1 reached, value: ' + value);
-				var calculatedValue = EvaluationService.executeCalculatedValueFunction(calculatedValueSerialized);
+				var calculatedValue = EvaluationService.executeCalculatedValueFunction(calculatedValueSerialized, view);
 				console.log('Point 2 reached, calculated value: ' + calculatedValue);
 				if (calculatedValue != undefined) {
 					var conceptId = view.model.get('conceptId');
@@ -220,6 +220,12 @@ PageService = _.extend({
 		}
 	},
 	
+	afterDecoratePages : function() {
+		for (var i = 0; i < PageService.pageModels.length; i++) {
+			PageService.pageModels.at(i).pageView.afterDecorate();
+		}
+	},
+	
 	pageEventFired : function(eventName) {
 		var args = [eventName]; //ie ViewService:registered
 		args = args.concat(Array.prototype.splice.call(arguments, 1));
@@ -266,7 +272,7 @@ PageService = _.extend({
 	
 	prevPage : function() {
 		if (!$.mobile.pageContainer.is(".ui-mobile-viewport-transitioning")) {
-			this.setActivePageIndex(this.activeIndex - 1, {transition:"slide",reverse:true});
+			this.setActivePageIndex(this.activeIndex - 1, {});//, {transition:"slide",reverse:true});
 		}
 	},
 	
@@ -281,7 +287,7 @@ PageService = _.extend({
 				}
 			}
 			
-			this.setActivePageIndex(this.activeIndex + 1, {transition:"slide",reverse:false});
+			this.setActivePageIndex(this.activeIndex + 1);//, {transition:"slide",reverse:false});
 		}
 	},
 	
@@ -388,15 +394,20 @@ EvaluationService = _.extend({
 			return viewEvalSerialized.compiledCondition.apply(viewEvalSerialized, paramValues);
 		},
 		compileCalculatedValueFunction : function(calculatedValueFunction) {
-			var func = new Function(calculatedValueFunction.conceptIds, calculatedValueFunction.functionCode);
+			var paramNames = ['_view', '_value'];
+			if (calculatedValueFunction.conceptIds) {
+				paramNames = paramNames.concat(calculatedValueFunction.conceptIds);
+			}
+			
+			var func = new Function(paramNames, calculatedValueFunction.functionCode);
 			calculatedValueFunction.compiledFunction = func;
 			
 			return func;
 		},
-		executeCalculatedValueFunction : function(calculatedValueFunction) {	
-			var conceptIdValues = [];
+		executeCalculatedValueFunction : function(calculatedValueFunction, view) {	
+			var conceptIdValues = [view, view.getValue()];
 			for (var i = 0; i < calculatedValueFunction.conceptIds.length; i++) {
-				conceptIdValues[i] = ObsService.getObs(calculatedValueFunction.conceptIds[i]);
+				conceptIdValues.push(ObsService.getObs(calculatedValueFunction.conceptIds[i]));
 			}
 			
 			if (!calculatedValueFunction.compiledFunction) {
@@ -508,12 +519,12 @@ ValidationService = _.extend({
 			 
 			 if (bounds.precisionExact != undefined) {
 				 if (isNaN(parseFloat(stringValue)) || !isFinite(stringValue)) {
-					 errors.push("La réponse doit être un nombre");//NEEDSTRANSLATION
+					 errors.push("La réponse doit être un nombre");
 				 } else if (bounds.precisionExact == 0 && Math.floor(value) != value) {
 					 //Nothing past the decimal place
-					 errors.push("La réponse doit être un nombre entier");//NEEDSTRANSLATION
+					 errors.push("La réponse doit être un nombre entier");
 				 } else if (bounds.precisionExact > 0 && ((stringValue.indexOf(".") != stringValue.length - bounds.precisionExact - 1) || (stringValue.indexOf(".") < 0))) {
-					 errors.push("La valeur doit avoir avoir " + bounds.precisionExact + " chiffres après la virgule."); //NEEDSTRANSLATION
+					 errors.push("La valeur doit avoir avoir " + bounds.precisionExact + " chiffres après la virgule.");
 				 }
 			 }
 		}

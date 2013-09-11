@@ -106,6 +106,10 @@ FormApp = _.extend({
 			ObsService.initializeValues();
 			FormApp.trigger("initializeObsComplete");
 			
+			FormApp.trigger("afterDecoratePages");
+			PageService.afterDecoratePages();
+			FormApp.trigger("afterDecoratePagesComplete");
+			
 			FormApp.trigger("enterForm");
 			PageService.setActivePageIndex(0);
 			FormApp.trigger("enterFormComplete");

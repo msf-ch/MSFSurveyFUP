@@ -8,11 +8,15 @@
    "descriptors":[
       {
          "label":"Date",
-         "conceptId":"datLieu"
+         "conceptId":"date_lieu"
       },
       {
          "label":"Nom du lieu",
-         "conceptId":"nomLieu"
+         "conceptId":"nom_lieu"
+      },
+      {
+         "label":"Nom du lieu",
+         "conceptId":"Aire de santé"
       }
    ],
    "pages":[
@@ -129,7 +133,6 @@
                   },
                   "showIf":{
                      "conceptIds":[
-
                      ],
                      "condition":"false"
                   }
@@ -137,7 +140,7 @@
                {
                   "viewType":"text",
                   "conceptId":"nom_lieu",
-                  "label":"Nom du lieu:"
+                  "label":"Nom du lieu"
                },
                {
                   "viewType":"radio",
@@ -196,7 +199,7 @@
                },
                {
                   "viewType":"date",
-                  "conceptId":"date_ieu",
+                  "conceptId":"date_lieu",
                   "label":"Date:"
                },
                {

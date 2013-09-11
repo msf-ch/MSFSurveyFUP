@@ -41,6 +41,7 @@ FormApp.once("initViewClassesComplete", function() {
 	ViewService.registerViewClass("gps", GPSAcquireView, []);
 	ViewService.registerViewClass("html", HTMLView, []);
 	ViewService.registerViewClass("photo", PhotoView, []);
+	ViewService.registerViewClass("selectjsonform", SelectJsonFormView, []);
 	
 	FormApp.trigger("defaultViewClassesRegistered");
 });

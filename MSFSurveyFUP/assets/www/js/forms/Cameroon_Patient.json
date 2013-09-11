@@ -110,6 +110,16 @@
                   "hiddenMode":true
                },
                {
+                  "viewType":"selectjsonform",
+                  "conceptId":"nom_lieu",
+                  "label":"Json Form Select",
+                  "formName":"Cameroon_Village",
+                  "formLabelConceptId":"nom_lieu",
+                  "formValueConceptId":"nom_lieu",
+                  "defaultAnswerLabelCacheName":"VillageNameCache",
+                  "defaultAnswerValueCacheName":"VillageValueCache"
+               },
+               {
                   "viewType":"text",
                   "conceptId":"id_num",
                   "label":"Patient ID num",
@@ -132,6 +142,7 @@
                   "conceptId":"num_enq",
                   "label":"Numéro de l'enquêteur",
                   "horizontalMode":"true",
+                  "hiddenMode":true,
                   "options":[
                      {
                         "value":"1",

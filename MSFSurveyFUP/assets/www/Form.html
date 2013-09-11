@@ -134,10 +134,23 @@ var inputId = view.id + '-input';
 			var currentId = inputId + '-' + index; %>
 			<option value="<%= option.value %>" id="<%= currentId %>" ><%= option.label %></option>
 		<% }); %>
-	</div>
+	</select>
 </div>
 </script>
 
+<script id='tmpl-selectjsonformview' type='text/template'>
+<%
+var inputId = view.id + '-input';
+%>
+<div class="selectjsonformview" data-role="fieldcontain">
+	<label class="question-label" for="<%= inputId %>"><%= model.get('label') %></label>
+	<div style="display:inline-block;">
+		<a class="edit-json-select-button" href="#" data-role="button" data-mini="true" data-inline="true" data-icon="edit" data-iconpos="left" data-theme="b">Edit</a>
+		<select name="<%= inputId %>" id="<%= inputId %>">
+		</select>
+	<div>
+</div>
+</script>
 
 <script id='tmpl-checkgroupview' type='text/template'>
 <%

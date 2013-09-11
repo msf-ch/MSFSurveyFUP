@@ -113,6 +113,9 @@
     <feature name="CameraService">
       <param name="android-package" value="org.msf.survey.monthly.fup.plugin.CameraPlugin"/>
     </feature>
+    <feature name="EnvironmentVariableService">
+      <param name="android-package" value="org.msf.survey.monthly.fup.plugin.EnvironmentVariablePlugin"/>
+    </feature>
     
     <!-- Deprecated plugins element. Remove in 3.0 -->
     <plugins>

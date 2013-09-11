@@ -22,6 +22,7 @@ FormItemViewModel = Backbone.Model.extend({
 		calculatedValue : undefined, //{conceptIds : ["conceptId1"], functionCode : "return conceptId1 + ', and detail'"}
 		horizontalMode : false,
 		hiddenMode : false,
+		disabled : false,
 		required : true
 	},
 	
@@ -125,6 +126,10 @@ FormItemView = Backbone.View.extend({
 		this.$el.trigger('create');
 	},
 	
+	afterDecorate : function() {
+		/*run code that requires JQuery mobile to have been initialized */
+	},
+	
 	defaultValueChanged : function() {
 		this.trigger('viewValueChange', this);
 		this.trigger('save', this);
@@ -202,6 +207,10 @@ TextView = FormItemView.extend({
 	
 	render : function() {
 		this.renderDefault();
+		
+//		if (this.model.get("disabled")) {
+//			this.$el.find("input").textinput('disable');
+//		}
 	},
 	
 	getValue : function() {
@@ -231,11 +240,7 @@ NumberView = TextView.extend({
 		} else {
 			return false; //catch it and prevent it from propagating
 		}
-	},
-	
-	render : function() {
-		this.renderDefault();
-	},
+	}
 });
 
 RadioView = TextView.extend({
@@ -287,6 +292,119 @@ SelectView = TextView.extend({
 		var select = this.$el.find("select");
 		select.val(value);
 		select.selectmenu('refresh');
+	}
+});
+
+/*Specific to Cameroon!*/
+SelectJsonFormView = SelectView.extend({
+	template : _.template($("#tmpl-selectjsonformview").html()),
+	
+	events : {
+		"change select" : "valueChanged",
+		"click .edit-json-select-button" : "edit"
+	},
+	
+	render : function() {
+		this.renderDefault();
+	},
+	
+	afterDecorate : function() {
+		this.select = this.$el.find("select");
+		this.select.selectmenu("disable");
+		
+		var cachedLabel = localStorage.getItem(this.model.get("defaultAnswerLabelCacheName"));
+		var cachedValue = localStorage.getItem(this.model.get("defaultAnswerValueCacheName"));
+		
+		if (cachedLabel && cachedValue) {
+			label = cachedLabel;
+			value = cachedValue;
+		} else {
+			label = this.model.get("defaultAnswerLabel");
+			value = this.model.get("defaultAnswerValue");
+		}
+		
+		if(label && value) {
+			this.addOption(label, value);
+			this.setValue(value);
+		
+			this.defaultValueChanged();
+		}
+	},
+	
+	getValue : function() {
+		var value = this.$el.find("select").val();
+		return value;
+	},
+	
+	setValue : function(value) {
+		var select = this.$el.find("select");
+		
+		select.val(value);
+		select.selectmenu('refresh');
+	},
+	
+	valueChanged : function() {
+		this.defaultValueChanged();
+		
+		var select = this.$el.find("select");
+		
+		if (this.model.get("defaultAnswerLabelCacheName") && this.model.get("defaultAnswerValueCacheName")) {
+			localStorage.setItem(this.model.get("defaultAnswerLabelCacheName"), select.find(":selected").text());
+			localStorage.setItem(this.model.get("defaultAnswerValueCacheName"), select.val());
+		}
+	},
+	
+	//This method does not call selectmenu.refresh(), must be performed after operations to ensure they display
+	addOption : function(label, value) {
+		this.select.append("<option value='" + value + "'>" + label + "</option>");
+	},
+	
+	edit : function() {
+		var $this = this;
+		
+		var success = function(encounters) {
+			console.log("Success ran...");
+			console.log("Encounters is " + encounters.length);
+			
+			if (encounters) {
+				var formLabelConceptId = $this.model.get('formLabelConceptId');
+				var formValueConceptId = $this.model.get('formValueConceptId');
+				
+				var label;
+				var value;
+				
+				var concept;
+				var encounter;
+				
+				for (var i = 0; i < encounters.length; i++) {
+					var encounter = encounters[i];
+					for (var j = 0; j < encounter.descriptors.length; j++) {
+						if (encounter.descriptors[j].conceptId == formLabelConceptId) {
+							label = encounter.descriptors[j].value;
+						}
+						
+						if (encounter.descriptors[j].conceptId == formValueConceptId) {
+							value = encounter.descriptors[j].value;
+						}
+					}
+					
+					if (label && value) {
+						$this.addOption(label, value);
+					}
+				}
+			}
+			
+			$this.$el.find("a.edit-json-select-button").hide();
+			
+			$this.select.selectmenu("enable");
+			$this.select.selectmenu("refresh");
+		};
+		
+		var fail = function(message) {
+			alert('ERROR: ' + message);
+		};
+		
+		cordova.exec(success, fail, "MSF", "getEncounters", [{ formName : this.model.get("formName") }] );
 	}
 });
 
@@ -732,14 +850,18 @@ GPSAcquireView = FormItemView.extend({
 	},
 	
 	initialize2 : function() {
-		var $this = this;
-		FormApp.on("initializeObs", function() {
-			$this.acquireGPS.apply($this, []);
-		});
+//		var $this = this;
+//		FormApp.on("initializeObs", function() {
+//			$this.acquireGPS.apply($this, []);
+//		});
 	},
 	
 	render : function() {
 		this.renderDefault();
+	},
+	
+	afterDecorate : function() {
+		this.acquireGPS();
 	},
 	
 	acquireGPS : function() {
