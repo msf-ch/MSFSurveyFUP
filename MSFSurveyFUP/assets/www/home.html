@@ -39,6 +39,12 @@
 		#testCamera {
 			display: none;
 		}
+		
+		#requireTabletIdMessage {
+			text-align: center;
+			color: red;
+			font-weight: bold;
+		}
 	</style>
 </head>
 <body>
@@ -53,15 +59,15 @@
 	            <img src="img/msf_logo_bilingual.png" alt="image" style="width: 100%;">
 	        </div>
 	        <div id="formLinks" data-role="controlgroup" data-type="horizontal">
-		        <a data-role="button" formButton href="#" formFilePath="js/forms/Cameroon_Village.json" data-icon="plus" data-iconpos="bottom" data-ajax="false" data-inline="true">Cameroon Village</a>
-		        <a data-role="button" formButton href="#" formFilePath="js/forms/Cameroon_Patient.json" data-icon="plus" data-iconpos="bottom" data-ajax="false" data-inline="true">Cameroon Patient</a>
+		        <a data-role="button" formButton href="#" formFilePath="js/forms/Cameroon_Village.json" data-icon="plus" data-iconpos="bottom" data-ajax="false" data-inline="true">Village</a>
+		        <a data-role="button" formButton href="#" formFilePath="js/forms/Cameroon_Patient.json" data-icon="plus" data-iconpos="bottom" data-ajax="false" data-inline="true">Patient</a>
 	        </div>
 	        <hr>
 	        <a data-role="button" href="LoadEncounter.html" data-icon="search" data-iconpos="left" data-ajax="false" data-theme="e">Modifier les données</a>
 	        <hr>
 	        <div data-role="collapsible-set">
 		        <div data-role="collapsible" data-collapsed="false">
-		        	<h3>Numéro de l'enquêteur</h3>
+		        	<h3>Numéro de la tablette</h3>
 					<div data-role="fieldcontain">
 		        		<fieldset data-role="controlgroup" data-type="horizontal" id="nomenq">
 		  		      		<legend>Numéro de l'enquêteur</legend>
@@ -79,6 +85,9 @@
 			        		<label for="radio-6">6</label>
 			        	</fieldset>
 		        	</div>
+			        <div id="requireTabletIdMessage">
+			        	<h4>La réponse à cette question est obligatoire.</h4>
+			        </div>
 				</div>
 		        <div data-role="collapsible">
 		        	<h3>Gestion des données</h3>
@@ -86,6 +95,7 @@
 		        		<a id="exportReport" data-role="button" href="#" data-icon="check" data-iconpos="left" data-ajax="false" >Exporter un rapport</a>
 	        		</div>
 		        </div>
+		        <!-- This was used for testing
 		        <div id="adminCollapsible" data-role="collapsible">
 		        	<h3>Administration</h3>
 					<div data-role="fieldcontain">
@@ -95,7 +105,7 @@
 	        		<a id="executeTestsButton" data-role="button" href="#" data-icon="check" data-iconpos="left" data-ajax="false" >Run tests</a>
 	        		<a id="deleteEncounters" data-role="button" href="#" data-icon="check" data-iconpos="left" data-ajax="false" >Delete all encounters</a>
 	        		<a id="deleteReports" data-role="button" href="#" data-icon="check" data-iconpos="left" data-ajax="false" >Delete all reports</a>
-		        </div>
+		        </div> -->
 	        </div>	  	        
 	    </div>
 	    
@@ -109,7 +119,7 @@
 					$(window).off("beforeunload");
 				});
 			});
-	    	$(function() {
+			$(document).on('pageinit', function() {
 	    		
 	    		//$("#adminCollapsible").hide();
 	    		$("[formButton]:jqmData(role='button')").click(function(event) {
@@ -155,19 +165,32 @@
 	    		});
 	    		
 	    		var surveyor = window.localStorage.getItem("surveyor");
+    			var radioinputs = $("#nomenq").find("input");
+    			var formButtons = $("#formLinks").find("a:jqmData(role='button')");
+    			var tabletIdRequiredMessage = $("#requireTabletIdMessage");
 	    		if (surveyor) {
-	    			var radiobuttons = $("#nomenq").find("input");
-	    			var changedButton = radiobuttons.filter("[value='" + surveyor + "']").attr('checked', true);
-	    			radiobuttons.not(changedButton).attr('checked', false);
-	    			radiobuttons.checkboxradio('refresh');
+	    			var changedButton = radioinputs.filter("[value='" + surveyor + "']").attr('checked', true);
+	    			radioinputs.not(changedButton).attr('checked', false);
+	    			radioinputs.checkboxradio('refresh');
+
+    				formButtons.removeClass("ui-disabled");
+	    			tabletIdRequiredMessage.hide();
+	    		} else {
+	    			//disable the surveys until this is filled
+	    			formButtons.addClass("ui-disabled");
+	    			tabletIdRequiredMessage.show();
 	    		}
 	    		
 	    		$("#nomenq").change(function() {
 	    			var val = $("#nomenq :checked").val();
 	    			if (val) {
 	    				window.localStorage.setItem("surveyor", val);
+	    				formButtons.removeClass("ui-disabled");
+		    			tabletIdRequiredMessage.hide();
 	    			} else {
 	    				window.localStorage.removeItem("surveyor");
+	    				formButtons.addClass("ui-disabled");
+		    			tabletIdRequiredMessage.show();
 	    			}
 	    		});
 	    	});

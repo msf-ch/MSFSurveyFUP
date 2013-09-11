@@ -112,7 +112,7 @@
                {
                   "viewType":"selectjsonform",
                   "conceptId":"nom_lieu",
-                  "label":"Json Form Select",
+                  "label":"Village",
                   "formName":"Cameroon_Village",
                   "formLabelConceptId":"nom_lieu",
                   "formValueConceptId":"nom_lieu",
@@ -122,7 +122,7 @@
                {
                   "viewType":"text",
                   "conceptId":"id_num",
-                  "label":"Patient ID num",
+                  "label":"Numéro d'identification",
                   "disabled":true
                },
                {

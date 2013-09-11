@@ -79,6 +79,9 @@
     }
     
     div.photoview a.takepic {
+    	display: block;
+    	overflow: hidden;
+    	width: auto;
     }
     
     div.photoview a.removepic {
