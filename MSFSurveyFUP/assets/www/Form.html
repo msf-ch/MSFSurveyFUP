@@ -17,7 +17,7 @@
 
 <body>
 
-
+	<!-- This page displays as the form is loading -->
 	<div data-role="page" id="loadingPage">
 		<div data-role="header" data-theme="e">
 			<h1 pageheader="true">Chargement du formulaire</h1>
@@ -34,6 +34,14 @@
 	</div>
 
 
+<!-- Below are the templates written for Underscore/Lodash's _.template() function (in "renderPages" event)
+	to render items for the form. These are processed by JQuery mobile during the "decoratePages"
+	stage, so the actual rendered HTML structure might not match these designs. This is particularly
+	important for the question items, since the entry data is often nested underneath
+	several JQM containers. -->
+
+
+<!-- Page, template, and header are used in page.js -->
 <script id='tmpl-page' type='text/template'>
 	<div pageheader="true">
 	</div>
@@ -67,6 +75,10 @@
 	</ul>
 </div>
 </script>
+
+<!-- Question items are used in form_views.js
+	Some question types, like ranking, use multiple templates
+	 -->
 
 	<script id='tmpl-textview' type='text/template'>
 <%
@@ -321,6 +333,7 @@ var contentId = view.id + '_content';
 </script>
 
 
+<!-- A generic popup that can be filled with text.  -->
 <script id='tmpl-genericpopup' type='text/template'>
 	<% if (data.headerText) { %>
 		<div class="ui-corner-top ui-header ui-bar-b">

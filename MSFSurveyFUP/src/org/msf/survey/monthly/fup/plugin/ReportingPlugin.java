@@ -15,6 +15,13 @@ import org.msf.survey.monthly.fup.CSVDataExport;
 import org.msf.survey.monthly.fup.Constants;
 import org.msf.survey.monthly.fup.FileUtilities;
 
+/**
+ * @author Nicholas Wilkie
+ * 
+ * Cordova plugin for reporting capabilities. At this point, only CSV export is implemented. 
+ * 
+ */
+
 public class ReportingPlugin extends CordovaPlugin {
 	public static final String ACTION_EXPORT_REPORT= "exportReport";
 	

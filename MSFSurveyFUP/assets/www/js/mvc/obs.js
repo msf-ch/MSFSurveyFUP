@@ -1,3 +1,10 @@
+/* obs.js
+ * 
+ * This file simply defines the Obs object that is used to store data points in the form. The ObsList
+ * triggers events "changeObsValue:*conceptId*" that can be used to listen for changes in a particular
+ * conceptId. 
+ */
+
 var Obs = Backbone.Model.extend({
 	defaults : {
 		conceptId : "",

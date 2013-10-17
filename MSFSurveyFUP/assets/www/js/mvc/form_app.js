@@ -1,34 +1,59 @@
+/* form_app.js
+ * 
+ * FormApp object coordinates high-level events for the program, particularly initialization. It
+ * also registers all services used by the application.
+ */
+
 /**
  * Events object for application-level management
  * 
  * Events order
  * 
  * Initialization
- * 	checkLibrariesInitialized
+ * 	checkLibrariesInitialized: ensures JQuery and Cordova libraries are ready
  * 	librariesInitialized
+ * 
+ *  initPageClasses: initializes the pages in page.js
+ *  initPageClassesComplete
  * 	
  * Initialize services
- * 	initServices
+ *  registerServices: collects all services (found in form_controller.js)
+ *  registerServicesComplete
+ *  
+ * 	initServices: initializes services in form_controller.js
  * 	initServicesComplete
  * 
- * 	initViewClasses
+ * 	initViewClasses: initializes view classes (defaults defined in form_defaults.js)
  * 	initViewClassesComplete
  * 	
  * Load data
- * 	loadData
+ * 	loadData: loads any existing encounter data (see FormApp.loadData())
+ * 	loadDataStart
  * 	loadDataComplete
  * 
  * Form creation
- * 	setFormModel
+ * 	setFormModelStart: loading the form model
  * 	setFormModelComplete
  * 	
- * 	setPageModels
+ * 	setPageModels: setting the contents of each page
  * 	setPageModelsComplete
  * 
- * 	renderPages
+ * 	renderPages: rendering the pages from the form
  * 	renderPagesComplete
  * 
- * 	enterForm
+ *  decoratePages: decorate the rendered pages with JQuery Mobile
+ *  decoratePagesComplete
+ *  
+ *  registerViews: registers view listeners (for question hide/show/logic etc)
+ *  registerViewsComplete
+ * 
+ *  initializeObs: apply any obs values to the form
+ *  initializeObsComplete
+ *  
+ *  afterDecoratePages: triggers any methods that must be run after page is decorated
+ *  	and views have been rendered with their proper values
+ * 
+ * 	enterForm: instructing the browser to enter the first page of the form
  * 	enterFormComplete
  * 
  * 

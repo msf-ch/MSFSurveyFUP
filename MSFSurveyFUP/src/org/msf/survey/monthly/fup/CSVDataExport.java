@@ -18,6 +18,13 @@ import org.json.JSONObject;
 import android.util.Log;
 import au.com.bytecode.opencsv.CSVWriter;
 
+/**
+ * @author Nick
+ *
+ * Tools to facilitate export of CSV reports
+ * 
+ */
+
 public class CSVDataExport {
 	
 	public static List<File> generateDefaultReports(List<JSONObject> forms) throws JSONException, IOException {

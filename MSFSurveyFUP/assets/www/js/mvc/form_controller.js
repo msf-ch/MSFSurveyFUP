@@ -1,4 +1,17 @@
+/* form_controller.js
+ * 
+ * This file defines services used by the form. They are initialized on the "registerServices"
+ * event from FormApp. They run their initialization code on "initServices".
+ * 
+ */
+
 FormApp.once('registerServices', function() {
+	
+	
+/*
+ * FormService provides methods for dealing with the form as a whole, such as registering views
+ * and saving form data.
+ */
 FormService = _.extend({
 	views : [],
 	
@@ -168,6 +181,9 @@ FormService = _.extend({
 }, Backbone.Events);
 FormApp.registerService('FormService', FormService);
 
+/*
+ * ObsService provides methods to access and change observations.
+ */
 ObsService = _.extend({
 	setObs : function(conceptId, value) {
 		console.log('set obs ' + conceptId + ' to ' + value);
@@ -186,6 +202,10 @@ ObsService = _.extend({
 }, Backbone.Events);
 FormApp.registerService('ObsService', ObsService);
 
+
+/*
+ * PageService provides methods to display and navigate through the pages in the form.
+ */
 PageService = _.extend({
 	pageModels : undefined,
 	activeIndex : -1,
@@ -343,6 +363,14 @@ PageService = _.extend({
 }, Backbone.Events);
 FormApp.registerService('PageService', PageService);
 
+
+
+/*
+ * EvaluationService provides methods to evaluate conditions, such as show/hide logic.]
+ * 
+ * Conditions are precompiled as functions on initialization to speed up execution during form entry.
+ */
+
 EvaluationService = _.extend({
 		compileObsCondition : function(obsEvalSerialized) {
 			var func = new Function(obsEvalSerialized.conceptIds, 'return ' + obsEvalSerialized.condition + ';');
@@ -420,6 +448,10 @@ EvaluationService = _.extend({
 }, Backbone.Events);
 FormApp.registerService('EvaluationService', EvaluationService);
 
+/* 
+ * ViewService stores view classes for use during rendering.
+ */
+
 ViewService = _.extend({
 	viewClasses : new (Backbone.Collection.extend({
 		model : Backbone.Model.extend({
@@ -445,6 +477,11 @@ ViewService = _.extend({
 	}
 }, Backbone.Events);
 FormApp.registerService('ViewService', ViewService);
+
+/*
+ * ValidationService is used to perform validation on the form, such as when there is a required value
+ * or a particular pattern that must be matched for a question.
+ */
 
 ValidationService = _.extend({
 	validatePage : function(pageView) {
@@ -605,6 +642,12 @@ ValidationService = _.extend({
 	}
 }, Backbone.Events);
 FormApp.registerService('ValidationService', ValidationService);
+
+
+/*
+ * UiService is a general class for UI events, but is currently only used to fix the position of the
+ * footer on every page.
+ */
 
 UiService = _.extend({
 	initialize : function() {

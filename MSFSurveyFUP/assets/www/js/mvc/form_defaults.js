@@ -1,33 +1,12 @@
-//window.formItemViewCodes = {text : TextView,
-//		number : NumberView,
-//		radio : RadioView,
-//		select : SelectView,
-//		checkboxgroup : CheckGroupView,
-//		checkbox : CheckView,
-//		date : DateView,
-//		ranking : RankingView,
-//		rankingitem : RankingItemView,
-//		submitpage : SubmitPageView,
-//		gps : GPSAcquireView};
-//});
+/*
+ * form_defaults.js
+ * 
+ * This file defines the default view classes used by the form software. More can be added
+ * in this or a separate file by binding to the "initViewClasses" function and calling
+ * ViewService.registerViewClass()
+ */
 
-
-//FormApp.on("")
-
-//window.formItemViewCodes = {text : TextView,
-//		number : NumberView,
-//		radio : RadioView,
-//		select : SelectView,
-//		checkboxgroup : CheckGroupView,
-//		checkbox : CheckView,
-//		date : DateView,
-//		ranking : RankingView,
-//		rankingitem : RankingItemView,
-//		submitpage : SubmitPageView,
-//		gps : GPSAcquireView};
-//});
-
-FormApp.once("initViewClassesComplete", function() {
+FormApp.once("initViewClasses", function() {
 	ViewService.registerViewClass("text", TextView, [ValidationService._standardBounds, ValidationService._standardRequired, ValidationService._standardValidators]);
 	ViewService.registerViewClass("number", NumberView, [ValidationService._standardBounds, ValidationService._standardRequired, ValidationService._standardValidators]);
 	ViewService.registerViewClass("radio", RadioView, [ValidationService._standardBounds, ValidationService._standardRequired, ValidationService._standardValidators]);

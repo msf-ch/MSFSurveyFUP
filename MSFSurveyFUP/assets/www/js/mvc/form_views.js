@@ -1,3 +1,15 @@
+/* form_views.js
+ * 
+ * This file contains the code to render and interact with views.
+ * 
+ * FormsItemViewModel defines the data associated with a particular view.
+ * FormItemViewModelList is simply a list of FormItemViewModels
+ * 
+ * FormItemView is a base class that other views extend. It contains default functionality on
+ * how values are stored and displayed.
+ */
+
+
 FormApp.once('initViewClasses', function() {
 FormItemViewModel = Backbone.Model.extend({
 	defaults : {

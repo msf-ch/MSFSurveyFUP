@@ -1,3 +1,9 @@
+/*form_model.js
+ * 
+ * This file defines the structure of a form JSON file. It also provides methods to access global
+ * variables defined in the "global" object.
+ */
+
 FormModel = Backbone.Model.extend({
 	defaults : {
 		name : undefined,

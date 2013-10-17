@@ -1,3 +1,8 @@
+/* page.js
+ * 
+ * This file defines the components of a page. 
+ */
+
 FormApp.once('initPageClasses', function() {
 HeaderModel = Backbone.Model.extend({
 	defaults : {

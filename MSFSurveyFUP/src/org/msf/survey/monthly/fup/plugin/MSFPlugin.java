@@ -29,8 +29,12 @@ import android.util.Log;
 /**
  * @author Nicholas Wilkie
  * 
+ * Cordova plugin to allow for functions that require interaction with Android outside of browser. Cordova calls execute()
+ * with an action string, and this determines what method is executed.
+ * 
  */
 public class MSFPlugin extends CordovaPlugin {
+	
 	public static final String SUBMIT_ACTION = "submit";
 	public static final String GET_ENCOUNTER_ACTION = "getEncounter";
 	public static final String PAGE_FORWARD_ACTION = "forward";
